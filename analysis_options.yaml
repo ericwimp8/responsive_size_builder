@@ -24,6 +24,7 @@ linter:
     - public_member_api_docs: false
     - non_constant_identifier_names: false
     - no_leading_underscores_for_local_identifiers: false
+    - unreachable_from_main: false
     - always_declare_return_types
     - always_put_required_named_parameters_first
     - always_use_package_imports
