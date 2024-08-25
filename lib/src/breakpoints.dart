@@ -145,12 +145,7 @@ class Breakpoints implements BaseBreakpoints<LayoutSize> {
   }
 
   @override
-  int get hashCode {
-    return extraLarge.hashCode ^
-        large.hashCode ^
-        medium.hashCode ^
-        small.hashCode;
-  }
+  int get hashCode => Object.hash(extraLarge, large, medium, small);
 
   /// Creates a copy of this [Breakpoints] object with the given properties
   /// replaced.
@@ -388,20 +383,20 @@ class BreakpointsGranular implements BaseBreakpoints<LayoutSizeGranular> {
   }
 
   @override
-  int get hashCode {
-    return jumboExtraLarge.hashCode ^
-        jumboLarge.hashCode ^
-        jumboNormal.hashCode ^
-        jumboSmall.hashCode ^
-        standardExtraLarge.hashCode ^
-        standardLarge.hashCode ^
-        standardNormal.hashCode ^
-        standardSmall.hashCode ^
-        compactExtraLarge.hashCode ^
-        compactLarge.hashCode ^
-        compactNormal.hashCode ^
-        compactSmall.hashCode;
-  }
+  int get hashCode => Object.hash(
+        jumboExtraLarge.hashCode,
+        jumboLarge.hashCode,
+        jumboNormal.hashCode,
+        jumboSmall.hashCode,
+        standardExtraLarge.hashCode,
+        standardLarge.hashCode,
+        standardNormal.hashCode,
+        standardSmall.hashCode,
+        compactExtraLarge.hashCode,
+        compactLarge.hashCode,
+        compactNormal.hashCode,
+        compactSmall.hashCode,
+      );
 }
 
 /// An enum representing different layout sizes.
