@@ -1,27 +1,28 @@
 // ignore_for_file: unreachable_from_main, unused_element
 
-import 'dart:math' as math;
-
 import 'package:flutter/material.dart';
 import 'package:responsive_size_builder/responsive_size_builder.dart';
-
-Color randomColor() {
-  return Color(math.Random().nextInt(0xffffffff)).withAlpha(0xff);
-}
 
 void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  final view = WidgetsBinding.instance.platformDispatcher.views.first;
   @override
   Widget build(BuildContext context) {
     return ScreenSize(
+      view: view,
       breakpoints: BreakpointsGranular.defaultBreakpoints,
       child: ScreenSize(
+        view: view,
         breakpoints: Breakpoints.defaultBreakpoints,
         child: MaterialApp(
           title: 'Responsive Size Builder Demo',
@@ -126,6 +127,18 @@ class ScreenSizeBuilderDemo extends StatelessWidget {
               ),
               standardSmall: (context) => Content(
                 title: 'Standard Small',
+              ),
+              compactExtraLarge: (context) => Content(
+                title: 'Compact Extra Large',
+              ),
+              compactLarge: (context) => Content(
+                title: 'Compact Large',
+              ),
+              compactNormal: (context) => Content(
+                title: 'Compact Normal',
+              ),
+              compactSmall: (context) => Content(
+                title: 'Compact Small',
               ),
             ),
           ),
@@ -359,7 +372,6 @@ class Content extends StatefulWidget {
 }
 
 class _ContentState extends State<Content> {
-  late final color = randomColor();
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);

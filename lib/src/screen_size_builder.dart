@@ -34,25 +34,16 @@ class ScreenSizeOrientationBuilder extends StatefulWidget {
           'At least one builder for landscape must be provided',
         );
 
-  final Widget Function(BuildContext context)? extraLarge;
-
-  final Widget Function(BuildContext context)? large;
-
-  final Widget Function(BuildContext context)? medium;
-
-  final Widget Function(BuildContext context)? small;
-
-  final Widget Function(BuildContext context)? extraSmall;
-
-  final Widget Function(BuildContext context)? extraLargeLandscape;
-
-  final Widget Function(BuildContext context)? largeLandscape;
-
-  final Widget Function(BuildContext context)? mediumLandscape;
-
-  final Widget Function(BuildContext context)? smallLandscape;
-
-  final Widget Function(BuildContext context)? extraSmallLandscape;
+  final WidgetBuilder? extraLarge;
+  final WidgetBuilder? large;
+  final WidgetBuilder? medium;
+  final WidgetBuilder? small;
+  final WidgetBuilder? extraSmall;
+  final WidgetBuilder? extraLargeLandscape;
+  final WidgetBuilder? largeLandscape;
+  final WidgetBuilder? mediumLandscape;
+  final WidgetBuilder? smallLandscape;
+  final WidgetBuilder? extraSmallLandscape;
 
   final Breakpoints breakpoints;
   final bool useShortestSide;
@@ -138,15 +129,11 @@ class ScreenSizeBuilder extends StatefulWidget {
           'At least one builder for must be provided',
         );
 
-  final Widget Function(BuildContext context)? extraLarge;
-
-  final Widget Function(BuildContext context)? large;
-
-  final Widget Function(BuildContext context)? medium;
-
-  final Widget Function(BuildContext context)? small;
-
-  final Widget Function(BuildContext context)? extraSmall;
+  final WidgetBuilder? extraLarge;
+  final WidgetBuilder? large;
+  final WidgetBuilder? medium;
+  final WidgetBuilder? small;
+  final WidgetBuilder? extraSmall;
 
   final Breakpoints breakpoints;
   final bool animateChange;
@@ -223,18 +210,18 @@ class ScreenSizeBuilderGranular extends StatefulWidget {
           'At least one builder must be provided',
         );
 
-  final Widget Function(BuildContext context)? jumboExtraLarge;
-  final Widget Function(BuildContext context)? jumboLarge;
-  final Widget Function(BuildContext context)? jumboNormal;
-  final Widget Function(BuildContext context)? jumboSmall;
-  final Widget Function(BuildContext context)? standardExtraLarge;
-  final Widget Function(BuildContext context)? standardLarge;
-  final Widget Function(BuildContext context)? standardNormal;
-  final Widget Function(BuildContext context)? standardSmall;
-  final Widget Function(BuildContext context)? compactExtraLarge;
-  final Widget Function(BuildContext context)? compactLarge;
-  final Widget Function(BuildContext context)? compactNormal;
-  final Widget Function(BuildContext context)? compactSmall;
+  final WidgetBuilder? jumboExtraLarge;
+  final WidgetBuilder? jumboLarge;
+  final WidgetBuilder? jumboNormal;
+  final WidgetBuilder? jumboSmall;
+  final WidgetBuilder? standardExtraLarge;
+  final WidgetBuilder? standardLarge;
+  final WidgetBuilder? standardNormal;
+  final WidgetBuilder? standardSmall;
+  final WidgetBuilder? compactExtraLarge;
+  final WidgetBuilder? compactLarge;
+  final WidgetBuilder? compactNormal;
+  final WidgetBuilder? compactSmall;
   final bool animateChange;
   final bool useShortestSide;
   final BreakpointsGranular breakpoints;
