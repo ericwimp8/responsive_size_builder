@@ -1,9 +1,9 @@
-// ignore_for_file: unreachable_from_main
+// ignore_for_file: unreachable_from_main, unused_element
 
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
-import 'package:responsive_size_builder/barrel.dart';
+import 'package:responsive_size_builder/responsive_size_builder.dart';
 
 Color randomColor() {
   return Color(math.Random().nextInt(0xffffffff)).withAlpha(0xff);

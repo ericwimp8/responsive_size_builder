@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-import 'package:responsive_size_builder/barrel.dart';
+import 'package:responsive_size_builder/responsive_size_builder.dart';
 
 class ScreenSize<K extends Enum> extends StatelessWidget {
   const ScreenSize({

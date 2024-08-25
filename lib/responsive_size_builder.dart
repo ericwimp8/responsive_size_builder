@@ -1,7 +1,6 @@
-library responsive_size_builder;
-
-/// A Calculator.
-class Calculator {
-  /// Returns [value] plus 1.
-  int addOne(int value) => value + 1;
-}
+export 'responsive_size_builder.dart';
+export 'src/breakpoints.dart';
+export 'src/breakpoints_handler.dart';
+export 'src/layout_size_builder.dart';
+export 'src/screen_size_builder.dart';
+export 'src/screen_size_data.dart';
