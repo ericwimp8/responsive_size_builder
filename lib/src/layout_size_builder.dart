@@ -19,15 +19,15 @@ class LayoutSizeBuilder extends StatefulWidget {
           'At least one builder for portrait must be provided',
         );
 
-  final Widget Function(BuildContext context)? extraLarge;
+  final WidgetBuilder? extraLarge;
 
-  final Widget Function(BuildContext context)? large;
+  final WidgetBuilder? large;
 
-  final Widget Function(BuildContext context)? medium;
+  final WidgetBuilder? medium;
 
-  final Widget Function(BuildContext context)? small;
+  final WidgetBuilder? small;
 
-  final Widget Function(BuildContext context)? extraSmall;
+  final WidgetBuilder? extraSmall;
 
   final Breakpoints breakpoints;
 
