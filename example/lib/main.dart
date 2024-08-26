@@ -15,14 +15,11 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  final view = WidgetsBinding.instance.platformDispatcher.views.first;
   @override
   Widget build(BuildContext context) {
-    return ScreenSize(
-      view: view,
+    return ScreenSize<LayoutSizeGranular>(
       breakpoints: BreakpointsGranular.defaultBreakpoints,
-      child: ScreenSize(
-        view: view,
+      child: ScreenSize<LayoutSize>(
         breakpoints: Breakpoints.defaultBreakpoints,
         child: MaterialApp(
           title: 'Responsive Size Builder Demo',

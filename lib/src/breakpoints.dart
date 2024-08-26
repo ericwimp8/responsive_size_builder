@@ -98,7 +98,7 @@ class Breakpoints implements BaseBreakpoints<LayoutSize> {
     this.extraLarge = 1200.0,
     this.large = 950.0,
     this.medium = 600.0,
-    this.small = 300.0,
+    this.small = 200.0,
   }) : assert(
           extraLarge > large && large > medium && medium > small && small >= 0,
           'Breakpoints must be in decending order and larger than or equal to 0.',

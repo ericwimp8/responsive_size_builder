@@ -14,7 +14,6 @@ class ScreenSizeOrientationBuilder extends StatefulWidget {
     this.smallLandscape,
     this.extraSmallLandscape,
     this.breakpoints = Breakpoints.defaultBreakpoints,
-    this.useShortestSide = false,
     this.animateChange = false,
     super.key,
   })  : assert(
@@ -46,7 +45,7 @@ class ScreenSizeOrientationBuilder extends StatefulWidget {
   final WidgetBuilder? extraSmallLandscape;
 
   final Breakpoints breakpoints;
-  final bool useShortestSide;
+
   final bool animateChange;
   @override
   State<ScreenSizeOrientationBuilder> createState() =>
@@ -92,9 +91,7 @@ class _ScreenSizeOrientationBuilderState
     final data = ScreenSizeModel.screenSizeOf<LayoutSize>(context);
 
     var child = handler.getScreenSizeValue(
-      screenSize: widget.useShortestSide
-          ? data.screenSizeShortestSide
-          : data.screenSize,
+      screenSize: data.screenSize,
     )(
       context,
     );
@@ -118,7 +115,6 @@ class ScreenSizeBuilder extends StatefulWidget {
     this.extraSmall,
     this.breakpoints = Breakpoints.defaultBreakpoints,
     this.animateChange = false,
-    this.useShortestSide = false,
     super.key,
   }) : assert(
           extraLarge != null ||
@@ -137,7 +133,7 @@ class ScreenSizeBuilder extends StatefulWidget {
 
   final Breakpoints breakpoints;
   final bool animateChange;
-  final bool useShortestSide;
+
   @override
   State<ScreenSizeBuilder> createState() => _ScreenSizeBuilderState();
 }
@@ -155,12 +151,12 @@ class _ScreenSizeBuilderState extends State<ScreenSizeBuilder> {
 
   @override
   Widget build(BuildContext context) {
-    final data = ScreenSizeModel.screenSizeOf<LayoutSize>(context);
+    final data = ScreenSizeModel.screenSizeOf<LayoutSize>(
+      context,
+    );
 
     var child = handler.getScreenSizeValue(
-      screenSize: widget.useShortestSide
-          ? data.screenSizeShortestSide
-          : data.screenSize,
+      screenSize: data.screenSize,
     )(
       context,
     );
@@ -192,7 +188,6 @@ class ScreenSizeBuilderGranular extends StatefulWidget {
     this.compactSmall,
     this.breakpoints = BreakpointsGranular.defaultBreakpoints,
     this.animateChange = false,
-    this.useShortestSide = false,
     super.key,
   }) : assert(
           jumboExtraLarge != null ||
@@ -223,7 +218,7 @@ class ScreenSizeBuilderGranular extends StatefulWidget {
   final WidgetBuilder? compactNormal;
   final WidgetBuilder? compactSmall;
   final bool animateChange;
-  final bool useShortestSide;
+
   final BreakpointsGranular breakpoints;
 
   @override
@@ -254,9 +249,7 @@ class _ScreenSizeBuilderGranularState extends State<ScreenSizeBuilderGranular> {
     final data = ScreenSizeModel.screenSizeOf<LayoutSizeGranular>(context);
 
     var child = handler.getScreenSizeValue(
-      screenSize: widget.useShortestSide
-          ? data.screenSizeShortestSide
-          : data.screenSize,
+      screenSize: data.screenSize,
     )(
       context,
     );

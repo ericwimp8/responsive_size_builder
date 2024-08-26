@@ -1,46 +1,27 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-
 import 'package:responsive_size_builder/responsive_size_builder.dart';
 
-class ScreenSize<K extends Enum> extends StatelessWidget {
+class ScreenSize<T extends Enum> extends StatefulWidget {
   const ScreenSize({
-    required this.child,
-    required this.breakpoints,
-    required this.view,
-    super.key,
-  });
-  final Widget child;
-  final BaseBreakpoints<K> breakpoints;
-  final FlutterView view;
-  @override
-  Widget build(BuildContext context) {
-    return MediaQuery.fromView(
-      view: view,
-      child: ScreenSizeModelWidget<K>(
-        breakpoints: breakpoints,
-        view: view,
-        child: child,
-      ),
-    );
-  }
-}
-
-class ScreenSizeModelWidget<T extends Enum> extends StatelessWidget {
-  const ScreenSizeModelWidget({
     required this.breakpoints,
     required this.child,
-    required this.view,
+    this.testView,
+    this.useShortestSide = true,
     super.key,
   });
   final Widget child;
   final BaseBreakpoints<T> breakpoints;
-  final FlutterView view;
+  final FlutterView? testView;
+  final bool useShortestSide;
+  @override
+  State<ScreenSize<T>> createState() => _ScreenSizeState<T>();
+}
 
-  /// Returns the screen size based on the given size.
+class _ScreenSizeState<T extends Enum> extends State<ScreenSize<T>> {
   T _getScreenSize(double size) {
-    final entries = breakpoints.values.entries;
+    final entries = widget.breakpoints.values.entries;
     for (final entry in entries) {
       if (size >= entry.value) {
         return entry.key;
@@ -52,14 +33,14 @@ class ScreenSizeModelWidget<T extends Enum> extends StatelessWidget {
 
   ScreenSizeModelData<T> updateMetrics(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final screenSize = _getScreenSize(size.width);
-    final screenSizeShortestSide = _getScreenSize(size.shortestSide);
+    final screenSize = widget.useShortestSide
+        ? _getScreenSize(size.shortestSide)
+        : _getScreenSize(size.width);
 
     return ScreenSizeModelData(
-      breakpoints: breakpoints,
-      currentBreakpoint: breakpoints.values[screenSize]!,
+      breakpoints: widget.breakpoints,
+      currentBreakpoint: widget.breakpoints.values[screenSize]!,
       screenSize: screenSize,
-      screenSizeShortestSide: screenSizeShortestSide,
       physicalWidth: view.physicalSize.width,
       physicalHeight: view.physicalSize.height,
       devicePixelRatio: view.devicePixelRatio,
@@ -68,42 +49,16 @@ class ScreenSizeModelWidget<T extends Enum> extends StatelessWidget {
     );
   }
 
+  late final view =
+      widget.testView ?? WidgetsBinding.instance.platformDispatcher.views.first;
+
   @override
   Widget build(BuildContext context) {
     return ScreenSizeModel<T>(
       data: updateMetrics(context),
-      child: child,
+      child: widget.child,
     );
   }
-}
-
-@immutable
-class ScreenSizeModelData<K extends Enum> {
-  const ScreenSizeModelData({
-    required this.breakpoints,
-    required this.currentBreakpoint,
-    required this.screenSize,
-    required this.screenSizeShortestSide,
-    required this.physicalWidth,
-    required this.physicalHeight,
-    required this.devicePixelRatio,
-    required this.logicalScreenWidth,
-    required this.logicalScreenHeight,
-  });
-  final BaseBreakpoints<K> breakpoints;
-  final double currentBreakpoint;
-  final K screenSize;
-  final K screenSizeShortestSide;
-  final double physicalWidth;
-  final double physicalHeight;
-  final double devicePixelRatio;
-  final double logicalScreenWidth;
-  final double logicalScreenHeight;
-}
-
-enum ScreenSizeAspect {
-  screenSize,
-  other,
 }
 
 class ScreenSizeModel<T extends Enum> extends InheritedModel<ScreenSizeAspect> {
@@ -145,4 +100,36 @@ class ScreenSizeModel<T extends Enum> extends InheritedModel<ScreenSizeAspect> {
 
     return false;
   }
+}
+
+@immutable
+class ScreenSizeModelData<K extends Enum> {
+  const ScreenSizeModelData({
+    required this.breakpoints,
+    required this.currentBreakpoint,
+    required this.screenSize,
+    required this.physicalWidth,
+    required this.physicalHeight,
+    required this.devicePixelRatio,
+    required this.logicalScreenWidth,
+    required this.logicalScreenHeight,
+  });
+  final BaseBreakpoints<K> breakpoints;
+  final double currentBreakpoint;
+  final K screenSize;
+  final double physicalWidth;
+  final double physicalHeight;
+  final double devicePixelRatio;
+  final double logicalScreenWidth;
+  final double logicalScreenHeight;
+
+  @override
+  String toString() {
+    return 'ScreenSizeModelData(breakpoints: $breakpoints, currentBreakpoint: $currentBreakpoint, screenSize: $screenSize, physicalWidth: $physicalWidth, physicalHeight: $physicalHeight, devicePixelRatio: $devicePixelRatio, logicalScreenWidth: $logicalScreenWidth, logicalScreenHeight: $logicalScreenHeight)';
+  }
+}
+
+enum ScreenSizeAspect {
+  screenSize,
+  other,
 }
