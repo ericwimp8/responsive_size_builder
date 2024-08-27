@@ -8,7 +8,7 @@ class ScreenSize<T extends Enum> extends StatefulWidget {
     required this.breakpoints,
     required this.child,
     this.testView,
-    this.useShortestSide = true,
+    this.useShortestSide = false,
     super.key,
   });
   final Widget child;
@@ -78,6 +78,19 @@ class ScreenSizeModel<T extends Enum> extends InheritedModel<ScreenSizeAspect> {
   static ScreenSizeModelData<K> screenSizeOf<K extends Enum>(
     BuildContext context,
   ) {
+    final model = InheritedModel.inheritFrom<ScreenSizeModel<K>>(
+      context,
+      aspect: ScreenSizeAspect.screenSize,
+    );
+    if (model == null) {
+      throw FlutterError('''
+ScreenSizeModel<$K> not found, please ensure that the app is wrapped in ScreenSize and 
+the appropriate builder widget is beign used.
+ScreenSize<LayoutSizeGranular> will require ScreenSizeBuilderGranular
+ScreenSize<LayoutSize> will require ScreenSizeBuilder
+''');
+    }
+
     return InheritedModel.inheritFrom<ScreenSizeModel<K>>(
       context,
       aspect: ScreenSizeAspect.screenSize,
