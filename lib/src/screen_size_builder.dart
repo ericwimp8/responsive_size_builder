@@ -186,6 +186,7 @@ class ScreenSizeBuilderGranular extends StatefulWidget {
     this.compactLarge,
     this.compactNormal,
     this.compactSmall,
+    this.tiny,
     this.breakpoints = BreakpointsGranular.defaultBreakpoints,
     this.animateChange = false,
     super.key,
@@ -217,6 +218,7 @@ class ScreenSizeBuilderGranular extends StatefulWidget {
   final WidgetBuilder? compactLarge;
   final WidgetBuilder? compactNormal;
   final WidgetBuilder? compactSmall;
+  final WidgetBuilder? tiny;
   final bool animateChange;
 
   final BreakpointsGranular breakpoints;
@@ -242,6 +244,7 @@ class _ScreenSizeBuilderGranularState extends State<ScreenSizeBuilderGranular> {
     compactLarge: widget.compactLarge,
     compactNormal: widget.compactNormal,
     compactSmall: widget.compactSmall,
+    tiny: widget.tiny,
   );
 
   @override

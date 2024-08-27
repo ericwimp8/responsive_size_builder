@@ -2,4 +2,3 @@
 // devs to just add a widget aty the top of the tree and not have to worry about the generics being assigned
 // This still enables the eager dev to build out their own breakpoints but caters to the dev who just wants things to work
     //   eg. ScreenSize<LayoutSize> -> ScreenSize and ScreenSizeGranular -> ScreenSizeGranular
-    
