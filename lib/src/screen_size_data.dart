@@ -85,7 +85,7 @@ class ScreenSizeModel<T extends Enum> extends InheritedModel<ScreenSizeAspect> {
     if (model == null) {
       throw FlutterError('''
 ScreenSizeModel<$K> not found, please ensure that the app is wrapped in ScreenSize and 
-the appropriate builder widget is beign used.
+the appropriate builder widget is being used.
 ScreenSize<LayoutSizeGranular> will require ScreenSizeBuilderGranularGranular
 ScreenSize<LayoutSize> will require ScreenSizeBuilderGranular
 ''');
