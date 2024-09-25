@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_size_builder/responsive_size_builder.dart';
 
@@ -32,7 +33,9 @@ class _ScreenSizeState<T extends Enum> extends State<ScreenSize<T>> {
   }
 
   ScreenSizeModelData<T> updateMetrics(BuildContext context) {
-    final size = MediaQuery.of(context).size;
+    final mq = MediaQuery.of(context);
+    final size = mq.size;
+    final orientation = mq.orientation;
     final screenSize = widget.useShortestSide
         ? _getScreenSize(size.shortestSide)
         : _getScreenSize(size.width);
@@ -46,6 +49,7 @@ class _ScreenSizeState<T extends Enum> extends State<ScreenSize<T>> {
       devicePixelRatio: view.devicePixelRatio,
       logicalScreenWidth: size.width,
       logicalScreenHeight: size.height,
+      orientation: orientation,
     );
   }
 
@@ -126,6 +130,7 @@ class ScreenSizeModelData<K extends Enum> {
     required this.devicePixelRatio,
     required this.logicalScreenWidth,
     required this.logicalScreenHeight,
+    required this.orientation,
   });
   final BaseBreakpoints<K> breakpoints;
   final double currentBreakpoint;
@@ -135,6 +140,11 @@ class ScreenSizeModelData<K extends Enum> {
   final double devicePixelRatio;
   final double logicalScreenWidth;
   final double logicalScreenHeight;
+  final Orientation orientation;
+
+  bool get isDesktopDevcie => kIsDesktopDevice;
+  bool get isTouchDevice => kIsTouchDevice;
+  bool get isWeb => kIsWeb;
 
   @override
   String toString() {

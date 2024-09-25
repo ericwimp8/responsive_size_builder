@@ -76,18 +76,18 @@ class LayoutSizeGranularBuilder extends StatefulWidget {
     super.key,
   });
 
-  final WidgetBuilder? jumboExtraLarge;
-  final WidgetBuilder? jumboLarge;
-  final WidgetBuilder? jumboNormal;
-  final WidgetBuilder? jumboSmall;
-  final WidgetBuilder? standardExtraLarge;
-  final WidgetBuilder? standardLarge;
-  final WidgetBuilder? standardNormal;
-  final WidgetBuilder? standardSmall;
-  final WidgetBuilder? compactExtraLarge;
-  final WidgetBuilder? compactLarge;
-  final WidgetBuilder? compactNormal;
-  final WidgetBuilder? compactSmall;
+  final ScreenSizeWidgetBuilder? jumboExtraLarge;
+  final ScreenSizeWidgetBuilder? jumboLarge;
+  final ScreenSizeWidgetBuilder? jumboNormal;
+  final ScreenSizeWidgetBuilder? jumboSmall;
+  final ScreenSizeWidgetBuilder? standardExtraLarge;
+  final ScreenSizeWidgetBuilder? standardLarge;
+  final ScreenSizeWidgetBuilder? standardNormal;
+  final ScreenSizeWidgetBuilder? standardSmall;
+  final ScreenSizeWidgetBuilder? compactExtraLarge;
+  final ScreenSizeWidgetBuilder? compactLarge;
+  final ScreenSizeWidgetBuilder? compactNormal;
+  final ScreenSizeWidgetBuilder? compactSmall;
 
   final BreakpointsGranular breakpoints;
   @override
@@ -95,8 +95,8 @@ class LayoutSizeGranularBuilder extends StatefulWidget {
 }
 
 class _LayoutSizeGranularState extends State<LayoutSizeGranularBuilder> {
-  late BreakpointsHandlerGranular<WidgetBuilder> handler =
-      BreakpointsHandlerGranular<WidgetBuilder>(
+  late BreakpointsHandlerGranular<ScreenSizeWidgetBuilder> handler =
+      BreakpointsHandlerGranular<ScreenSizeWidgetBuilder>(
     breakpoints: widget.breakpoints,
     jumboExtraLarge: widget.jumboExtraLarge,
     jumboLarge: widget.jumboLarge,
@@ -115,9 +115,12 @@ class _LayoutSizeGranularState extends State<LayoutSizeGranularBuilder> {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
+        final data = ScreenSizeModel.screenSizeOf<LayoutSize>(
+          context,
+        );
         return handler.getLayoutSizeValue(
           constraints: constraints,
-        )(context);
+        )(context, data);
       },
     );
   }

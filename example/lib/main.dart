@@ -81,19 +81,19 @@ class ScreenSizeBuilderDemo extends StatelessWidget {
           _Card(
             title: 'Screen Size Builder',
             child: ScreenSizeBuilder(
-              extraLarge: (context) => Content(
+              extraLarge: (context, data) => Content(
                 title: 'Extra Large',
               ),
-              large: (context) => Content(
+              large: (context, data) => Content(
                 title: 'Large',
               ),
-              medium: (context) => Content(
+              medium: (context, data) => Content(
                 title: 'Medium',
               ),
-              small: (context) => Content(
+              small: (context, data) => Content(
                 title: 'Small',
               ),
-              extraSmall: (context) => Content(
+              extraSmall: (context, data) => Content(
                 title: 'Extra Small',
               ),
             ),
@@ -101,40 +101,40 @@ class ScreenSizeBuilderDemo extends StatelessWidget {
           _Card(
             title: 'Screen Size Builder Granular',
             child: ScreenSizeBuilderGranular(
-              jumboExtraLarge: (context) => Content(
+              jumboExtraLarge: (context, data) => Content(
                 title: 'Jumbo Extra Large',
               ),
-              jumboLarge: (context) => Content(
+              jumboLarge: (context, data) => Content(
                 title: 'Jumbo Large',
               ),
-              jumboNormal: (context) => Content(
+              jumboNormal: (context, data) => Content(
                 title: 'Jumbo Normal',
               ),
-              jumboSmall: (context) => Content(
+              jumboSmall: (context, data) => Content(
                 title: 'Jumbo Small',
               ),
-              standardExtraLarge: (context) => Content(
+              standardExtraLarge: (context, data) => Content(
                 title: 'Standard Extra Large',
               ),
-              standardLarge: (context) => Content(
+              standardLarge: (context, data) => Content(
                 title: 'Standard Large',
               ),
-              standardNormal: (context) => Content(
+              standardNormal: (context, data) => Content(
                 title: 'Standard Normal',
               ),
-              standardSmall: (context) => Content(
+              standardSmall: (context, data) => Content(
                 title: 'Standard Small',
               ),
-              compactExtraLarge: (context) => Content(
+              compactExtraLarge: (context, data) => Content(
                 title: 'Compact Extra Large',
               ),
-              compactLarge: (context) => Content(
+              compactLarge: (context, data) => Content(
                 title: 'Compact Large',
               ),
-              compactNormal: (context) => Content(
+              compactNormal: (context, data) => Content(
                 title: 'Compact Normal',
               ),
-              compactSmall: (context) => Content(
+              compactSmall: (context, data) => Content(
                 title: 'Compact Small',
               ),
             ),
@@ -228,40 +228,40 @@ class ScreenSizeBuilderDemo extends StatelessWidget {
                 child: _Card(
                   title: 'Layout Size Builder Granular One',
                   child: LayoutSizeGranularBuilder(
-                    jumboExtraLarge: (context) => Content(
+                    jumboExtraLarge: (context, data) => Content(
                       title: 'Jumbo Extra Large Layout Granular One',
                     ),
-                    jumboLarge: (context) => Content(
+                    jumboLarge: (context, data) => Content(
                       title: 'Jumbo Large Layout Granular One',
                     ),
-                    jumboNormal: (context) => Content(
+                    jumboNormal: (context, data) => Content(
                       title: 'Jumbo Normal Layout Granular One',
                     ),
-                    jumboSmall: (context) => Content(
+                    jumboSmall: (context, data) => Content(
                       title: 'Jumbo Small Layout Granular One',
                     ),
-                    standardExtraLarge: (context) => Content(
+                    standardExtraLarge: (context, data) => Content(
                       title: 'Standard Extra Large Layout Granular One',
                     ),
-                    standardLarge: (context) => Content(
+                    standardLarge: (context, data) => Content(
                       title: 'Standard Large Layout Granular One',
                     ),
-                    standardNormal: (context) => Content(
+                    standardNormal: (context, data) => Content(
                       title: 'Standard Normal Layout Granular One',
                     ),
-                    standardSmall: (context) => Content(
+                    standardSmall: (context, data) => Content(
                       title: 'Standard Small Layout Granular One',
                     ),
-                    compactExtraLarge: (context) => Content(
+                    compactExtraLarge: (context, data) => Content(
                       title: 'Compact Extra Large Layout Granular One',
                     ),
-                    compactLarge: (context) => Content(
+                    compactLarge: (context, data) => Content(
                       title: 'Compact Large Layout Granular One',
                     ),
-                    compactNormal: (context) => Content(
+                    compactNormal: (context, data) => Content(
                       title: 'Compact Normal Layout Granular One',
                     ),
-                    compactSmall: (context) => Content(
+                    compactSmall: (context, data) => Content(
                       title: 'Compact Small Layout Granular One',
                     ),
                   ),
@@ -271,40 +271,40 @@ class ScreenSizeBuilderDemo extends StatelessWidget {
                 child: _Card(
                   title: 'Layout Size Builder Granular Two',
                   child: LayoutSizeGranularBuilder(
-                    jumboExtraLarge: (context) => Content(
+                    jumboExtraLarge: (context, data) => Content(
                       title: 'Jumbo Extra Large Layout Granular Two',
                     ),
-                    jumboLarge: (context) => Content(
+                    jumboLarge: (context, data) => Content(
                       title: 'Jumbo Large Layout Granular Two',
                     ),
-                    jumboNormal: (context) => Content(
+                    jumboNormal: (context, data) => Content(
                       title: 'Jumbo Normal Layout Granular Two',
                     ),
-                    jumboSmall: (context) => Content(
+                    jumboSmall: (context, data) => Content(
                       title: 'Jumbo Small Layout Granular Two',
                     ),
-                    standardExtraLarge: (context) => Content(
+                    standardExtraLarge: (context, data) => Content(
                       title: 'Standard Extra Large Layout Granular Two',
                     ),
-                    standardLarge: (context) => Content(
+                    standardLarge: (context, data) => Content(
                       title: 'Standard Large Layout Granular Two',
                     ),
-                    standardNormal: (context) => Content(
+                    standardNormal: (context, data) => Content(
                       title: 'Standard Normal Layout Granular Two',
                     ),
-                    standardSmall: (context) => Content(
+                    standardSmall: (context, data) => Content(
                       title: 'Standard Small Layout Granular Two',
                     ),
-                    compactExtraLarge: (context) => Content(
+                    compactExtraLarge: (context, data) => Content(
                       title: 'Compact Extra Large Layout Granular Two',
                     ),
-                    compactLarge: (context) => Content(
+                    compactLarge: (context, data) => Content(
                       title: 'Compact Large Layout Granular Two',
                     ),
-                    compactNormal: (context) => Content(
+                    compactNormal: (context, data) => Content(
                       title: 'Compact Normal Layout Granular Two',
                     ),
-                    compactSmall: (context) => Content(
+                    compactSmall: (context, data) => Content(
                       title: 'Compact Small Layout Granular Two',
                     ),
                   ),
