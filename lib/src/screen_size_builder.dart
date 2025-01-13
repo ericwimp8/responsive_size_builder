@@ -208,7 +208,8 @@ class ScreenSizeBuilderGranular extends StatefulWidget {
               compactExtraLarge != null ||
               compactLarge != null ||
               compactNormal != null ||
-              compactSmall != null,
+              compactSmall != null ||
+              tiny != null,
           'At least one builder must be provided',
         );
 
