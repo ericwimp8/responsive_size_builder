@@ -4,59 +4,56 @@ import 'package:responsive_size_builder/responsive_size_builder.dart';
 // TODO(ericwimp): Add ability to position overlay origin relative to widget eg, topleft, topright, bottomleft, bottomright etc
 // TODO(bruntz): Add ability to position overlay based on origin, so top center would place the top
 // center of the overlay at the choose overlay origin
-mixin OverlayPositionUtils on BuildContext {
-  // place in didchange dependencies
-  WidgetSpacing getWidgetSpacing<T extends Enum>() {
-    final renderBox = findRenderObject() as RenderBox?;
-    final screenSizeModel = ScreenSizeModel.of<T>(this);
 
-    if (renderBox == null || !renderBox.hasSize) {
-      // It's crucial that the renderBox has been laid out and has a size.
-      // Returning a default or throwing might depend on your use case.
-      // Throwing is safer if the logic absolutely depends on valid measurements.
-      throw Exception(
-        'renderBox is null or has no size. Ensure getWidgetSpacing is called after layout (e.g., in addPostFrameCallback or didChangeDependencies after initial build).',
-      );
-    }
+// place in didchange dependencies
+WidgetSpacing getWidgetSpacing<T extends Enum>(BuildContext context) {
+  final renderBox = context.findRenderObject() as RenderBox?;
+  final screenSizeModel = ScreenSizeModel.of<T>(context);
 
-    // Get widget's size and position
-    final widgetSize = renderBox.size;
-    final widgetPosition = renderBox.localToGlobal(Offset.zero);
-
-    // Get screen dimensions from the model
-    final screenWidth = screenSizeModel.logicalScreenWidth;
-    final screenHeight = screenSizeModel.logicalScreenHeight;
-
-    // Calculate spacing
-    final heightAbove = widgetPosition.dy;
-    final heightBelow = screenHeight - (widgetPosition.dy + widgetSize.height);
-    final widthLeft = widgetPosition.dx;
-    final widthRight = screenWidth - (widgetPosition.dx + widgetSize.width);
-
-    // Calculate the size of the areas around the widget
-    // Note: Ensure these calculations make sense for your specific overlay needs.
-    // These assume the areas span the full width/height outside the widget bounds.
-    final sizeAbove = Size(screenWidth, heightAbove);
-    final sizeBelow = Size(screenWidth, heightBelow);
-    final sizeLeft = Size(widthLeft, screenHeight);
-    final sizeRight = Size(widthRight, screenHeight);
-
-    // Return the calculated spacing
-    return WidgetSpacing(
-      screenHeight: screenHeight,
-      screenWidth: screenWidth,
-      widgetSize: widgetSize,
-      widgetPosition: widgetPosition,
-      heightAbove: heightAbove,
-      heightBelow: heightBelow,
-      widthLeft: widthLeft,
-      widthRight: widthRight,
-      sizeAbove: sizeAbove,
-      sizeBelow: sizeBelow,
-      sizeLeft: sizeLeft,
-      sizeRight: sizeRight,
-    );
+  if (renderBox == null || !renderBox.hasSize) {
+    // It's crucial that the renderBox has been laid out and has a size.
+    // Returning a default or throwing might depend on your use case.
+    // Throwing is safer if the logic absolutely depends on valid measurements.
+    return WidgetSpacing.empty;
   }
+
+  // Get widget's size and position
+  final widgetSize = renderBox.size;
+  final widgetPosition = renderBox.localToGlobal(Offset.zero);
+
+  // Get screen dimensions from the model
+  final screenWidth = screenSizeModel.logicalScreenWidth;
+  final screenHeight = screenSizeModel.logicalScreenHeight;
+
+  // Calculate spacing
+  final heightAbove = widgetPosition.dy;
+  final heightBelow = screenHeight - (widgetPosition.dy + widgetSize.height);
+  final widthLeft = widgetPosition.dx;
+  final widthRight = screenWidth - (widgetPosition.dx + widgetSize.width);
+
+  // Calculate the size of the areas around the widget
+  // Note: Ensure these calculations make sense for your specific overlay needs.
+  // These assume the areas span the full width/height outside the widget bounds.
+  final sizeAbove = Size(screenWidth, heightAbove);
+  final sizeBelow = Size(screenWidth, heightBelow);
+  final sizeLeft = Size(widthLeft, screenHeight);
+  final sizeRight = Size(widthRight, screenHeight);
+
+  // Return the calculated spacing
+  return WidgetSpacing(
+    screenHeight: screenHeight,
+    screenWidth: screenWidth,
+    widgetSize: widgetSize,
+    widgetPosition: widgetPosition,
+    heightAbove: heightAbove,
+    heightBelow: heightBelow,
+    widthLeft: widthLeft,
+    widthRight: widthRight,
+    sizeAbove: sizeAbove,
+    sizeBelow: sizeBelow,
+    sizeLeft: sizeLeft,
+    sizeRight: sizeRight,
+  );
 }
 
 @immutable
@@ -88,69 +85,122 @@ class WidgetSpacing {
   final Size sizeLeft;
   final Size sizeRight;
 
+  static const empty = WidgetSpacing(
+    screenHeight: 0,
+    screenWidth: 0,
+    widgetSize: Size.zero,
+    widgetPosition: Offset.zero,
+    heightAbove: 0,
+    heightBelow: 0,
+    widthLeft: 0,
+    widthRight: 0,
+    sizeAbove: Size.zero,
+    sizeBelow: Size.zero,
+    sizeLeft: Size.zero,
+    sizeRight: Size.zero,
+  );
+
   bool get hasSpaceLeft => widthLeft > 0;
   bool get hasSpaceRight => widthRight > 0;
   bool get hasSpaceAbove => heightAbove > 0;
   bool get hasSpaceBelow => heightBelow > 0;
-  BoxConstraints constraintsVertical({
+  (BoxConstraints effectiveConstraints, VerticalDirection effectiveDirection)
+      constraintsVertical({
     double minimumSpace = 250,
     VerticalDirection desiredDirection = VerticalDirection.down,
     double? maximumWidth,
   }) {
+    if (this == WidgetSpacing.empty) {
+      return (
+        const BoxConstraints(maxHeight: 0, maxWidth: 0),
+        VerticalDirection.down
+      );
+    }
     if (desiredDirection == VerticalDirection.down) {
       if (heightBelow >= minimumSpace) {
-        return BoxConstraints(
-          maxHeight: heightBelow,
-          maxWidth: maximumWidth ?? screenWidth,
+        return (
+          BoxConstraints(
+            maxHeight: heightBelow,
+            maxWidth: maximumWidth ?? widgetSize.width,
+          ),
+          VerticalDirection.down
         );
       } else {
-        return BoxConstraints(
-          maxHeight: heightAbove,
-          maxWidth: maximumWidth ?? screenWidth,
+        return (
+          BoxConstraints(
+            maxHeight: heightAbove,
+            maxWidth: maximumWidth ?? widgetSize.width,
+          ),
+          VerticalDirection.up
         );
       }
     } else {
       if (heightAbove >= minimumSpace) {
-        return BoxConstraints(
-          maxHeight: heightAbove,
-          maxWidth: maximumWidth ?? screenWidth,
+        return (
+          BoxConstraints(
+            maxHeight: heightAbove,
+            maxWidth: maximumWidth ?? widgetSize.width,
+          ),
+          VerticalDirection.up
         );
       } else {
-        return BoxConstraints(
-          maxHeight: heightBelow,
-          maxWidth: maximumWidth ?? screenWidth,
+        return (
+          BoxConstraints(
+            maxHeight: heightBelow,
+            maxWidth: maximumWidth ?? widgetSize.width,
+          ),
+          VerticalDirection.down
         );
       }
     }
   }
 
-  BoxConstraints constraintsHorizontal({
+  (BoxConstraints effectiveConstraints, HorizonatalDirection effectiveDirection)
+      onstraintsHorizontal({
     double minimumWidth = 150,
     HorizonatalDirection desiredDirection = HorizonatalDirection.right,
     double? maximumHeight,
   }) {
+    if (this == WidgetSpacing.empty) {
+      return (
+        const BoxConstraints(maxHeight: 0, maxWidth: 0),
+        HorizonatalDirection.right
+      );
+    }
     if (desiredDirection == HorizonatalDirection.right) {
       if (widthRight >= minimumWidth) {
-        return BoxConstraints(
-          maxHeight: maximumHeight ?? screenHeight,
-          maxWidth: widthRight,
+        return (
+          BoxConstraints(
+            maxHeight: maximumHeight ?? screenHeight,
+            maxWidth: widthRight,
+          ),
+          HorizonatalDirection.right
         );
       } else {
-        return BoxConstraints(
-          maxHeight: maximumHeight ?? screenHeight,
-          maxWidth: widthLeft,
+        return (
+          BoxConstraints(
+            maxHeight: maximumHeight ?? screenHeight,
+            maxWidth: widthLeft,
+          ),
+          HorizonatalDirection.left
         );
       }
     } else {
       if (heightAbove >= minimumWidth) {
-        return BoxConstraints(
-          maxHeight: maximumHeight ?? screenHeight,
-          maxWidth: widthLeft,
+        return (
+          BoxConstraints(
+            maxHeight: maximumHeight ?? screenHeight,
+            maxWidth: widthLeft,
+          ),
+          HorizonatalDirection.left
         );
       } else {
-        return BoxConstraints(
-          maxHeight: maximumHeight ?? screenHeight,
-          maxWidth: widthRight,
+        return (
+          BoxConstraints(
+            maxHeight: maximumHeight ?? screenHeight,
+            maxWidth: widthRight,
+          ),
+          HorizonatalDirection.right
         );
       }
     }
