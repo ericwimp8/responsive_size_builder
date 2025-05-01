@@ -79,6 +79,24 @@ class ScreenSizeModel<T extends Enum> extends InheritedModel<ScreenSizeAspect> {
     return data != oldWidget.data;
   }
 
+  static ScreenSizeModelData<K> of<K extends Enum>(
+    BuildContext context,
+  ) {
+    final model = InheritedModel.inheritFrom<ScreenSizeModel<K>>(context);
+    if (model == null) {
+      throw FlutterError('''
+ScreenSizeModel<$K> not found. Please ensure that:
+1. Your application or relevant subtree is wrapped in a ScreenSize widget 
+   (e.g., ScreenSize<LayoutSize>(...) or ScreenSize<LayoutSizeGranular>(...)).
+2. You are requesting the correct type parameter <$K>.
+
+The context used to look up ScreenSizeModel was:
+  $context
+''');
+    }
+    return model.data;
+  }
+
   static ScreenSizeModelData<K> screenSizeOf<K extends Enum>(
     BuildContext context,
   ) {
