@@ -78,7 +78,7 @@ class _ValueSizeBuilderState<K> extends State<ValueSizeBuilderGranular<K>> {
     final data = ScreenSizeModel.screenSizeOf<LayoutSizeGranular>(context);
 
     final value = handler.getScreenSizeValue.call(
-      screenSize: data.screenSize,
+      screenSize: data,
     );
 
     return widget.builder(context, value);

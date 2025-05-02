@@ -97,7 +97,7 @@ The context used to look up ScreenSizeModel was:
     return model.data;
   }
 
-  static ScreenSizeModelData<K> screenSizeOf<K extends Enum>(
+  static K screenSizeOf<K extends Enum>(
     BuildContext context,
   ) {
     final model = InheritedModel.inheritFrom<ScreenSizeModel<K>>(
@@ -117,7 +117,8 @@ ScreenSize<LayoutSize> will require ScreenSizeBuilderGranular
       context,
       aspect: ScreenSizeAspect.screenSize,
     )!
-        .data;
+        .data
+        .screenSize;
   }
 
   @override

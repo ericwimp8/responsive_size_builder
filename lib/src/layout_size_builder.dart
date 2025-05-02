@@ -115,7 +115,7 @@ class _LayoutSizeGranularState extends State<LayoutSizeGranularBuilder> {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
-        final data = ScreenSizeModel.screenSizeOf<LayoutSize>(
+        final data = ScreenSizeModel.of<LayoutSize>(
           context,
         );
         return handler.getLayoutSizeValue(

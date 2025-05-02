@@ -96,7 +96,7 @@ class _ScreenSizeOrientationBuilderState
     final data = ScreenSizeModel.screenSizeOf<LayoutSize>(context);
 
     var child = handler.getScreenSizeValue(
-      screenSize: data.screenSize,
+      screenSize: data,
     )(
       context,
     );
@@ -156,7 +156,7 @@ class _ScreenSizeBuilderState extends State<ScreenSizeBuilder> {
 
   @override
   Widget build(BuildContext context) {
-    final data = ScreenSizeModel.screenSizeOf<LayoutSize>(
+    final data = ScreenSizeModel.of<LayoutSize>(
       context,
     );
 
@@ -256,7 +256,7 @@ class _ScreenSizeBuilderGranularState extends State<ScreenSizeBuilderGranular> {
 
   @override
   Widget build(BuildContext context) {
-    final data = ScreenSizeModel.screenSizeOf<LayoutSizeGranular>(context);
+    final data = ScreenSizeModel.of<LayoutSizeGranular>(context);
 
     var child = handler.getScreenSizeValue(
       screenSize: data.screenSize,
