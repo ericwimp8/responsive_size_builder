@@ -124,6 +124,7 @@ class LayoutConstraintsWrapper extends StatelessWidget {
   /// Creates a widget that provides layout constraints to its child.
   const LayoutConstraintsWrapper({
     required this.child,
+    required this.builder,
     super.key,
   });
 
@@ -132,6 +133,7 @@ class LayoutConstraintsWrapper extends StatelessWidget {
   /// This child and its descendants can access the constraints captured
   /// by this wrapper using `ConstraintsProvider.of(context)`.
   final Widget child;
+  final Widget Function(BuildContext context, Widget child) builder;
 
   @override
   Widget build(BuildContext context) {
@@ -143,7 +145,7 @@ class LayoutConstraintsWrapper extends StatelessWidget {
         // available to the child and its descendants.
         return LayoutConstraintsProvider(
           constraints: constraints,
-          child: child, // Render the actual child widget here
+          child: builder(context, child), // Render the actual child widget here
         );
       },
     );
