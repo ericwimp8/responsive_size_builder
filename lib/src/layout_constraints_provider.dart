@@ -65,22 +65,22 @@ class LayoutConstraintsProvider extends InheritedWidget {
   /// If the constraints change, the dependent widget will be rebuilt.
   ///
   /// Throws a [FlutterError] if no [LayoutConstraintsProvider] ancestor is found.
-  static BoxConstraints of(BuildContext context) {
+  static BoxConstraints? of(BuildContext context) {
     final result =
         context.dependOnInheritedWidgetOfExactType<LayoutConstraintsProvider>();
 
-    if (result == null) {
-      throw FlutterError(
-        'ConstraintsProvider.of() called with a context that does not contain a ConstraintsProvider.\n'
-        'No ConstraintsProvider ancestor could be found starting from the context that was passed '
-        'to ConstraintsProvider.of(). This usually happens because you used a context that does not '
-        'have a ConstraintsProvider widget ancestor.\n'
-        'Make sure to wrap the relevant part of your widget tree with a LayoutBuilder '
-        'providing constraints to a ConstraintsProvider.\n'
-        'The context used was: $context',
-      );
-    }
-    return result.constraints;
+    // if (result == null) {
+    //   throw FlutterError(
+    //     'ConstraintsProvider.of() called with a context that does not contain a ConstraintsProvider.\n'
+    //     'No ConstraintsProvider ancestor could be found starting from the context that was passed '
+    //     'to ConstraintsProvider.of(). This usually happens because you used a context that does not '
+    //     'have a ConstraintsProvider widget ancestor.\n'
+    //     'Make sure to wrap the relevant part of your widget tree with a LayoutBuilder '
+    //     'providing constraints to a ConstraintsProvider.\n'
+    //     'The context used was: $context',
+    //   );
+    // }
+    return result?.constraints;
   }
 
   /// Determines whether widgets that depend on this inherited widget should
