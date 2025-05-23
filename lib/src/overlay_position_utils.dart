@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:responsive_size_builder/responsive_size_builder.dart';
 
 // TODO(ericwimp): Add ability to position overlay origin relative to widget eg, topleft, topright, bottomleft, bottomright etc
-// TODO(bruntz): Add ability to position overlay based on origin, so top center would place the top
+// TODO(ericwimp): Add ability to position overlay based on origin, so top center would place the top
 // center of the overlay at the choose overlay origin
 
 // place in didchange dependencies
