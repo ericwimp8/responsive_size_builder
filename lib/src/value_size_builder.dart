@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_size_builder/responsive_size_builder.dart';
-import 'package:responsive_size_builder/src/breakpoints_handler.dart';
 
 class ValueSizeBuilderGranular<K> extends StatefulWidget {
   const ValueSizeBuilderGranular({
