@@ -1,3 +1,16 @@
+/// Development task list and future enhancements for the responsive_size_builder package.
+///
+/// This file contains TODO items and planned improvements for the package architecture.
+/// Items listed here represent potential breaking changes and new features that require
+/// careful consideration and implementation planning.
+///
+/// The tasks primarily focus on:
+/// - Simplifying the developer experience with pre-configured breakpoint wrappers
+/// - Creating single-value responsive widgets for common use cases
+/// - Refactoring the breakpoints system for better centralized configuration
+/// - Implementing scoped rebuilds for breakpoint changes
+library;
+
 // TODO(ericwimp): Make a specific wrapper for each type of breakpoint to make it easy for 
 // devs to just add a widget aty the top of the tree and not have to worry about the generics being assigned
 // This still enables the eager dev to build out their own breakpoints but caters to the dev who just wants things to work
