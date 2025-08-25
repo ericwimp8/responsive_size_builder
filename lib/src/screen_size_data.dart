@@ -55,6 +55,7 @@ class ScreenSize<T extends Enum> extends StatefulWidget {
     this.useShortestSide = false,
     super.key,
   });
+
   /// The widget below this widget in the tree.
   final Widget child;
 
@@ -88,7 +89,7 @@ class _ScreenSizeState<T extends Enum> extends State<ScreenSize<T>> {
   /// first category whose threshold the [size] meets or exceeds.
   ///
   /// The [size] parameter represents the screen dimension to evaluate,
-  /// typically width or shortest side depending on [useShortestSide].
+  /// typically width or shortest side depending on `useShortestSide`.
   ///
   /// Returns the smallest breakpoint category if the size doesn't meet any
   /// threshold.
@@ -135,7 +136,7 @@ class _ScreenSizeState<T extends Enum> extends State<ScreenSize<T>> {
 
   /// The view used for obtaining physical screen metrics.
   ///
-  /// Uses [testView] if provided (for testing), otherwise defaults to the
+  /// Uses `testView` if provided (for testing), otherwise defaults to the
   /// platform's primary view.
   late final view =
       widget.testView ?? WidgetsBinding.instance.platformDispatcher.views.first;
@@ -329,6 +330,7 @@ class ScreenSizeModelData<K extends Enum> {
     required this.logicalScreenHeight,
     required this.orientation,
   });
+
   /// The breakpoints configuration used to determine screen size categories.
   final BaseBreakpoints<K> breakpoints;
 

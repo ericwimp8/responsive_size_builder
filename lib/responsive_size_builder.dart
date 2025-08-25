@@ -21,7 +21,7 @@
 ///
 /// ## Basic Usage
 ///
-/// Wrap your app with a [ScreenSize] widget and use builder widgets to create
+/// Wrap your app with a ScreenSize widget and use builder widgets to create
 /// responsive layouts:
 ///
 /// ```dart
@@ -48,24 +48,24 @@
 ///
 /// ## Available Breakpoint Systems
 ///
-/// * **[LayoutSize]**: Simple 5-tier system (extraSmall, small, medium, large, extraLarge)
-/// * **[LayoutSizeGranular]**: Comprehensive 13-tier system with jumbo, standard,
+/// * **LayoutSize**: Simple 5-tier system (extraSmall, small, medium, large, extraLarge)
+/// * **LayoutSizeGranular**: Comprehensive 13-tier system with jumbo, standard,
 ///   compact, and tiny categories for precise control
 ///
 /// ## Builder Widgets
 ///
-/// * **[ScreenSizeBuilder]**: Basic responsive builder with screen size data
-/// * **[ScreenSizeOrientationBuilder]**: Orientation-aware builder with separate
+/// * **ScreenSizeBuilder**: Basic responsive builder with screen size data
+/// * **ScreenSizeOrientationBuilder**: Orientation-aware builder with separate
 ///   builders for portrait and landscape modes
-/// * **[ScreenSizeBuilderGranular]**: Fine-grained control with granular breakpoints
-/// * **[LayoutSizeBuilder]**: Layout-focused responsive builder
-/// * **[ValueSizeBuilder]**: Value-based responsive design for non-widget responses
+/// * **ScreenSizeBuilderGranular**: Fine-grained control with granular breakpoints
+/// * **LayoutSizeBuilder**: Layout-focused responsive builder
+/// * **ValueSizeBuilder**: Value-based responsive design for non-widget responses
 ///
 /// ## Utilities and Providers
 ///
-/// * **[LayoutConstraintsProvider]**: Access to BoxConstraints in responsive context
-/// * **[OverlayPositionUtils]**: Utilities for responsive overlay positioning
-/// * **[BreakpointsHandler]**: Core logic for handling breakpoint calculations
+/// * **LayoutConstraintsProvider**: Access to BoxConstraints in responsive context
+/// * **OverlayPositionUtils**: Utilities for responsive overlay positioning
+/// * **BreakpointsHandler**: Core logic for handling breakpoint calculations
 ///
 /// See the individual classes and functions for detailed usage examples and
 /// configuration options.

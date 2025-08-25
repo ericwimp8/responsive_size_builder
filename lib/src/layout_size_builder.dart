@@ -98,7 +98,6 @@ import 'package:responsive_size_builder/responsive_size_builder.dart';
 ///
 ///  * [ScreenSizeBuilder], for responsive layouts based on overall screen size
 ///  * [LayoutSizeGranularBuilder], for more granular layout constraint control
-///  * [ValueSizeBuilder], for constraint-based value selection instead of widgets
 ///  * [BreakpointsHandler], the underlying logic for breakpoint resolution
 class LayoutSizeBuilder extends StatefulWidget {
   /// Creates a [LayoutSizeBuilder] with the specified widget builders for different constraint sizes.
@@ -317,10 +316,10 @@ class _LayoutSizeBuilderState extends State<LayoutSizeBuilder> {
 /// LayoutSizeGranularBuilder(
 ///   // Jumbo group - for ultra-wide scenarios
 ///   jumboLarge: (context, data) => UltraWideLayout(),
-///   
-///   // Standard group - for desktop scenarios  
+///
+///   // Standard group - for desktop scenarios
 ///   standardLarge: (context, data) => DesktopLayout(),
-///   
+///
 ///   // Compact group - for mobile scenarios
 ///   compactLarge: (context, data) => MobileLayout(),
 /// )
@@ -563,7 +562,7 @@ class _LayoutSizeGranularState extends State<LayoutSizeGranularBuilder> {
         final data = ScreenSizeModel.of<LayoutSize>(
           context,
         );
-        
+
         // Get the appropriate widget builder based on current constraints
         // and invoke it with both context and screen size data for enhanced decision making
         return handler.getLayoutSizeValue(
