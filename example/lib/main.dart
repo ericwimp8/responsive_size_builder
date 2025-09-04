@@ -25,7 +25,7 @@ class _MyAppState extends State<MyApp> {
           title: 'Responsive Size Builder Demo',
           theme: ThemeData(
             listTileTheme: ListTileThemeData(
-              tileColor: Colors.purple.withValues(alpha: 0.1),
+              tileColor: Colors.purple.withOpacity(0.1),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8),
               ),
