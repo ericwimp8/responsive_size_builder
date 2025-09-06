@@ -1,7 +1,6 @@
+import 'package:example/shared/widgets/screen_size_header.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_size_builder/responsive_size_builder.dart';
-
-import 'package:example/shared/widgets/screen_size_header.dart';
 
 class LayoutSizeBuilderExample extends StatelessWidget {
   const LayoutSizeBuilderExample({super.key});
