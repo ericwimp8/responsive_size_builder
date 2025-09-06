@@ -3,6 +3,8 @@
 /// This library provides tools to calculate available space around widgets on
 /// screen, which is essential for positioning overlays like tooltips, dropdowns,
 /// and context menus in responsive layouts.
+library;
+
 ///
 /// The main functionality centers around [getWidgetSpacing], which analyzes a
 /// widget's position relative to screen boundaries and calculates available
@@ -54,13 +56,13 @@ import 'package:responsive_size_builder/responsive_size_builder.dart';
 ///   Widget build(BuildContext context) {
 ///     final (constraints, direction) = spacing?.constraintsVertical() ??
 ///         (BoxConstraints.tight(Size.zero), VerticalDirection.down);
-///     
+///
 ///     return Stack(
 ///       children: [
 ///         MyWidget(),
 ///         if (spacing != null)
 ///           Positioned(
-///             top: direction == VerticalDirection.down 
+///             top: direction == VerticalDirection.down
 ///                 ? spacing!.widgetPosition.dy + spacing!.widgetSize.height
 ///                 : null,
 ///             bottom: direction == VerticalDirection.up
@@ -165,6 +167,7 @@ class WidgetSpacing {
     required this.sizeLeft,
     required this.sizeRight,
   });
+
   /// The total logical height of the screen.
   final double screenHeight;
 
@@ -258,6 +261,7 @@ class WidgetSpacing {
 
   /// Whether there is any available space below the widget.
   bool get hasSpaceBelow => heightBelow > 0;
+
   /// Calculates optimal vertical positioning constraints for overlay placement.
   ///
   /// This method analyzes available vertical space and determines the best
@@ -290,7 +294,7 @@ class WidgetSpacing {
   ///   desiredDirection: VerticalDirection.up,
   ///   maximumWidth: 300,
   /// );
-  /// 
+  ///
   /// final overlay = ConstrainedBox(
   ///   constraints: constraints,
   ///   child: MyOverlayContent(),

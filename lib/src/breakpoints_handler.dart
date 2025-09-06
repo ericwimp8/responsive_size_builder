@@ -710,11 +710,11 @@ class BreakpointsHandler<T> extends BaseBreakpointsHandler<T, LayoutSize> {
 ///   // Compact group: mobile-optimized layouts
 ///   compactLarge: MobileLayout(),
 ///   compactNormal: MobileLayout(density: 'high'),
-///   
+///
 ///   // Standard group: traditional responsive layouts
 ///   standardNormal: TabletLayout(),
 ///   standardLarge: DesktopLayout(sidebar: false),
-///   
+///
 ///   // Jumbo group: take advantage of extra space
 ///   jumboSmall: DesktopLayout(panels: 3),
 ///   jumboLarge: DesktopLayout(panels: 4, toolbars: 'extensive'),
@@ -726,17 +726,17 @@ class BreakpointsHandler<T> extends BaseBreakpointsHandler<T, LayoutSize> {
 /// BreakpointsHandlerGranular<double>(
 ///   // Tiny displays: minimal spacing
 ///   tiny: 2.0,
-///   
+///
 ///   // Compact displays: touch-friendly spacing
 ///   compactSmall: 4.0,
 ///   compactNormal: 6.0,
 ///   compactLarge: 8.0,
-///   
+///
 ///   // Standard displays: comfortable spacing
 ///   standardSmall: 12.0,
 ///   standardNormal: 16.0,
 ///   standardLarge: 20.0,
-///   
+///
 ///   // Jumbo displays: generous spacing
 ///   jumboSmall: 32.0,
 ///   jumboLarge: 48.0,
@@ -1040,6 +1040,7 @@ class BreakpointsHandlerGranular<T>
   /// Includes smartwatches, IoT displays, and very old mobile devices. Requires
   /// extremely simplified interfaces with only critical functionality exposed.
   final T? tiny;
+
   /// Map of granular layout size categories to their corresponding values.
   ///
   /// This implementation maps each [LayoutSizeGranular] enum value to its

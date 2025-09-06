@@ -751,15 +751,15 @@ enum LayoutSize {
 ///     // Jumbo displays: Complex multi-panel layouts
 ///     LayoutSizeGranular.jumboExtraLarge ||
 ///     LayoutSizeGranular.jumboLarge => MultiPanelDesktopLayout(),
-///     
+///
 ///     // Standard displays: Traditional desktop layouts
 ///     LayoutSizeGranular.standardExtraLarge ||
 ///     LayoutSizeGranular.standardLarge => DesktopLayout(),
-///     
+///
 ///     // Compact displays: Mobile-optimized layouts
 ///     LayoutSizeGranular.compactLarge ||
 ///     LayoutSizeGranular.compactNormal => MobileLayout(),
-///     
+///
 ///     // Handle other cases...
 ///     _ => DefaultLayout(),
 ///   };

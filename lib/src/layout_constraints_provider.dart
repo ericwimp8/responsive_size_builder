@@ -34,7 +34,7 @@ import 'package:flutter/widgets.dart';
 ///   @override
 ///   Widget build(BuildContext context) {
 ///     final constraints = LayoutConstraintsProvider.of(context);
-///     
+///
 ///     if (constraints == null) {
 ///       return const SizedBox.shrink();
 ///     }
@@ -110,12 +110,12 @@ class LayoutConstraintsProvider extends InheritedWidget {
   /// ```dart
   /// Widget build(BuildContext context) {
   ///   final constraints = LayoutConstraintsProvider.of(context);
-  ///   
+  ///
   ///   if (constraints == null) {
   ///     // Handle case where no provider is available
   ///     return const SizedBox.shrink();
   ///   }
-  ///   
+  ///
   ///   // Use the constraints for responsive layout
   ///   return Container(
   ///     width: constraints.maxWidth * 0.8,
