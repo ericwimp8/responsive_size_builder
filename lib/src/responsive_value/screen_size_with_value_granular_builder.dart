@@ -102,11 +102,9 @@ class _ScreenSizeWithValueBuilderGranularState<V extends Object?>
 
   @override
   Widget build(BuildContext context) {
-    print('ScreenSizeWithValueBuilderGranular.build called');
     final data = ScreenSizeModelWithValue.of<LayoutSizeGranular, V>(
       context,
     );
-    print('  Got data with screenSize: ${data.screenSize}');
 
     var child = handler.getScreenSizeValue(
       screenSize: data.screenSize,
@@ -114,7 +112,6 @@ class _ScreenSizeWithValueBuilderGranularState<V extends Object?>
       context,
       data,
     );
-    print('  Builder function called');
 
     if (widget.animateChange) {
       child = AnimatedSwitcher(

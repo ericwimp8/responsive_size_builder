@@ -76,9 +76,7 @@ class _ScreenSizeWithValueState<T extends Enum, V extends Object?>
 
   @override
   Widget build(BuildContext context) {
-    print('ScreenSizeWithValue.build called');
     final newData = updateMetrics(context);
-    print('  Created data with hashCode: ${newData.hashCode}');
     return ScreenSizeModelWithValue<T, V>(
       data: newData,
       child: widget.child,
@@ -99,9 +97,6 @@ class ScreenSizeModelWithValue<T extends Enum, V extends Object?>
   @override
   bool updateShouldNotify(ScreenSizeModelWithValue<T, V> oldWidget) {
     final shouldUpdate = data != oldWidget.data;
-    print('ScreenSizeModelWithValue.updateShouldNotify: $shouldUpdate');
-    print('  Old data: ${oldWidget.data.hashCode}');
-    print('  New data: ${data.hashCode}');
     return shouldUpdate;
   }
 
@@ -199,10 +194,6 @@ class ScreenSizeModelDataWithValue<K extends Enum, V extends Object?> {
     required this.responsiveValue,
   });
 
-  /// The numerical threshold for the current screen size category.
-  ///
-  /// This represents the minimum width (or shortest side) required to be
-  /// classified as the current [screenSize] category.
   final double currentBreakpoint;
   final BaseBreakpoints<K> breakpoints;
   final double devicePixelRatio;
