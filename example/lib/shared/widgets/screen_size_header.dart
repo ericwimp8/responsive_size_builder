@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+
+import 'package:example/shared/widgets/category_chip.dart';
 import 'package:responsive_size_builder/responsive_size_builder.dart';
 
 class ScreenSizeHeader extends StatelessWidget {
@@ -46,7 +48,7 @@ class ScreenSizeHeader extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             if (category != null) ...[
-              _CategoryChip(category: category!),
+              CategoryChip(category: category!),
               const SizedBox(width: 12),
             ],
             Flexible(
@@ -109,50 +111,6 @@ class ScreenSizeHeader extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(16),
           child: content,
-        ),
-      ),
-    );
-  }
-}
-
-class _CategoryChip extends StatelessWidget {
-  const _CategoryChip({required this.category});
-
-  final String category;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
-    Color categoryColor;
-    switch (category.toLowerCase()) {
-      case 'tiny':
-        categoryColor = theme.colorScheme.surfaceTint;
-      case 'compact':
-        categoryColor = theme.colorScheme.error;
-      case 'standard':
-        categoryColor = theme.colorScheme.primary;
-      case 'jumbo':
-        categoryColor = theme.colorScheme.secondary;
-      default:
-        categoryColor = theme.colorScheme.primary;
-    }
-
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 12,
-        vertical: 4,
-      ),
-      decoration: BoxDecoration(
-        color: categoryColor.withValues(alpha: 0.2),
-        border: Border.all(color: categoryColor.withValues(alpha: 0.5)),
-        borderRadius: BorderRadius.circular(4),
-      ),
-      child: Text(
-        category.toUpperCase(),
-        style: theme.textTheme.labelSmall?.copyWith(
-          color: categoryColor,
-          fontWeight: FontWeight.bold,
         ),
       ),
     );

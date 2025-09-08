@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:responsive_size_builder/responsive_size_builder.dart';
+import 'package:responsive_size_builder/src/core/breakpoints/breakpoints.dart';
+import 'package:responsive_size_builder/src/core/breakpoints/breakpoints_handler_granular.dart';
+import 'package:responsive_size_builder/src/screen_size/screen_size_data.dart';
 
 /// A responsive widget that returns values based on granular screen size breakpoints.
 ///
@@ -165,9 +167,9 @@ import 'package:responsive_size_builder/responsive_size_builder.dart';
 ///
 /// See also:
 ///
-/// * [ScreenSizeBuilderGranular], for widget-based granular responsive design
+/// * ScreenSizeBuilderGranular, for widget-based granular responsive design
 /// * [BreakpointsHandlerGranular], the underlying breakpoint resolution logic
-/// * [LayoutSizeGranular], the enum defining all thirteen breakpoint categories
+/// * LayoutSizeGranular, the enum defining all thirteen breakpoint categories
 class ValueSizeBuilderGranular<K> extends StatefulWidget {
   /// Creates a [ValueSizeBuilderGranular] with granular breakpoint support.
   ///
@@ -452,7 +454,7 @@ class ValueSizeBuilderGranular<K> extends StatefulWidget {
 
   @override
   State<ValueSizeBuilderGranular<K>> createState() =>
-      _ValueSizeBuilderState<K>();
+      _ValueSizeBuilderGranularState<K>();
 }
 
 /// Private state class for [ValueSizeBuilderGranular].
@@ -465,7 +467,8 @@ class ValueSizeBuilderGranular<K> extends StatefulWidget {
 /// all the breakpoint resolution logic, caching, and fallback behavior. This
 /// handler is initialized once and reused throughout the widget's lifetime
 /// for optimal performance.
-class _ValueSizeBuilderState<K> extends State<ValueSizeBuilderGranular<K>> {
+class _ValueSizeBuilderGranularState<K>
+    extends State<ValueSizeBuilderGranular<K>> {
   /// Granular breakpoints handler for resolving values based on screen size.
   ///
   /// This handler contains all the breakpoint values from the widget and

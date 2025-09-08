@@ -90,9 +90,15 @@ class _ResponsiveLayout extends StatelessWidget {
       route: '/layout-size-builder',
     ),
     _ExampleData(
+      title: 'ValueSizeBuilder',
+      subtitle: 'Responsive values with standard breakpoints',
+      icon: Icons.straighten,
+      route: '/value-size-builder',
+    ),
+    _ExampleData(
       title: 'ValueSizeBuilderGranular',
       subtitle: 'Responsive values with granular control',
-      icon: Icons.straighten,
+      icon: Icons.tune_rounded,
       route: '/value-size-builder-granular',
     ),
     _ExampleData(
@@ -100,6 +106,24 @@ class _ResponsiveLayout extends StatelessWidget {
       subtitle: 'Combine screen size with responsive values',
       icon: Icons.tune,
       route: '/screen-size-with-value',
+    ),
+    _ExampleData(
+      title: 'ScreenSizeWithValueBuilder',
+      subtitle: 'Widget builders with LayoutConfig model',
+      icon: Icons.widgets,
+      route: '/screen-size-with-value-builder',
+    ),
+    _ExampleData(
+      title: 'Granular ValueBuilder',
+      subtitle: '13-tier responsive with LayoutConfig',
+      icon: Icons.grid_view,
+      route: '/screen-size-with-value-granular-builder',
+    ),
+    _ExampleData(
+      title: 'Orientation ValueBuilder',
+      subtitle: 'Portrait/landscape with LayoutConfig',
+      icon: Icons.flip,
+      route: '/screen-size-with-value-orientation-builder',
     ),
   ];
 

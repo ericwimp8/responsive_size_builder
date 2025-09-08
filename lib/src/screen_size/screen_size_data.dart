@@ -184,7 +184,11 @@ class ScreenSizeModel<T extends Enum> extends InheritedModel<ScreenSizeAspect> {
 
   @override
   bool updateShouldNotify(ScreenSizeModel oldWidget) {
-    return data != oldWidget.data;
+    final shouldUpdate = data != oldWidget.data;
+    print('ScreenSizeModel.updateShouldNotify: $shouldUpdate');
+    print('  Old data: ${oldWidget.data.hashCode}');
+    print('  New data: ${data.hashCode}');
+    return shouldUpdate;
   }
 
   /// Obtains the complete screen size data from the nearest [ScreenSizeModel].
@@ -268,12 +272,7 @@ ScreenSize<LayoutSize> will require ScreenSizeBuilderGranular
 ''');
     }
 
-    return InheritedModel.inheritFrom<ScreenSizeModel<K>>(
-      context,
-      aspect: ScreenSizeAspect.screenSize,
-    )!
-        .data
-        .screenSize;
+    return model.data.screenSize;
   }
 
   /// Determines whether dependent widgets should be notified of changes.
@@ -397,6 +396,37 @@ class ScreenSizeModelData<K extends Enum> {
   @override
   String toString() {
     return 'ScreenSizeModelData(breakpoints: $breakpoints, currentBreakpoint: $currentBreakpoint, screenSize: $screenSize, physicalWidth: $physicalWidth, physicalHeight: $physicalHeight, devicePixelRatio: $devicePixelRatio, logicalScreenWidth: $logicalScreenWidth, logicalScreenHeight: $logicalScreenHeight)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is ScreenSizeModelData<K> &&
+        other.breakpoints == breakpoints &&
+        other.currentBreakpoint == currentBreakpoint &&
+        other.screenSize == screenSize &&
+        other.physicalWidth == physicalWidth &&
+        other.physicalHeight == physicalHeight &&
+        other.devicePixelRatio == devicePixelRatio &&
+        other.logicalScreenWidth == logicalScreenWidth &&
+        other.logicalScreenHeight == logicalScreenHeight &&
+        other.orientation == orientation;
+  }
+
+  @override
+  int get hashCode {
+    return Object.hash(
+      breakpoints,
+      currentBreakpoint,
+      screenSize,
+      physicalWidth,
+      physicalHeight,
+      devicePixelRatio,
+      logicalScreenWidth,
+      logicalScreenHeight,
+      orientation,
+    );
   }
 }
 

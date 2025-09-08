@@ -3,8 +3,12 @@ import 'package:example/pages/layout_size_builder_example.dart';
 import 'package:example/pages/screen_size_builder_example.dart';
 import 'package:example/pages/screen_size_builder_granular_example.dart';
 import 'package:example/pages/screen_size_orientation_builder_example.dart';
+import 'package:example/pages/screen_size_with_value_builder_example.dart';
 import 'package:example/pages/screen_size_with_value_example.dart';
+import 'package:example/pages/screen_size_with_value_granular_builder_example.dart';
+import 'package:example/pages/screen_size_with_value_orientation_builder_example.dart';
 import 'package:example/pages/theme.dart';
+import 'package:example/pages/value_size_builder_example.dart';
 import 'package:example/pages/value_size_builder_granular_example.dart';
 import 'package:flutter/material.dart';
 
@@ -33,10 +37,17 @@ class MyApp extends StatelessWidget {
         '/screen-size-builder-granular': (context) =>
             const ScreenSizeBuilderGranularExample(),
         '/layout-size-builder': (context) => const LayoutSizeBuilderExample(),
+        '/value-size-builder': (context) => const ValueSizeBuilderExample(),
         '/value-size-builder-granular': (context) =>
             const ValueSizeBuilderGranularExample(),
         '/screen-size-with-value': (context) =>
             const ScreenSizeWithValueExample(),
+        '/screen-size-with-value-builder': (context) =>
+            const ScreenSizeWithValueBuilderExample(),
+        '/screen-size-with-value-granular-builder': (context) =>
+            const ScreenSizeWithValueBuilderGranularExample(),
+        '/screen-size-with-value-orientation-builder': (context) =>
+            const ScreenSizeWithValueOrientationBuilderExample(),
       },
     );
   }
