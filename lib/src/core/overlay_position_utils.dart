@@ -57,6 +57,58 @@ WidgetSpacing getWidgetSpacing<T extends Enum>(BuildContext context) {
   );
 }
 
+WidgetSpacing getWidgetSpacingWithValue<T extends Enum, V extends Object?>(
+  BuildContext context,
+) {
+  final renderBox = context.findRenderObject() as RenderBox?;
+  final screenSizeModel = ScreenSizeModelWithValue.of<T, V>(context);
+
+  if (renderBox == null || !renderBox.hasSize) {
+    // It's crucial that the renderBox has been laid out and has a size.
+    // Returning a default or throwing might depend on your use case.
+    // Throwing is safer if the logic absolutely depends on valid measurements.
+    return WidgetSpacing.empty;
+  }
+
+  // Get widget's size and position
+  final widgetSize = renderBox.size;
+  final widgetPosition = renderBox.localToGlobal(Offset.zero);
+
+  // Get screen dimensions from the model
+  final screenWidth = screenSizeModel.logicalScreenWidth;
+  final screenHeight = screenSizeModel.logicalScreenHeight;
+
+  // Calculate spacing
+  final heightAbove = widgetPosition.dy;
+  final heightBelow = screenHeight - (widgetPosition.dy + widgetSize.height);
+  final widthLeft = widgetPosition.dx;
+  final widthRight = screenWidth - (widgetPosition.dx + widgetSize.width);
+
+  // Calculate the size of the areas around the widget
+  // Note: Ensure these calculations make sense for your specific overlay needs.
+  // These assume the areas span the full width/height outside the widget bounds.
+  final sizeAbove = Size(screenWidth, heightAbove);
+  final sizeBelow = Size(screenWidth, heightBelow);
+  final sizeLeft = Size(widthLeft, screenHeight);
+  final sizeRight = Size(widthRight, screenHeight);
+
+  // Return the calculated spacing
+  return WidgetSpacing(
+    screenHeight: screenHeight,
+    screenWidth: screenWidth,
+    widgetSize: widgetSize,
+    widgetPosition: widgetPosition,
+    heightAbove: heightAbove,
+    heightBelow: heightBelow,
+    widthLeft: widthLeft,
+    widthRight: widthRight,
+    sizeAbove: sizeAbove,
+    sizeBelow: sizeBelow,
+    sizeLeft: sizeLeft,
+    sizeRight: sizeRight,
+  );
+}
+
 @immutable
 class WidgetSpacing {
   const WidgetSpacing({
