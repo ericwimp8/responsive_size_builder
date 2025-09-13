@@ -1,327 +1,235 @@
 # Responsive Size Builder Architecture Documentation
 
 ## Overview
-The `responsive_size_builder` is a Flutter package that provides comprehensive tools for creating responsive user interfaces that adapt to different screen sizes and breakpoints. The package offers both simple and granular breakpoint systems, along with various builder widgets to handle different responsive design scenarios.
+
+The **Responsive Size Builder** is a Flutter package designed to simplify responsive design by providing a robust, type-safe breakpoint system for adapting UI layouts and values based on screen size and layout constraints. The package follows a modular, widget-based architecture that integrates seamlessly with Flutter's widget tree and build system.
 
 ## Architecture Style
-- **Pattern**: Component-based architecture with layered design following Flutter's widget composition model
+
+- **Pattern**: Widget-based Responsive Framework with Abstract Type System
 - **Key Technologies**: 
   - Dart 3.5.0+
   - Flutter 1.17.0+
-  - InheritedModel for efficient state propagation
-  - MediaQuery for screen dimension access
-  - LayoutBuilder for constraint-based responsive design
+  - Generic type constraints and enums
+  - InheritedModel pattern for efficient rebuilds
+  - LayoutBuilder integration for constraint-based responses
 
 ## Directory Structure
+
 ```
-/responsive_size_builder
-  /lib
-    /src
-      /core                    - Core breakpoint logic and utilities
-        /breakpoints          - Breakpoint definitions and handlers
-        overlay_position_utils.dart - Overlay positioning utilities
-        utilities.dart        - Platform detection constants
-      /layout_constraints     - BoxConstraints management
-      /layout_size           - Layout-focused responsive builders  
-      /responsive_value      - Value-based responsive design
-      /screen_size          - Screen size detection and builders
-      /value_size           - Value-oriented size builders
-    responsive_size_builder.dart - Main library export file
-  /example                  - Demo application with usage examples
-  /test                     - Unit and widget tests
-  /documents               - Project documentation
+/lib
+  /src
+    /core
+      /breakpoints        - Core breakpoint definitions and handling logic
+      overlay_position_utils.dart - Utility for overlay positioning
+      utilities.dart      - Platform detection utilities
+    /layout_constraints   - Layout constraint providers and wrappers
+    /layout_size         - Layout-based responsive builders
+    /responsive_value    - Responsive value containers and builders
+    /screen_size         - Screen size detection and builders
+    /value_size          - Value-based size builders  
+    /value_size_with_value_builder - Combined value and size builders
+  responsive_size_builder.dart - Main library export file
 ```
 
 ## Component Overview
 
-### Core Components
-
-#### 1. Breakpoints System
-- **Location**: `/lib/src/core/breakpoints/`
-- **Responsibility**: Define screen size thresholds and categorization logic
+### Component 1: Core Breakpoints System
+- **Location**: `/src/core/breakpoints/`
+- **Responsibility**: Defines breakpoint configurations and handles breakpoint resolution logic
 - **Key Functions**:
-  - BaseBreakpoints<T> - Abstract breakpoint interface
-  - Breakpoints - Standard 5-tier system (extraSmall, small, medium, large, extraLarge)
-  - BreakpointsGranular - Comprehensive 13-tier system with jumbo, standard, compact, tiny categories
-  - LayoutSize/LayoutSizeGranular enums - Size category definitions
-- **Dependencies**: None (foundational component)
+  - Abstract breakpoint definitions (`BaseBreakpoints<T>`)
+  - Standard breakpoints (extraLarge, large, medium, small, extraSmall)
+  - Granular breakpoints (13 size categories from tiny to jumboExtraLarge)
+  - Breakpoint resolution algorithm with fallback mechanism
+- **Dependencies**: Flutter foundation, enum types
 
-#### 2. Breakpoint Handlers
-- **Location**: `/lib/src/core/breakpoints/breakpoints_handler.dart`
-- **Responsibility**: Execute breakpoint resolution logic with fallback mechanisms
+### Component 2: Screen Size Detection
+- **Location**: `/src/screen_size/`
+- **Responsibility**: Provides screen size detection and data management through InheritedModel
 - **Key Functions**:
-  - BaseBreakpointsHandler<T, K> - Abstract handler interface
-  - BreakpointsHandler<T> - Standard 5-tier handler
-  - BreakpointsHandlerGranular<T> - Granular 13-tier handler
-- **Dependencies**: Core breakpoints, utilities
+  - Screen size calculation from MediaQuery
+  - Physical and logical dimension tracking
+  - Orientation detection
+  - Platform-aware device type detection
+  - Efficient widget tree updates via InheritedModel
+- **Dependencies**: Core breakpoints, Flutter MediaQuery
 
-#### 3. Screen Size Data Management
-- **Location**: `/lib/src/screen_size/screen_size_data.dart`
-- **Responsibility**: Collect, process, and distribute screen size information
+### Component 3: Layout Constraint System
+- **Location**: `/src/layout_constraints/`
+- **Responsibility**: Manages layout constraints for widget-level responsive behavior
 - **Key Functions**:
-  - ScreenSize<T> - Root widget that monitors screen dimensions
-  - ScreenSizeModel<T> - InheritedModel for efficient data propagation
-  - ScreenSizeModelData<K> - Immutable data container with comprehensive metrics
-- **Dependencies**: Core breakpoints, Flutter's MediaQuery
+  - Constraint-based breakpoint resolution
+  - Layout constraint inheritance
+  - Wrapper widgets for constraint propagation
+- **Dependencies**: Core breakpoints, Flutter LayoutBuilder
 
-### Builder Components
-
-#### 4. Screen Size Builders
-- **Location**: `/lib/src/screen_size/`
-- **Responsibility**: Widget builders that adapt to screen size changes
+### Component 4: Responsive Value Containers
+- **Location**: `/src/responsive_value/`
+- **Responsibility**: Type-safe containers for responsive values with automatic breakpoint resolution
 - **Key Functions**:
-  - ScreenSizeBuilder - Basic responsive builder
-  - ScreenSizeOrientationBuilder - Orientation-aware builder
-  - ScreenSizeBuilderGranular - Fine-grained breakpoint control
-- **Dependencies**: Screen size data, breakpoint handlers
+  - Generic value containers (`ResponsiveValue<V>`, `ResponsiveValueGranular<V>`)
+  - Automatic value selection based on current breakpoint
+  - Type-safe value retrieval with fallback mechanism
+- **Dependencies**: Core breakpoints system
 
-#### 5. Layout Size Builders
-- **Location**: `/lib/src/layout_size/`
-- **Responsibility**: Layout-focused responsive builders using BoxConstraints
+### Component 5: Builder Widgets
+- **Locations**: `/src/layout_size/`, `/src/screen_size/`, `/src/value_size/`
+- **Responsibility**: Flutter widgets that rebuild UI based on responsive conditions
 - **Key Functions**:
-  - LayoutSizeBuilder - Constraint-based responsive building
-  - LayoutSizeBuilderGranular - Granular constraint-based building
-- **Dependencies**: Layout constraints providers, breakpoint handlers
-
-#### 6. Value Size Builders
-- **Location**: `/lib/src/value_size/`
-- **Responsibility**: Value-based responsive design for non-widget responses
-- **Key Functions**:
-  - ValueSizeBuilder<T> - Returns typed values based on screen size
-  - ValueSizeBuilderGranular<T> - Granular value-based building
-- **Dependencies**: Screen size data, breakpoint handlers
-
-#### 7. Responsive Value System
-- **Location**: `/lib/src/responsive_value/`
-- **Responsibility**: Advanced value-based responsive design with screen size integration
-- **Key Functions**:
-  - ResponsiveValue<T> - Value container with breakpoint mapping
-  - ScreenSizeWithValue<T> - Screen size data with value integration
-  - Multiple specialized builders for different scenarios
-- **Dependencies**: Screen size data, breakpoint system
-
-### Utility Components
-
-#### 8. Layout Constraints Providers
-- **Location**: `/lib/src/layout_constraints/`
-- **Responsibility**: BoxConstraints management and access in responsive context
-- **Key Functions**:
-  - LayoutConstraintsProviderBase<T> - Abstract constraint provider
-  - LayoutConstraintsWrapper - Constraint wrapping utilities
-- **Dependencies**: Flutter's LayoutBuilder, breakpoint handlers
-
-#### 9. Platform Utilities
-- **Location**: `/lib/src/core/utilities.dart`
-- **Responsibility**: Platform detection and device type identification
-- **Key Functions**:
-  - kIsDesktopDevice - Desktop platform detection
-  - kIsTouchDevice - Touch device detection
-- **Dependencies**: Flutter foundation
-
-#### 10. Overlay Positioning
-- **Location**: `/lib/src/core/overlay_position_utils.dart`
-- **Responsibility**: Utilities for responsive overlay positioning
-- **Dependencies**: Core breakpoint system
+  - Screen size-based builders
+  - Layout constraint-based builders
+  - Value-responsive builders with type safety
+  - Optional animation support for size transitions
+- **Dependencies**: All core systems, Flutter StatefulWidget
 
 ## Component Interactions
 
-### Primary Data Flow
 ```
-ScreenSize<T> Widget
-    ↓
-MediaQuery/View Data → ScreenSizeModel<T> → ScreenSizeModelData<T>
-    ↓                                           ↓
-Breakpoint Resolution                    Builder Components
-    ↓                                           ↓
-BreakpointsHandler<T>                     Widget Tree
-    ↓
-Value/Widget Selection
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│  MediaQuery     │───▶│  ScreenSize     │───▶│  Builder        │
+│  LayoutBuilder  │    │  Detection      │    │  Widgets        │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
+                              │                        │
+                              ▼                        ▼
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│  Breakpoints    │◀───│  Breakpoint     │───▶│  Responsive     │
+│  Configuration  │    │  Handler        │    │  Values         │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
 ```
 
-### Interaction Matrix
-
-| Component | Calls | Called By | Communication Method |
-|-----------|-------|-----------|---------------------|
-| ScreenSize<T> | MediaQuery, BreakpointHandlers | Application Root | Widget composition |
-| ScreenSizeModel<T> | InheritedModel system | Builder widgets | InheritedModel |
-| BreakpointsHandler | Breakpoints configuration | All builders | Direct method calls |
-| Builder widgets | ScreenSizeModel.of() | Application widgets | InheritedModel access |
-| Responsive values | Breakpoint resolution | Builder widgets | Configuration objects |
-
-### Dependency Rules
-- Core components have no dependencies on builders
-- Builders depend on core components and data models
-- Utilities are standalone and can be used independently
-- All components follow Flutter's widget composition patterns
-- No circular dependencies between layers
-
-## Architectural Patterns
-
-### 1. Layered Architecture
-**Implementation Details:**
-- **Core Layer**: Fundamental breakpoint logic and data structures
-- **Model Layer**: Data management with InheritedModel pattern
-- **Builder Layer**: Widget construction with responsive logic
-- **Utility Layer**: Platform-specific helpers and positioning tools
-
-**Benefits:**
-- Clear separation of concerns
-- Testable individual components
-- Reusable core logic across different builder types
-
-### 2. Strategy Pattern
-**Implementation Details:**
-- BaseBreakpointsHandler<T, K> defines the strategy interface
-- BreakpointsHandler and BreakpointsHandlerGranular provide specific implementations
-- Runtime strategy selection based on breakpoint system choice
-
-**Benefits:**
-- Swappable breakpoint systems
-- Consistent API across different complexity levels
-- Easy extension for custom breakpoint strategies
-
-### 3. Observer Pattern (via InheritedModel)
-**Implementation Details:**
-- ScreenSizeModel<T> extends InheritedModel<ScreenSizeAspect>
-- Widgets register dependencies on specific data aspects
-- Automatic rebuilds only when relevant data changes
-
-**Benefits:**
-- Efficient widget rebuilds
-- Granular dependency tracking
-- Optimal performance for responsive UIs
-
-### 4. Builder Pattern
-**Implementation Details:**
-- Multiple builder widgets with consistent API patterns
-- Type-safe builder functions: `(BuildContext, ScreenSizeModelData<T>) -> Widget`
-- Fallback resolution when specific builders aren't provided
-
-**Benefits:**
-- Flexible responsive UI construction
-- Type safety for different responsive scenarios
-- Consistent developer experience
-
-### 5. Template Method Pattern
-**Implementation Details:**
-- BaseBreakpointsHandler defines the algorithm skeleton
-- Concrete handlers implement specific value resolution
-- Common fallback logic shared across implementations
-
-**Benefits:**
-- Code reuse for common breakpoint logic
-- Consistent behavior across different breakpoint systems
-- Easy maintenance of core algorithms
+**Communication Pattern**: 
+- **Data Flow**: MediaQuery/LayoutBuilder → Size Detection → Breakpoint Resolution → Value Selection → Widget Building
+- **Update Mechanism**: InheritedModel efficiently propagates only relevant changes to dependent widgets
+- **Type Safety**: Generic type system ensures compile-time validation of breakpoint configurations
 
 ## Code Organization Conventions
 
 ### File Naming
-- **Pattern**: snake_case for files, PascalCase for classes
-- **Test files**: `*_test.dart` in `/test` directory
-- **Example files**: descriptive names in `/example/lib/pages/`
+- **Pattern**: snake_case for all files
+- **Builder Files**: `*_builder.dart` for widget builders
+- **Data Files**: `*_data.dart` for data models
+- **Granular Variants**: `*_granular.dart` for 13-breakpoint implementations
 
 ### Code Location Guide
+
 | Code Type | Location | Example |
 |-----------|----------|---------|
-| Core Logic | `/lib/src/core/` | `breakpoints.dart`, `utilities.dart` |
-| Data Models | `/lib/src/*/` | `screen_size_data.dart` |
-| Builder Widgets | `/lib/src/*/` | `screen_size_builder.dart` |
-| Abstract Interfaces | `/lib/src/core/` | `base_breakpoints_handler.dart` |
-| Platform Utilities | `/lib/src/core/` | `utilities.dart` |
-| Examples | `/example/lib/pages/` | `screen_size_builder_example.dart` |
+| Breakpoint Definitions | `/src/core/breakpoints/` | `breakpoints.dart` |
+| Size Detection Logic | `/src/screen_size/` | `screen_size_data.dart` |
+| Builder Widgets | `/src/*/` | `screen_size_builder.dart` |
+| Responsive Values | `/src/responsive_value/` | `responsive_value.dart` |
+| Layout Constraints | `/src/layout_constraints/` | `layout_constraints_wrapper.dart` |
+| Utility Functions | `/src/core/` | `utilities.dart` |
+| Type Definitions | `*_builder.dart` files | `ScreenSizeWidgetBuilder` |
+| Library Exports | Root `/lib/` | `responsive_size_builder.dart` |
 
-### Import Conventions
-- Package imports use full package path: `package:responsive_size_builder/responsive_size_builder.dart`
-- Internal imports use relative paths within the same module
-- Flutter framework imports grouped separately
-- Dart core imports listed first
+### Architecture Patterns
 
-### Documentation Standards
-- Comprehensive dartdoc comments for all public APIs
-- Usage examples in class-level documentation
-- Parameter documentation with types and constraints
-- Cross-references between related classes
+#### Pattern 1: Abstract Type System
+- **Implementation**: Uses generic enums (`LayoutSize`, `LayoutSizeGranular`) to provide type-safe breakpoint definitions
+- **Benefits**: Compile-time validation, extensible breakpoint systems
+- **Example**: `BaseBreakpoints<T extends Enum>` allows custom breakpoint enums
 
-## Module Boundaries and Responsibilities
+#### Pattern 2: Fallback Resolution Algorithm
+- **Implementation**: Smart fallback mechanism in `BaseBreakpointsHandler.getScreenSizeValue()`
+- **Logic**:
+  1. Check exact breakpoint match
+  2. Search larger breakpoints for defined values
+  3. Fall back to any defined value
+- **Benefits**: Graceful degradation, fewer required definitions
 
-### Strict Boundaries
-- **Core → Builders**: Core provides interfaces, builders implement behavior
-- **Data → UI**: Data models are immutable, UI components consume data
-- **Platform → Logic**: Platform utilities are isolated from business logic
-
-### Shared Responsibilities
-- **Error Handling**: Assertion-based validation in constructors
-- **Type Safety**: Generic type parameters for breakpoint system flexibility
-- **Performance**: Caching and efficient InheritedModel usage
-
-### Integration Points
-- **ScreenSizeModel**: Central integration point for all builder components
-- **BaseBreakpoints**: Interface contract for all breakpoint systems
-- **BreakpointsHandler**: Resolution logic shared across builders
+#### Pattern 3: InheritedModel Integration
+- **Implementation**: `ScreenSizeModel<T>` extends `InheritedModel<ScreenSizeAspect>`
+- **Benefits**: Efficient rebuilds only when relevant data changes
+- **Aspects**: `screenSize` (for size changes) and `other` (for all data changes)
 
 ## Architectural Decisions
 
-### ADR-001: InheritedModel for State Propagation
-- **Date**: Project inception
+### ADR-001: Dual Breakpoint System
+- **Date**: Package Creation
 - **Status**: Accepted
-- **Context**: Need efficient way to propagate screen size data to multiple widgets
-- **Decision**: Use InheritedModel with aspect-based dependency tracking
+- **Context**: Need to support both simple and granular responsive design requirements
+- **Decision**: Implement two breakpoint systems - standard 5-point and granular 13-point
 - **Consequences**: 
-  - Optimal performance with granular rebuilds
-  - Complex implementation but excellent Flutter integration
-  - Standard Flutter pattern for state distribution
+  - **Positive**: Flexibility for different use cases, progressive complexity
+  - **Negative**: Code duplication, learning curve for granular system
 
 ### ADR-002: Generic Type System for Breakpoints
-- **Date**: Project inception  
+- **Date**: Package Creation  
 - **Status**: Accepted
-- **Context**: Support both simple and granular breakpoint systems
-- **Decision**: Use generic type parameters constrained to Enum
+- **Context**: Ensure type safety and extensibility for breakpoint definitions
+- **Decision**: Use generic enums with `BaseBreakpoints<T extends Enum>` pattern
 - **Consequences**:
-  - Type safety across different breakpoint systems
-  - Compile-time verification of breakpoint usage
-  - Some complexity in API but better developer experience
+  - **Positive**: Type safety, custom breakpoint support, clear API contracts
+  - **Negative**: More complex type signatures, generic constraints
 
-### ADR-003: Fallback Resolution Strategy
-- **Date**: Early development
+### ADR-003: InheritedModel for State Management
+- **Date**: Package Creation
 - **Status**: Accepted
-- **Context**: Handle cases where not all breakpoints have assigned values
-- **Decision**: Implement systematic fallback from larger to smaller breakpoints
+- **Context**: Efficiently propagate screen size changes without excessive rebuilds
+- **Decision**: Use `InheritedModel` with aspect-based dependencies
 - **Consequences**:
-  - Robust behavior with partial configurations
-  - Predictable fallback patterns
-  - Reduced configuration burden for simple use cases
+  - **Positive**: Optimal rebuild performance, Flutter best practices
+  - **Negative**: Complexity in dependency management
 
-### ADR-004: Separation of Builder Types
-- **Date**: Feature expansion
+### ADR-004: Widget-Based Builder Pattern
+- **Date**: Package Creation
 - **Status**: Accepted
-- **Context**: Different responsive scenarios need different builder approaches
-- **Decision**: Create specialized builder widgets for different use cases
+- **Context**: Integrate responsive behavior naturally with Flutter's widget system
+- **Decision**: Implement builders as StatefulWidgets with declarative breakpoint definitions
 - **Consequences**:
-  - Clear API boundaries for different scenarios
-  - Some code duplication but better usability
-  - Easier to optimize each builder type independently
+  - **Positive**: Natural Flutter integration, declarative API, hot reload support
+  - **Negative**: Widget tree depth, potential performance considerations
+
+## Module Boundaries and Responsibilities
+
+### Core Module (`/src/core/`)
+- **Boundary**: Contains only fundamental abstractions and utilities
+- **Restrictions**: No UI dependencies, no specific implementation details
+- **Shared Code**: `BaseBreakpoints`, `BaseBreakpointsHandler`, platform detection
+
+### Screen Size Module (`/src/screen_size/`)
+- **Boundary**: Screen-level responsive behavior
+- **Interface**: `ScreenSizeModel.of<T>()`, `ScreenSizeModel.screenSizeOf<T>()`
+- **Responsibilities**: MediaQuery integration, device detection, InheritedModel management
+
+### Layout Size Module (`/src/layout_size/`)
+- **Boundary**: Widget constraint-level responsive behavior
+- **Interface**: `LayoutSizeBuilder` widgets
+- **Responsibilities**: LayoutBuilder integration, constraint-based breakpoint resolution
+
+### Value Modules (`/src/responsive_value/`, `/src/value_size/`)
+- **Boundary**: Value containers and value-based builders
+- **Interface**: `ResponsiveValue<V>` containers, value builders
+- **Responsibilities**: Type-safe value storage, value selection logic
 
 ## Getting Started
+
 Quick guide for developers to understand the architecture:
 
-1. **Start with ScreenSize<T>**: Wrap your app to enable responsive features
-2. **Choose breakpoint system**: Use LayoutSize for simple (5 categories) or LayoutSizeGranular for complex (13 categories)
-3. **Select appropriate builder**: Pick builder widget based on your responsive needs (widgets vs values, orientation awareness, etc.)
-4. **Configure breakpoints**: Use default breakpoints or customize for your design requirements
-5. **Implement fallback strategy**: Ensure at least one breakpoint category has a value defined
+1. **Breakpoint Definition**: Choose between `LayoutSize` (5 breakpoints) or `LayoutSizeGranular` (13 breakpoints)
+2. **Screen Size Setup**: Wrap your app in `ScreenSize<LayoutSize>` or `ScreenSize<LayoutSizeGranular>`
+3. **Builder Selection**: Use appropriate builders:
+   - `ScreenSizeBuilder` for MediaQuery-based responses
+   - `LayoutSizeBuilder` for constraint-based responses
+   - `ValueSizeBuilder` for value-based responses
+4. **Type Safety**: Always specify the correct generic type parameter matching your breakpoint enum
 
-### Key Conventions to Follow
-- Always wrap apps with ScreenSize<T> before using builders
-- Match type parameters between ScreenSize<T> and builder widgets
-- Provide fallback values to prevent runtime errors
-- Use aspect-based dependencies with ScreenSizeModel.screenSizeOf() for performance
-- Follow the layered architecture - don't skip abstraction layers
+## Key Conventions
+
+- **Generic Type Consistency**: Always use the same enum type throughout a widget subtree
+- **Null Safety**: At least one breakpoint value must be provided to any builder
+- **Fallback Strategy**: Larger breakpoint values automatically fall back to smaller ones
+- **Animation Support**: Use `animateChange: true` for smooth transitions between breakpoints
 
 ## Maintenance
-- **Owner**: Package maintainer team
-- **Last Updated**: 2025-01-15
-- **Review Schedule**: Quarterly architecture reviews, updates with major feature additions
+
+- **Owner**: Package Developer
+- **Last Updated**: 2024-01-XX (Package Creation)
+- **Review Schedule**: Per release cycle
+- **Update Triggers**: Breaking changes to Flutter, new responsive requirements, performance optimizations
 
 ---
 
-This architecture documentation provides developers with a comprehensive understanding of the responsive_size_builder package structure, enabling effective development and maintenance of responsive Flutter applications. The modular design ensures scalability while maintaining simplicity for common use cases.
+This architecture prioritizes type safety, performance, and developer experience while maintaining flexibility for diverse responsive design needs. The modular structure allows developers to use only the components they need while providing a comprehensive solution for Flutter responsive design challenges.

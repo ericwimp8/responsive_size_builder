@@ -32,6 +32,7 @@ class ScreenSizeWithValue<T extends Enum, V extends Object?>
 
 class _ScreenSizeWithValueState<T extends Enum, V extends Object?>
     extends State<ScreenSizeWithValue<T, V>> {
+
   T _getScreenSize(double size) {
     final entries = widget.breakpoints.values.entries.toList()
       ..sort((a, b) => b.value.compareTo(a.value));
@@ -167,10 +168,16 @@ ScreenSizeWithValue and the appropriate type parameter is being used.
     ScreenSizeModelWithValue<T, V> oldWidget,
     Set<ScreenSizeAspect> dependencies,
   ) {
-    if (oldWidget.data.screenSize != data.screenSize &&
-        dependencies.contains(ScreenSizeAspect.screenSize)) {
-      return true;
-    } else if (oldWidget.data != data &&
+    // Check if screen size or responsive value changed for screenSize aspect
+    if (dependencies.contains(ScreenSizeAspect.screenSize)) {
+      if (oldWidget.data.screenSize != data.screenSize ||
+          oldWidget.data.responsiveValue != data.responsiveValue) {
+        return true;
+      }
+    }
+    
+    // Check for any other changes for other aspect
+    if (oldWidget.data != data &&
         dependencies.contains(ScreenSizeAspect.other)) {
       return true;
     }

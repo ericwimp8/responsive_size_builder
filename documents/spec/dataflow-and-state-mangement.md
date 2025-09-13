@@ -1,353 +1,313 @@
 # Data Flow and State Management Documentation
 
 ## Introduction
-This document provides comprehensive documentation for the data flow and state management aspects of the `responsive_size_builder` Flutter package. This documentation is critical for understanding system behavior and maintaining consistency across responsive layouts.
 
-## Step 1: Document Database Schemas
+This document provides comprehensive documentation for the data flow and state management aspects of the **Responsive Size Builder** Flutter package. This package implements a sophisticated responsive design system that adapts UI components based on screen size breakpoints, providing a clean abstraction for building responsive Flutter applications.
 
-### 1.1 Create Schema Overview
-The `responsive_size_builder` package is a client-side Flutter package that doesn't use traditional databases. Instead, it manages responsive layout state through in-memory data structures and Flutter's inherited widget system.
+The package follows a hierarchical state management pattern using Flutter's InheritedWidget system combined with reactive data flows to manage screen size states and breakpoint transitions across the widget tree.
 
-## Database Architecture Overview
-- **Database Type**: In-Memory State Management (Flutter Widgets)
-- **Number of Databases**: N/A - Client-side package
-- **Connection Strategy**: Flutter's Widget Tree and Inherited Widget system
+## Step 1: Database Schemas
 
-### 1.2 Document Each Schema
+### Database Architecture Overview
+- **Database Type**: No persistent database - In-memory state management only
+- **Number of Databases**: N/A - This is a UI framework package
+- **Connection Strategy**: N/A - Uses Flutter's widget tree for state propagation
 
-### Data Structure: BreakpointsHandler State
-**Purpose**: Stores responsive breakpoint calculations and resolved values
+### Data Models
 
-| Field Name | Type | Constraints | Description |
-|------------|------|-------------|-------------|
-| currentValue | T? | nullable | Cached value from most recent resolution |
-| screenSizeCache | K? | nullable, extends Enum | Cached screen size category |
-| breakpoints | BaseBreakpoints<K> | required | Configuration defining pixel thresholds |
-| onChanged | Function(K)? | nullable | Optional callback for breakpoint changes |
+#### Breakpoints Configuration
+**Purpose**: Defines screen size breakpoints for responsive behavior
 
-**Relationships**:
-- One-to-one with BaseBreakpoints configuration
-- One-to-many with value resolution requests
+| Property | Type | Constraints | Description |
+|----------|------|-------------|-------------|
+| extraLarge | double | > large, default: 1200.0 | Extra large screen threshold |
+| large | double | > medium, default: 950.0 | Large screen threshold |
+| medium | double | > small, default: 600.0 | Medium screen threshold |
+| small | double | >= 0, default: 200.0 | Small screen threshold |
 
-### Data Structure: ScreenSizeModelData
-**Purpose**: Stores comprehensive screen size information
+**Validation Rules**:
+- All breakpoints must be in descending order: extraLarge > large > medium > small >= 0
+- extraSmall is implicit at -1 (catch-all for sizes below small)
 
-| Field Name | Type | Constraints | Description |
-|------------|------|-------------|-------------|
-| breakpoints | BaseBreakpoints<K> | required | Breakpoint configuration |
-| currentBreakpoint | double | required | Current threshold value |
-| screenSize | K | required, extends Enum | Current size category |
-| physicalWidth | double | required | Physical screen width in pixels |
-| physicalHeight | double | required | Physical screen height in pixels |
-| devicePixelRatio | double | required | Pixel density ratio |
-| logicalScreenWidth | double | required | Logical screen width |
-| logicalScreenHeight | double | required | Logical screen height |
-| orientation | Orientation | required | Current device orientation |
+#### BreakpointsGranular Configuration
+**Purpose**: Extended breakpoint system with 13 size categories
 
-**Relationships**:
-- One-to-many with dependent widgets
-- One-to-one with MediaQuery data source
+| Property | Type | Constraints | Description |
+|----------|------|-------------|-------------|
+| jumboExtraLarge | double | default: 4096.0 | Ultra-wide displays |
+| jumboLarge | double | default: 3840.0 | 4K displays |
+| jumboNormal | double | default: 2560.0 | QHD displays |
+| jumboSmall | double | default: 1920.0 | Full HD displays |
+| standardExtraLarge | double | default: 1280.0 | Large laptops |
+| standardLarge | double | default: 1024.0 | Standard laptops |
+| standardNormal | double | default: 768.0 | Tablets landscape |
+| standardSmall | double | default: 568.0 | Tablets portrait |
+| compactExtraLarge | double | default: 480.0 | Large phones landscape |
+| compactLarge | double | default: 430.0 | Standard phones landscape |
+| compactNormal | double | default: 360.0 | Standard phones portrait |
+| compactSmall | double | default: 300.0 | Small phones |
+| tiny | double | implicit: -1 | Catch-all for very small screens |
 
-### 1.3 Include Migration History
+## Step 2: State Management Patterns
 
-## Migration Strategy
-- **Tool**: Flutter Widget State Management
-- **Current Version**: Package version-based
-- **Migration Location**: N/A - In-memory state
-- **Rollback Strategy**: Widget tree reconstruction
+### Frontend State Management Architecture
 
-## Step 2: Define Caching Strategies
+#### State Management Library
+- **Technology**: Flutter InheritedWidget/InheritedModel
+- **Version**: Flutter SDK native (no external dependencies)
+- **Pattern**: Hierarchical inherited state with selective notifications
 
-### 2.1 Document Cache Layers
+#### Core State Components
 
-## Caching Architecture
-
-### Level 1: BreakpointsHandler Cache
-- **Technology**: In-memory Dart objects
-- **TTL Default**: Widget lifecycle duration
-- **Eviction Policy**: Widget disposal
-- **Max Memory**: Limited by widget instance lifecycle
-
-### Level 2: InheritedModel Cache
-- **Technology**: Flutter InheritedModel system
-- **Cache Duration**: Widget tree rebuild cycles
-- **Cache Scope**: Widget subtree descendants
-
-### 2.2 Document Cache Keys and Patterns
-
-## Cache Key Patterns
-
-| Pattern | Example | TTL | Description |
-|---------|---------|-----|-------------|
-| screenSize:{K} | screenSize:large | Widget lifecycle | Current screen size category |
-| value:{screenSize} | value:LayoutSize.medium | Until screen change | Resolved breakpoint value |
-| metrics:{orientation} | metrics:portrait | Until orientation change | Screen dimension metrics |
-
-## Cache Invalidation Rules
-- **Screen Size Change**: Invalidate screenSize and value caches
-- **Orientation Change**: Invalidate metrics and recalculate screen size
-- **Widget Disposal**: Clear all associated cache entries
-- **Breakpoint Config Change**: Full cache invalidation
-
-## Step 3: Map State Management Patterns
-
-### 3.1 Frontend State Management
-
-## Frontend State Management
-
-### State Management Library
-- **Technology**: Flutter InheritedModel and StatefulWidget
-- **Version**: Flutter SDK dependent
-
-### Store Structure
-```
-lib/src/
-├── core/
-│   ├── breakpoints/
-│   │   ├── base_breakpoints_handler.dart
-│   │   ├── breakpoints.dart
-│   │   ├── breakpoints_handler.dart
-│   │   └── breakpoints_handler_granular.dart
-│   ├── overlay_position_utils.dart
-│   └── utilities.dart
-├── screen_size/
-│   ├── screen_size_data.dart
-│   ├── screen_size_builder.dart
-│   └── screen_size_orientation_builder.dart
-└── value_size/
-    ├── value_size_builder.dart
-    └── value_size_builder_granular.dart
-```
-
-### Global State Schema
+##### ScreenSizeModel<T extends Enum>
 ```dart
-{
-  screenSizeModel: {
-    breakpoints: BaseBreakpoints<K>,
-    currentBreakpoint: double,
-    screenSize: K,
-    physicalDimensions: {
-      width: double,
-      height: double
-    },
-    logicalDimensions: {
-      width: double,
-      height: double
-    },
-    devicePixelRatio: double,
-    orientation: Orientation
-  },
-  breakpointsHandler: {
-    currentValue: T?,
-    screenSizeCache: K?,
-    values: Map<K, T?>
-  }
+// Global state schema for screen size data
+ScreenSizeModelData<T> {
+  breakpoints: BaseBreakpoints<T>,       // Active breakpoint configuration
+  currentBreakpoint: double,             // Current breakpoint threshold value
+  screenSize: T,                         // Current screen size enum value
+  physicalWidth: double,                 // Physical device width in pixels
+  physicalHeight: double,                // Physical device height in pixels
+  devicePixelRatio: double,              // Device pixel density
+  logicalScreenWidth: double,            // Logical screen width
+  logicalScreenHeight: double,           // Logical screen height
+  orientation: Orientation,              // Portrait or landscape
 }
 ```
 
-### 3.2 Backend State Management
+##### LayoutConstraintsProvider
+```dart
+// Layout constraint propagation
+{
+  constraints: BoxConstraints,           // Current layout constraints
+}
+```
 
-## Backend State Management
+### State Propagation Architecture
 
-### Session Management
-- **Storage**: In-memory (widget lifecycle)
-- **Session Duration**: Widget tree lifetime
-- **Renewal Strategy**: Widget rebuild cycle
+#### InheritedModel Pattern
+- **Primary Model**: `ScreenSizeModel<T>` - Manages screen size state
+- **Aspect-Based Updates**: Uses `ScreenSizeAspect` enum for selective rebuilds
+- **Dependency Tracking**: Widgets subscribe to specific aspects (screenSize vs other)
 
-### Application State
-- **Stateless Services**: All builder widgets are stateless after resolution
-- **Stateful Services**: ScreenSize root widget, BreakpointsHandler instances
-- **Distributed State**: Shared via InheritedModel propagation
+#### State Update Flow
+1. **Device Rotation/Resize** → MediaQuery change detection
+2. **ScreenSize Widget** → Calculates new screen size category
+3. **ScreenSizeModel** → Updates inherited state
+4. **Dependent Widgets** → Selective rebuilds based on aspect dependencies
+5. **UI Components** → Re-render with new responsive values
 
-## Step 4: Document Data Validation Rules
+## Step 3: Data Validation Rules
 
-### 4.1 Input Validation Rules
+### Input Validation Rules
 
-## Data Validation Rules
+#### Breakpoint Configuration Validation
+| Validation Rule | Error Condition | Error Message |
+|----------------|-----------------|---------------|
+| Descending Order | extraLarge <= large | "Breakpoints must be in descending order" |
+| Non-negative | small < 0 | "Breakpoints must be >= 0" |
+| At Least One Value | All responsive values null | "At least one size argument must be provided" |
 
-### Breakpoint Configuration Validation
-| Field | Rules | Error Message |
-|-------|-------|---------------|
-| breakpoint values | Descending order, >= 0 | "Breakpoints must be in descending order and >= 0" |
-| handler values | At least one non-null | "At least one builder must be provided" |
-| enum constraints | Must extend Enum | Compile-time type error |
+#### Widget Builder Validation
+- **Required Builders**: At least one screen size builder must be non-null
+- **Type Safety**: Generic type constraints ensure type consistency across breakpoint handlers
+- **Null Safety**: Built-in fallback mechanism for missing breakpoint values
 
-### Screen Size Calculation Validation
-- **Dimension Range**: Must be >= 0 logical pixels
-- **Orientation**: Must be valid Orientation enum value
-- **Device Pixel Ratio**: Must be > 0
+### Business Logic Validation
 
-### 4.2 Business Logic Validation
+#### Screen Size Determination
+1. **Size Calculation**: Compare current dimension against breakpoint thresholds
+2. **Breakpoint Matching**: Iterate through breakpoints in descending order
+3. **Fallback Logic**: Default to smallest breakpoint if no match found
+4. **Orientation Handling**: Option to use shortest side vs width for calculations
 
-## Business Logic Validation
+#### Responsive Value Resolution
+- **Priority Order**: Exact match → Next smaller breakpoint → Fallback to smallest non-null
+- **Caching Strategy**: Cache resolved values per screen size to avoid recalculation
+- **Change Detection**: Only trigger callbacks when screen size category changes
 
-### Breakpoint Resolution Rules
-1. **Direct Match**: Exact screenSize category has non-null value
-2. **Fallback Search**: Search smaller categories for first non-null value
-3. **Last Resort**: Use last configured non-null value from any category
-4. **Error Condition**: All configured values are null (StateError)
+## Step 4: Event-Driven Communication
 
-### Screen Size Categorization Rules
-- **Threshold Matching**: size >= threshold value determines category
-- **Fallback Category**: If no thresholds met, use smallest category
-- **Special Values**: Handle -1 and other special threshold indicators
+### Event Architecture Overview
+- **Technology**: Flutter widget tree notifications (no external event system)
+- **Protocol**: InheritedWidget dependency changes
+- **Deployment**: Single Flutter app instance
 
-## Step 5: Define Event-Driven Communication
+### State Change Events
 
-### 5.1 Document Event Architecture
+| Event Type | Trigger | Consumers | Payload |
+|------------|---------|-----------|---------|
+| Screen Size Change | MediaQuery update | All dependent builders | ScreenSizeModelData<T> |
+| Breakpoint Transition | Screen size category change | BreakpointsHandler instances | New screen size enum |
+| Layout Constraint Change | Parent layout change | LayoutConstraintsProvider dependents | BoxConstraints |
 
-## Event-Driven Architecture
+### Event Flow Patterns
 
-### Message Broker
-- **Technology**: Flutter InheritedModel notification system
-- **Protocol**: Widget tree propagation
-- **Deployment**: In-process, single isolate
+#### Screen Size Change Flow
+1. **MediaQuery** detects device dimension change
+2. **ScreenSize widget** recalculates screen size category
+3. **ScreenSizeModel** compares with cached value
+4. **If changed** → `updateShouldNotifyDependent` returns true
+5. **Dependent widgets** receive notification via `dependOnInheritedWidgetOfExactType`
+6. **Builder widgets** re-execute with new responsive values
+7. **UI components** rebuild with appropriate layout
 
-### Event Catalog
+#### Responsive Value Resolution Flow
+1. **Widget build** → Requests current screen size
+2. **BaseBreakpointsHandler** → Checks cache for current screen size
+3. **Cache miss** → Resolves value using fallback logic
+4. **Value cached** → Stored for subsequent requests
+5. **onChange callback** → Notified of screen size changes
 
-| Event Name | Producer | Consumers | Payload Schema |
-|------------|----------|-----------|----------------|
-| screenSize.changed | ScreenSize widget | All dependent builders | {screenSize: K, metrics: ScreenSizeModelData} |
-| breakpoint.resolved | BreakpointsHandler | ValueSizeBuilder widgets | {screenSize: K, value: T} |
-| orientation.changed | MediaQuery | ScreenSize widget | {orientation: Orientation} |
-| dimensions.changed | MediaQuery | ScreenSize widget | {width: double, height: double} |
+### Error Handling in State Changes
+- **Missing Model**: Throws descriptive FlutterError with troubleshooting steps
+- **Type Mismatch**: Compile-time type safety prevents runtime type errors
+- **Invalid Breakpoints**: Assertion errors during development, graceful degradation in release
 
-### 5.2 Document Event Flow
+## Step 5: Data Flow Diagrams
 
-## Event Flow Patterns
+### System-Level Data Flow
 
-### Screen Size Change Flow
-1. MediaQuery detects screen dimension change
-2. ScreenSize widget receives MediaQuery update
-3. ScreenSize calculates new breakpoint category
-4. ScreenSizeModel notifies dependent widgets via InheritedModel
-5. Builder widgets receive new screen size data
-6. BreakpointsHandler resolves appropriate values
-7. onChanged callbacks (if configured) are invoked
-8. Builder widgets rebuild with new resolved values
+#### Widget Tree State Propagation
+1. **App Widget** → Wrapped in ScreenSize<T>
+2. **ScreenSize<T>** → Creates ScreenSizeModel<T>
+3. **Child Widgets** → Access state via ScreenSizeModel.of<T>(context)
+4. **Builder Widgets** → Resolve responsive values using handlers
+5. **UI Components** → Render with resolved values
 
-### Orientation Change Flow
-1. Device orientation changes
-2. MediaQuery updates orientation data
-3. ScreenSize widget detects orientation change
-4. Screen dimensions recalculated
-5. New breakpoint category determined
-6. Full event cascade as per screen size change
+#### Responsive Value Resolution Flow
+1. **Widget build()** called
+2. **Handler.getScreenSizeValue()** → Checks cache
+3. **Cache miss** → Iterates through breakpoint values
+4. **Value resolution** → Uses fallback logic for missing values
+5. **Cache update** → Stores resolved value
+6. **Return value** → Widget renders with responsive value
 
-### Error Handling in Events
-- **Validation Errors**: Immediate assertion failures during development
-- **Resolution Errors**: StateError if no fallback values available
-- **Widget Tree Errors**: FlutterError if ScreenSizeModel not found
+### Breakpoint Handler Lifecycle
+1. **Initialization** → Configure breakpoints and values
+2. **First Request** → Calculate screen size from constraints
+3. **Value Lookup** → Find exact match or fallback value
+4. **Cache Storage** → Store result for performance
+5. **Change Detection** → Monitor for screen size transitions
+6. **Update Notification** → Trigger onChange callbacks
 
-## Step 6: Create Data Flow Diagrams
+## Step 6: Data Synchronization
 
-### 6.1 System-Level Data Flow
+### State Synchronization Strategies
 
-## System Data Flow
+#### Screen Size State Sync
+- **Source of Truth**: MediaQuery provided by Flutter framework
+- **Update Pattern**: Push-based notifications via InheritedWidget
+- **Consistency Model**: Immediate consistency within widget tree
+- **Sync Frequency**: Real-time on device orientation/window resize
 
-### Widget Build Lifecycle
-1. **App Initialization** → ScreenSize widget creation
-2. **MediaQuery** → Screen dimension detection
-3. **Breakpoint Calculation** → Category determination
-4. **InheritedModel** → State propagation
-5. **Builder Widgets** → Value resolution
-6. **BreakpointsHandler** → Cached value lookup
-7. **Widget Build** → UI rendering
-8. **Change Detection** → Rebuild cycle initiation
+#### Cache Synchronization
+- **Pattern**: Write-through caching in BreakpointsHandler
+- **Invalidation**: Automatic on screen size category changes
+- **Scope**: Per-handler instance (no cross-handler sync needed)
+- **Performance**: O(1) lookup after initial resolution
 
-### Responsive Value Resolution Flow
-1. **Builder Widget** requests current screen size
-2. **ScreenSizeModel** provides cached category
-3. **BreakpointsHandler** checks cache for value
-4. **Cache Hit** → Return cached value
-5. **Cache Miss** → Apply fallback resolution
-6. **Value Found** → Cache and return
-7. **Builder Function** → Construct responsive widget
+### Cross-Widget State Sharing
+- **Mechanism**: InheritedWidget automatic dependency tracking
+- **Granularity**: Aspect-based selective updates (screenSize vs other properties)
+- **Performance**: Only affected widgets rebuild on state changes
+- **Isolation**: Each ScreenSize<T> creates independent state scope
 
-## Step 7: Document Data Synchronization
+## Step 7: Performance Considerations
 
-### 7.1 Synchronization Strategies
+### Optimization Strategies
 
-## Data Synchronization
+#### Caching Layer
+- **Screen Size Resolution**: Cache resolved values per screen size enum
+- **Constraint Calculations**: Cache dimension-to-screen-size mappings
+- **Builder Results**: No automatic caching (delegate to Flutter widget system)
 
-### Widget Tree Synchronization
-- **Strategy**: InheritedModel-based propagation
-- **Consistency Model**: Eventual consistency within build cycle
-- **Sync Frequency**: Real-time on MediaQuery changes
+#### Selective Updates
+- **InheritedModel Aspects**: Only rebuild widgets depending on changed aspects
+- **Screen Size vs Other**: Separate aspect for screen size enum vs detailed metrics
+- **Change Detection**: Compare hash codes to minimize unnecessary rebuilds
 
-### Cache Synchronization
-- **Strategy**: Immediate invalidation on state change
-- **Update Pattern**: Write-through for screen size changes
-- **Consistency**: Strong consistency within widget lifecycle
+#### Memory Management
+- **Static Defaults**: Reuse default breakpoint configurations
+- **Enum-based Keys**: Lightweight enum values for map keys
+- **Immutable Data**: All data models are immutable for safe sharing
 
-### Cross-Widget Data Sync
-- **Pattern**: Shared InheritedModel for screen size data
-- **Dependency Tracking**: Aspect-based notification system
-- **Optimization**: Selective rebuilds based on data aspects
-
-## Step 8: Create Quick Reference Guide
-
-### 8.1 Summary Documentation
+### Common Performance Patterns
+- **Single ScreenSize Wrapper**: Place at app root for global screen size state
+- **Localized Handlers**: Use separate BreakpointsHandler instances per component
+- **Batch Updates**: Flutter automatically batches widget rebuilds
+- **Constraint-based Building**: Prefer layout constraints over screen dimensions when possible
 
 ## Quick Reference
 
 ### Critical Data Flows
-- **Screen Size Detection**: MediaQuery → ScreenSize → BreakpointCalculation → CategoryDetermination
-- **Value Resolution**: CategoryRequest → BreakpointsHandler → CacheCheck → FallbackLogic → ValueReturn
-- **Widget Updates**: StateChange → InheritedModel → DependentNotification → WidgetRebuild
+- **Screen Size Detection**: MediaQuery → ScreenSize → ScreenSizeModel → Builders
+- **Responsive Value Lookup**: Handler → Cache Check → Breakpoint Resolution → UI Render
+- **State Updates**: Device Change → MediaQuery → Model Update → Selective Widget Rebuilds
 
-### Common Patterns
-- **Read Pattern**: ScreenSizeModel.of() → Data Access → Widget Build
-- **Resolution Pattern**: Handler.getScreenSizeValue() → Cache Check → Fallback → Return
-- **Builder Pattern**: ValueSizeBuilder → Handler → Value → WidgetConstruction
+### Common Integration Patterns
+```dart
+// App-level setup
+ScreenSize<LayoutSize>(
+  breakpoints: Breakpoints.defaultBreakpoints,
+  child: MyApp(),
+)
 
-### Performance Considerations
-- Use ScreenSizeModel.screenSizeOf() for screen size only dependencies
-- Configure minimal breakpoint values for optimal fallback performance
-- Cache BreakpointsHandler instances to avoid repeated configuration
-- Prefer value-based builders over widget-based for non-widget responses
+// Widget-level responsive building
+ScreenSizeBuilder(
+  small: (context, data) => MobileLayout(),
+  large: (context, data) => DesktopLayout(),
+)
 
-## Step 9: Maintenance and Updates
+// Value-based responsive properties
+ValueSizeBuilder<double>(
+  small: 16.0,
+  large: 24.0,
+  builder: (context, fontSize) => Text('Hello', style: TextStyle(fontSize: fontSize)),
+)
+```
 
-### 9.1 Documentation Maintenance
+### Error Prevention Checklist
+- Always wrap app in ScreenSize<T> widget
+- Provide at least one non-null builder per responsive component
+- Use consistent generic type parameters throughout component tree
+- Configure breakpoints in descending order
+- Test orientation changes and window resizing
 
-## Documentation Maintenance
+## Maintenance and Updates
 
-### Update Triggers
-- New breakpoint system implementations
-- Additional builder widget types
+### Documentation Maintenance Triggers
+- New breakpoint configurations added
+- Additional responsive builder widgets created
 - Performance optimization changes
 - API surface modifications
 - Flutter SDK compatibility updates
 
 ### Review Schedule
-- **Weekly**: Review recent commits for API changes
-- **Monthly**: Validate all data flow examples and patterns
-- **Quarterly**: Full documentation accuracy audit
-- **Release**: Update documentation with new package versions
+- **With Each Release**: Validate all code examples and API references
+- **Flutter Updates**: Ensure compatibility with new Flutter versions
+- **Performance Reviews**: Monitor for any regressions in state management efficiency
 
-### Version Control
-- Keep documentation in same repository as code
-- Update docs in same PR as code changes
-- Tag documentation versions with package releases
-- Maintain backward compatibility documentation
+### Version Control Strategy
+- Keep documentation synchronized with package version
+- Update examples to reflect current API patterns
+- Document breaking changes in migration guides
+- Maintain backwards compatibility documentation for major versions
 
 ## Conclusion
 
-The `responsive_size_builder` package implements a sophisticated state management system for responsive Flutter applications. The data flows through a carefully designed hierarchy:
+The Responsive Size Builder package implements a clean, performant state management system for responsive Flutter applications. The architecture leverages Flutter's native InheritedWidget system to provide:
 
-1. **MediaQuery** provides raw screen dimensions
-2. **ScreenSize** widget processes dimensions into breakpoint categories
-3. **InheritedModel** efficiently propagates state changes
-4. **BreakpointsHandler** resolves appropriate values with intelligent caching
-5. **Builder widgets** construct responsive UIs using resolved values
+- **Type-safe responsive value resolution** across different screen size categories
+- **Efficient caching and change detection** to minimize unnecessary widget rebuilds
+- **Flexible breakpoint configuration** supporting both standard and granular size classifications
+- **Hierarchical state management** that integrates naturally with Flutter's widget tree
 
-Key characteristics of this system:
+Key architectural strengths include:
+- No external dependencies beyond Flutter SDK
+- Compile-time type safety preventing common responsive design errors
+- Automatic state synchronization across the widget tree
+- Performance-optimized with intelligent caching and selective updates
+- Comprehensive fallback mechanisms for robust responsive behavior
 
-- **Immutable State**: All configuration objects are immutable for predictable behavior
-- **Intelligent Caching**: Avoids redundant calculations while maintaining responsiveness
-- **Graceful Fallbacks**: Ensures robust value resolution even with partial configuration
-- **Type Safety**: Leverages Dart's type system for compile-time error prevention
-- **Performance Optimized**: Selective rebuilds and aspect-based dependencies minimize unnecessary work
-
-This documentation serves as a critical reference for debugging responsive behavior, onboarding new developers, and implementing system optimizations. The state management patterns documented here ensure consistent, predictable, and performant responsive layouts across all supported device categories.
+This documentation serves as the definitive reference for understanding data flow patterns, state management strategies, and integration approaches when using the Responsive Size Builder package in Flutter applications.
