@@ -1,3 +1,4 @@
+// ignore: unnecessary_library_directive
 library responsive_size_builder;
 
 export 'responsive_size_builder.dart';

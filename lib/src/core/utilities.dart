@@ -1,5 +1,3 @@
-library;
-
 import 'package:flutter/foundation.dart';
 
 bool kIsDesktopDevice = [

@@ -1,6 +1,5 @@
-import 'package:flutter/material.dart';
-
 import 'package:example/shared/widgets/category_chip.dart';
+import 'package:flutter/material.dart';
 import 'package:responsive_size_builder/responsive_size_builder.dart';
 
 class ScreenSizeHeader extends StatelessWidget {
