@@ -11,7 +11,7 @@ export 'src/core/utilities.dart';
 export 'src/layout_constraints/layout_constraints_provider_base.dart';
 export 'src/layout_constraints/layout_constraints_wrapper.dart';
 export 'src/layout_size/layout_size_builder.dart';
-export 'src/layout_size/layout_size_granular_builder.dart';
+export 'src/layout_size/layout_size_builder_granular.dart';
 export 'src/responsive_value/responsive_value.dart';
 export 'src/responsive_value/screen_size_with_value.dart';
 export 'src/responsive_value/screen_size_with_value_builder.dart';
