@@ -1,5 +1,7 @@
 import 'package:responsive_size_builder/responsive_size_builder.dart';
 
+/// Base class for computing a breakpoint-aware responsive value independent
+/// of widgets or layout.
 abstract class BaseResponsiveValue<T extends Enum, V extends Object?>
     extends BaseBreakpointsHandler<V, T> {
   BaseResponsiveValue({
@@ -13,6 +15,7 @@ abstract class BaseResponsiveValue<T extends Enum, V extends Object?>
   Map<T, V?> get values => _values;
 }
 
+/// Simple breakpoint-based value resolver for the 5-size [LayoutSize] enum.
 class ResponsiveValue<V extends Object?>
     extends BaseResponsiveValue<LayoutSize, V> {
   ResponsiveValue({
@@ -42,6 +45,8 @@ class ResponsiveValue<V extends Object?>
         );
 }
 
+/// Granular breakpoint-based value resolver for the 12-size
+/// [LayoutSizeGranular] enum.
 class ResponsiveValueGranular<V extends Object?>
     extends BaseResponsiveValue<LayoutSizeGranular, V> {
   ResponsiveValueGranular({

@@ -3,6 +3,8 @@ import 'package:responsive_size_builder/src/core/breakpoints/breakpoints.dart';
 import 'package:responsive_size_builder/src/core/breakpoints/breakpoints_handler.dart';
 import 'package:responsive_size_builder/src/screen_size/screen_size_data.dart';
 
+/// Value selector that resolves a single value of type [K] from the current
+/// global [ScreenSize] (5 breakpoints) and passes it to [builder].
 class ValueSizeBuilder<K> extends StatefulWidget {
   const ValueSizeBuilder({
     required this.builder,
@@ -31,6 +33,7 @@ class ValueSizeBuilder<K> extends StatefulWidget {
 
   final K? extraSmall;
 
+  /// Called with the resolved value for the current [LayoutSize].
   final Widget Function(BuildContext context, K value) builder;
 
   @override

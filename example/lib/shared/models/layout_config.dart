@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_size_builder/responsive_size_builder.dart'
-    show ResponsiveValue, ScreenSizeWithValueBuilder;
+    show ResponsiveValue, ScreenWithValueWidgetBuilder;
 
 /// Configuration model for responsive layouts containing padding and column information.
 ///
@@ -30,7 +30,7 @@ import 'package:responsive_size_builder/responsive_size_builder.dart'
 /// See also:
 ///
 /// * [ResponsiveValue], for creating responsive layout configurations
-/// * [ScreenSizeWithValueBuilder], for building widgets with layout configs
+/// * [ScreenWithValueWidgetBuilder], for building widgets with layout configs
 @immutable
 class LayoutConfig {
   /// Creates a [LayoutConfig] with the specified layout parameters.

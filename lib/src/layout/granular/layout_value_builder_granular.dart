@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_size_builder/responsive_size_builder.dart';
 
-typedef ValueSizeWithValueBuilderGranularWidgetBuilder<K> = Widget Function(
-  BuildContext context,
-  K value,
-);
-
-class ValueSizeWithValueBuilderGranular<K, V extends Object?>
-    extends StatefulWidget {
-  const ValueSizeWithValueBuilderGranular({
+/// Layout-only value selector that resolves a single value of type [K] from
+/// local [LayoutBuilder] constraints using the 12-size
+/// [LayoutSizeGranular] enum.
+class LayoutValueBuilderGranular<K> extends StatefulWidget {
+  const LayoutValueBuilderGranular({
     required this.builder,
     this.jumboExtraLarge,
     this.jumboLarge,
@@ -23,7 +20,8 @@ class ValueSizeWithValueBuilderGranular<K, V extends Object?>
     this.compactNormal,
     this.compactSmall,
     this.tiny,
-    this.animateChange = false,
+    this.breakpoints = BreakpointsGranular.defaultBreakpoints,
+    this.useShortestSide = false,
     super.key,
   }) : assert(
           jumboExtraLarge != null ||
@@ -39,47 +37,37 @@ class ValueSizeWithValueBuilderGranular<K, V extends Object?>
               compactNormal != null ||
               compactSmall != null ||
               tiny != null,
-          'At least one builder must be provided',
+          'At least one value must be provided',
         );
 
   final K? jumboExtraLarge;
-
   final K? jumboLarge;
-
   final K? jumboNormal;
-
   final K? jumboSmall;
-
   final K? standardExtraLarge;
-
   final K? standardLarge;
-
   final K? standardNormal;
-
   final K? standardSmall;
-
   final K? compactExtraLarge;
-
   final K? compactLarge;
-
   final K? compactNormal;
-
   final K? compactSmall;
-
   final K? tiny;
 
-  final ValueSizeWithValueBuilderGranularWidgetBuilder<K> builder;
-
-  final bool animateChange;
+  final BreakpointsGranular breakpoints;
+  final bool useShortestSide;
+  final LayoutValueBuilderFn<K> builder;
 
   @override
-  State<ValueSizeWithValueBuilderGranular<K, V>> createState() =>
-      _ValueSizeWithValueBuilderGranularState<K, V>();
+  State<LayoutValueBuilderGranular<K>> createState() =>
+      _LayoutValueBuilderGranularState<K>();
 }
 
-class _ValueSizeWithValueBuilderGranularState<K, V extends Object?>
-    extends State<ValueSizeWithValueBuilderGranular<K, V>> {
-  late final handler = BreakpointsHandlerGranular<K>(
+class _LayoutValueBuilderGranularState<K>
+    extends State<LayoutValueBuilderGranular<K>> {
+  late final BreakpointsHandlerGranular<K> _handler =
+      BreakpointsHandlerGranular<K>(
+    breakpoints: widget.breakpoints,
     jumboExtraLarge: widget.jumboExtraLarge,
     jumboLarge: widget.jumboLarge,
     jumboNormal: widget.jumboNormal,
@@ -97,23 +85,14 @@ class _ValueSizeWithValueBuilderGranularState<K, V extends Object?>
 
   @override
   Widget build(BuildContext context) {
-    final data = ScreenSizeModelWithValue.of<LayoutSizeGranular, V>(
-      context,
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final value = _handler.getLayoutSizeValue(
+          constraints: constraints,
+          useShortestSide: widget.useShortestSide,
+        );
+        return widget.builder(context, value);
+      },
     );
-
-    final value = handler.getScreenSizeValue.call(
-      screenSize: data.screenSize,
-    );
-
-    var child = widget.builder(context, value);
-
-    if (widget.animateChange) {
-      child = AnimatedSwitcher(
-        duration: const Duration(milliseconds: 300),
-        child: child,
-      );
-    }
-
-    return child;
   }
 }

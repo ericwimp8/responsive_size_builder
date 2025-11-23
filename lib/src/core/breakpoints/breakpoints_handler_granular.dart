@@ -1,5 +1,7 @@
 import 'package:responsive_size_builder/responsive_size_builder.dart';
 
+/// Convenience [BaseBreakpointsHandler] wired to the 12-size
+/// [LayoutSizeGranular] enum.
 class BreakpointsHandlerGranular<T>
     extends BaseBreakpointsHandler<T, LayoutSizeGranular> {
   BreakpointsHandlerGranular({
@@ -61,6 +63,8 @@ class BreakpointsHandlerGranular<T>
 
   final T? tiny;
 
+  /// Map of [LayoutSizeGranular] to the value used when that breakpoint
+  /// is active.
   @override
   Map<LayoutSizeGranular, T?> get values => {
         LayoutSizeGranular.jumboExtraLarge: jumboExtraLarge,

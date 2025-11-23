@@ -32,25 +32,25 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: const HomePage(),
       routes: {
-        '/screen-size-builder': (context) => const ScreenSizeBuilderExample(),
+        '/screen-size-builder': (context) => const ScreenWidgetBuilderExample(),
         '/screen-size-orientation-builder': (context) =>
-            const ScreenSizeOrientationBuilderExample(),
+            const ScreenWidgetBuilderOrientationExample(),
         '/screen-size-builder-granular': (context) =>
-            const ScreenSizeBuilderGranularExample(),
-        '/layout-size-builder': (context) => const LayoutSizeBuilderExample(),
+            const ScreenWidgetBuilderGranularExample(),
+        '/layout-size-builder': (context) => const LayoutWidgetBuilderExample(),
         '/layout-value-size-builder': (context) =>
-            const LayoutValueSizeBuilderExample(),
-        '/value-size-builder': (context) => const ValueSizeBuilderExample(),
+            const LayoutValueBuilderExample(),
+        '/value-size-builder': (context) => const ScreenValueBuilderExample(),
         '/value-size-builder-granular': (context) =>
-            const ValueSizeBuilderGranularExample(),
+            const ScreenValueBuilderGranularExample(),
         '/screen-size-with-value': (context) =>
             const ScreenSizeWithValueExample(),
         '/screen-size-with-value-builder': (context) =>
-            const ScreenSizeWithValueBuilderExample(),
+            const ScreenWithValueWidgetBuilderExample(),
         '/screen-size-with-value-granular-builder': (context) =>
             const ScreenSizeWithValueBuilderGranularExample(),
         '/screen-size-with-value-orientation-builder': (context) =>
-            const ScreenSizeWithValueOrientationBuilderExample(),
+            const ScreenWithValueWidgetBuilderOrientationExample(),
       },
     );
   }

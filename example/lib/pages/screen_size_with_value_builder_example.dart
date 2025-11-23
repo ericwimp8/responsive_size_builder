@@ -3,8 +3,8 @@ import 'package:example/shared/widgets/screen_size_header.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_size_builder/responsive_size_builder.dart';
 
-class ScreenSizeWithValueBuilderExample extends StatelessWidget {
-  const ScreenSizeWithValueBuilderExample({super.key});
+class ScreenWithValueWidgetBuilderExample extends StatelessWidget {
+  const ScreenWithValueWidgetBuilderExample({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,7 @@ class ScreenSizeWithValueBuilderExample extends StatelessWidget {
       ),
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('ScreenSizeWithValueBuilder Example'),
+          title: const Text('ScreenWithValueWidgetBuilder Example'),
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         ),
         body: const _ResponsiveContent(),
@@ -34,7 +34,7 @@ class _ResponsiveContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ScreenSizeWithValueBuilder<LayoutConfig>(
+    return ScreenWithValueWidgetBuilder<LayoutConfig>(
       // Each builder now gets the LayoutConfig from the ScreenSizeWithValue provider
       extraSmall: (context, data) => _LayoutWidget(
         data: data,

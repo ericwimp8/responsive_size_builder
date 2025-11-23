@@ -3,6 +3,8 @@ import 'package:responsive_size_builder/src/core/breakpoints/breakpoints.dart';
 import 'package:responsive_size_builder/src/core/breakpoints/breakpoints_handler_granular.dart';
 import 'package:responsive_size_builder/src/screen_size/screen_size_data.dart';
 
+/// Value selector that resolves a single value of type [K] from the current
+/// global [ScreenSize] using the 12-size [LayoutSizeGranular] enum.
 class ValueSizeBuilderGranular<K> extends StatefulWidget {
   const ValueSizeBuilderGranular({
     required this.builder,
@@ -63,6 +65,7 @@ class ValueSizeBuilderGranular<K> extends StatefulWidget {
 
   final K? tiny;
 
+  /// Called with the resolved value for the current [LayoutSizeGranular].
   final Widget Function(BuildContext context, K value) builder;
 
   @override

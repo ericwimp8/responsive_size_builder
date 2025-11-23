@@ -2,10 +2,10 @@ import 'package:example/shared/widgets/screen_size_header.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_size_builder/responsive_size_builder.dart';
 
-/// Demonstrates using LayoutValueSizeBuilder to choose primitive values
+/// Demonstrates using LayoutValueBuilder to choose primitive values
 /// based on parent constraints rather than global screen size.
-class LayoutValueSizeBuilderExample extends StatelessWidget {
-  const LayoutValueSizeBuilderExample({super.key});
+class LayoutValueBuilderExample extends StatelessWidget {
+  const LayoutValueBuilderExample({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +13,7 @@ class LayoutValueSizeBuilderExample extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('LayoutValueSizeBuilder Example'),
+        title: const Text('LayoutValueBuilder Example'),
         backgroundColor: theme.colorScheme.inversePrimary,
       ),
       body: Column(
@@ -26,7 +26,7 @@ class LayoutValueSizeBuilderExample extends StatelessWidget {
                 child: Column(
                   children: [
                     Text(
-                      'LayoutValueSizeBuilder',
+                      'LayoutValueBuilder',
                       style: theme.textTheme.headlineSmall,
                     ),
                     const SizedBox(height: 8),
@@ -97,14 +97,14 @@ class _ValuePanel extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Expanded(
-              child: LayoutValueSizeBuilder<double>(
+              child: LayoutValueBuilder<double>(
                 extraSmall: 6,
                 small: 10,
                 medium: 14,
                 large: 20,
                 extraLarge: 28,
                 builder: (context, spacing) {
-                  return LayoutValueSizeBuilder<int>(
+                  return LayoutValueBuilder<int>(
                     extraSmall: 1,
                     small: 2,
                     medium: 3,

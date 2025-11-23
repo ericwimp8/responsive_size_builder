@@ -2,8 +2,8 @@ import 'package:example/shared/widgets/screen_size_header.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_size_builder/responsive_size_builder.dart';
 
-class ValueSizeBuilderGranularExample extends StatelessWidget {
-  const ValueSizeBuilderGranularExample({super.key});
+class ScreenValueBuilderGranularExample extends StatelessWidget {
+  const ScreenValueBuilderGranularExample({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +12,7 @@ class ValueSizeBuilderGranularExample extends StatelessWidget {
       breakpoints: BreakpointsGranular.defaultBreakpoints,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('ValueSizeBuilderGranular Example'),
+          title: const Text('ScreenValueBuilderGranular Example'),
           backgroundColor: theme.colorScheme.inversePrimary,
         ),
         body: SingleChildScrollView(
@@ -25,7 +25,7 @@ class ValueSizeBuilderGranularExample extends StatelessWidget {
                   child: Column(
                     children: [
                       Text(
-                        'ValueSizeBuilderGranular',
+                        'ScreenValueBuilderGranular',
                         style: theme.textTheme.headlineSmall,
                       ),
                       const SizedBox(height: 8),
@@ -42,7 +42,7 @@ class ValueSizeBuilderGranularExample extends StatelessWidget {
               ),
               const SizedBox(height: 20),
               // Example 1: Responsive Spacing
-              ValueSizeBuilderGranular<double>(
+              ScreenValueBuilderGranular<double, Object?>(
                 tiny: 4,
                 compactSmall: 8,
                 compactNormal: 12,
@@ -55,7 +55,7 @@ class ValueSizeBuilderGranularExample extends StatelessWidget {
                 jumboNormal: 40,
                 jumboLarge: 44,
                 jumboExtraLarge: 48,
-                builder: (context, spacing) {
+                builder: (context, spacing, {data, responsiveValue}) {
                   return Card(
                     child: Padding(
                       padding: EdgeInsets.all(spacing),
@@ -79,7 +79,7 @@ class ValueSizeBuilderGranularExample extends StatelessWidget {
               ),
               const SizedBox(height: 20),
               // Example 2: Responsive Font Size
-              ValueSizeBuilderGranular<double>(
+              ScreenValueBuilderGranular<double, Object?>(
                 tiny: 12,
                 compactSmall: 14,
                 compactNormal: 16,
@@ -92,7 +92,7 @@ class ValueSizeBuilderGranularExample extends StatelessWidget {
                 jumboNormal: 32,
                 jumboLarge: 36,
                 jumboExtraLarge: 40,
-                builder: (context, fontSize) {
+                builder: (context, fontSize, {data, responsiveValue}) {
                   return Card(
                     child: Padding(
                       padding: const EdgeInsets.all(20),
@@ -124,7 +124,7 @@ class ValueSizeBuilderGranularExample extends StatelessWidget {
               ),
               const SizedBox(height: 20),
               // Example 3: Responsive Column Count
-              ValueSizeBuilderGranular<int>(
+              ScreenValueBuilderGranular<int, Object?>(
                 tiny: 1,
                 compactSmall: 1,
                 compactNormal: 2,
@@ -138,7 +138,7 @@ class ValueSizeBuilderGranularExample extends StatelessWidget {
                 jumboNormal: 8,
                 jumboLarge: 10,
                 jumboExtraLarge: 12,
-                builder: (context, columns) {
+                builder: (context, columns, {data, responsiveValue}) {
                   return Card(
                     child: Padding(
                       padding: const EdgeInsets.all(20),

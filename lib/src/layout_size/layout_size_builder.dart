@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_size_builder/responsive_size_builder.dart';
 
+/// Layout-only widget selector using 5 breakpoints derived from
+/// local [LayoutBuilder] constraints.
 class LayoutSizeBuilder extends StatefulWidget {
   const LayoutSizeBuilder({
     this.extraLarge,
@@ -29,6 +31,7 @@ class LayoutSizeBuilder extends StatefulWidget {
 
   final WidgetBuilder? extraSmall;
 
+  /// Breakpoints used to classify the layout constraints.
   final Breakpoints breakpoints;
 
   @override

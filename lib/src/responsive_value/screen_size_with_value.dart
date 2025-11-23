@@ -4,6 +4,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_size_builder/responsive_size_builder.dart';
 
+/// Top-level widget that exposes both screen metrics and a breakpoint-derived
+/// responsive value via [ScreenSizeModelWithValue].
 class ScreenSizeWithValue<T extends Enum, V extends Object?>
     extends StatefulWidget {
   const ScreenSizeWithValue({
@@ -23,6 +25,7 @@ class ScreenSizeWithValue<T extends Enum, V extends Object?>
 
   final FlutterView? testView;
 
+  /// Whether to classify using the shortest side instead of width.
   final bool useShortestSide;
 
   @override
@@ -32,7 +35,6 @@ class ScreenSizeWithValue<T extends Enum, V extends Object?>
 
 class _ScreenSizeWithValueState<T extends Enum, V extends Object?>
     extends State<ScreenSizeWithValue<T, V>> {
-
   T _getScreenSize(double size) {
     final entries = widget.breakpoints.values.entries.toList()
       ..sort((a, b) => b.value.compareTo(a.value));
@@ -121,6 +123,15 @@ The context used to look up ScreenSizeModelWithValue was:
     return model.data;
   }
 
+  /// Like [of] but returns null when no model is found.
+  static ScreenSizeModelDataWithValue<K, V>?
+      maybeOf<K extends Enum, V extends Object?>(
+    BuildContext context,
+  ) {
+    return InheritedModel.inheritFrom<ScreenSizeModelWithValue<K, V>>(context)
+        ?.data;
+  }
+
   static V responsiveValueOf<K extends Enum, V extends Object?>(
     BuildContext context,
   ) {
@@ -175,7 +186,7 @@ ScreenSizeWithValue and the appropriate type parameter is being used.
         return true;
       }
     }
-    
+
     // Check for any other changes for other aspect
     if (oldWidget.data != data &&
         dependencies.contains(ScreenSizeAspect.other)) {
@@ -217,15 +228,34 @@ class ScreenSizeModelDataWithValue<K extends Enum, V extends Object?> {
 
   final Orientation orientation;
 
+  /// True when the resolved platform is a desktop platform.
   bool get isDesktopDevice => kIsDesktopDevice;
 
+  /// True when the resolved platform is a touch-first mobile platform.
   bool get isTouchDevice => kIsTouchDevice;
 
+  /// True when the app is running on the web.
   bool get isWeb => kIsWeb;
 
   @override
   String toString() {
     return 'ScreenSizeModelDataWithValue(breakpoints: $breakpoints, currentBreakpoint: $currentBreakpoint, screenSize: $screenSize, physicalWidth: $physicalWidth, physicalHeight: $physicalHeight, devicePixelRatio: $devicePixelRatio, logicalScreenWidth: $logicalScreenWidth, logicalScreenHeight: $logicalScreenHeight, orientation: $orientation, responsiveValue: $responsiveValue)';
+  }
+
+  /// Returns a [ScreenSizeModelData] view of this object for APIs that only
+  /// expect screen metrics without the responsive value.
+  ScreenSizeModelData<K> asScreenData() {
+    return ScreenSizeModelData<K>(
+      breakpoints: breakpoints,
+      currentBreakpoint: currentBreakpoint,
+      screenSize: screenSize,
+      physicalWidth: physicalWidth,
+      physicalHeight: physicalHeight,
+      devicePixelRatio: devicePixelRatio,
+      logicalScreenWidth: logicalScreenWidth,
+      logicalScreenHeight: logicalScreenHeight,
+      orientation: orientation,
+    );
   }
 
   @override

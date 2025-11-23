@@ -4,6 +4,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_size_builder/responsive_size_builder.dart';
 
+/// Top-level widget that measures the current screen size using [MediaQuery]
+/// and exposes it via [ScreenSizeModel].
 class ScreenSize<T extends Enum> extends StatefulWidget {
   const ScreenSize({
     required this.breakpoints,
@@ -19,6 +21,7 @@ class ScreenSize<T extends Enum> extends StatefulWidget {
 
   final FlutterView? testView;
 
+  /// Whether to classify using the shortest side instead of width.
   final bool useShortestSide;
   @override
   State<ScreenSize<T>> createState() => _ScreenSizeState<T>();
@@ -111,10 +114,9 @@ The context used to look up ScreenSizeModel was:
     );
     if (model == null) {
       throw FlutterError('''
-ScreenSizeModel<$K> not found, please ensure that the app is wrapped in ScreenSize and 
-the appropriate builder widget is being used.
-ScreenSize<LayoutSizeGranular> will require ScreenSizeBuilderGranularGranular
-ScreenSize<LayoutSize> will require ScreenSizeBuilderGranular
+ScreenSizeModel<$K> not found. Wrap your app in ScreenSize<$K> and use the matching builder:
+ScreenSize<LayoutSizeGranular> → ScreenWidgetBuilderGranular
+ScreenSize<LayoutSize> → ScreenWidgetBuilder
 ''');
     }
 
@@ -170,10 +172,13 @@ class ScreenSizeModelData<K extends Enum> {
 
   final Orientation orientation;
 
+  /// True when the resolved platform is a desktop platform.
   bool get isDesktopDevcie => kIsDesktopDevice;
 
+  /// True when the resolved platform is a touch-first mobile platform.
   bool get isTouchDevice => kIsTouchDevice;
 
+  /// True when the app is running on the web.
   bool get isWeb => kIsWeb;
 
   @override
@@ -214,7 +219,9 @@ class ScreenSizeModelData<K extends Enum> {
 }
 
 enum ScreenSizeAspect {
+  /// Only depend on changes to the [ScreenSizeModelData.screenSize] value.
   screenSize,
 
+  /// Depend on any other field within [ScreenSizeModelData].
   other,
 }

@@ -1,44 +1,42 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_size_builder/responsive_size_builder.dart';
 
-// TODO(ericwimp): Add ability to position overlay origin relative to widget eg, topleft, topright, bottomleft, bottomright etc
-// TODO(ericwimp): Add ability to position overlay based on origin, so top center would place the top
-// center of the overlay at the choose overlay origin
-
+/// Computes spacing information around a widget based on its render box and
+/// current [ScreenSizeModel].
+///
+/// The returned [WidgetSpacing] can be used to position overlays relative to
+/// the widget while respecting available screen space.
 WidgetSpacing getWidgetSpacing<T extends Enum>(BuildContext context) {
   final renderBox = context.findRenderObject() as RenderBox?;
   final screenSizeModel = ScreenSizeModel.of<T>(context);
 
   if (renderBox == null || !renderBox.hasSize) {
-    // It's crucial that the renderBox has been laid out and has a size.
-    // Returning a default or throwing might depend on your use case.
-    // Throwing is safer if the logic absolutely depends on valid measurements.
+    // The render object must be laid out before we can measure spacing.
+    // Returning [WidgetSpacing.empty] avoids throwing during build.
     return WidgetSpacing.empty;
   }
 
-  // Get widget's size and position
+  // Get widget's size and position.
   final widgetSize = renderBox.size;
   final widgetPosition = renderBox.localToGlobal(Offset.zero);
 
-  // Get screen dimensions from the model
+  // Get screen dimensions from the model.
   final screenWidth = screenSizeModel.logicalScreenWidth;
   final screenHeight = screenSizeModel.logicalScreenHeight;
 
-  // Calculate spacing
+  // Calculate spacing.
   final heightAbove = widgetPosition.dy;
   final heightBelow = screenHeight - (widgetPosition.dy + widgetSize.height);
   final widthLeft = widgetPosition.dx;
   final widthRight = screenWidth - (widgetPosition.dx + widgetSize.width);
 
-  // Calculate the size of the areas around the widget
-  // Note: Ensure these calculations make sense for your specific overlay needs.
-  // These assume the areas span the full width/height outside the widget bounds.
+  // Calculate the size of the areas around the widget. These represent the
+  // free regions above, below, left and right of the widget.
   final sizeAbove = Size(screenWidth, heightAbove);
   final sizeBelow = Size(screenWidth, heightBelow);
   final sizeLeft = Size(widthLeft, screenHeight);
   final sizeRight = Size(widthRight, screenHeight);
 
-  // Return the calculated spacing
   return WidgetSpacing(
     screenHeight: screenHeight,
     screenWidth: screenWidth,
@@ -55,6 +53,8 @@ WidgetSpacing getWidgetSpacing<T extends Enum>(BuildContext context) {
   );
 }
 
+/// Variant of [getWidgetSpacing] that reads metrics from
+/// [ScreenSizeModelWithValue] when a responsive value model is in use.
 WidgetSpacing getWidgetSpacingWithValue<T extends Enum, V extends Object?>(
   BuildContext context,
 ) {
@@ -62,35 +62,30 @@ WidgetSpacing getWidgetSpacingWithValue<T extends Enum, V extends Object?>(
   final screenSizeModel = ScreenSizeModelWithValue.of<T, V>(context);
 
   if (renderBox == null || !renderBox.hasSize) {
-    // It's crucial that the renderBox has been laid out and has a size.
-    // Returning a default or throwing might depend on your use case.
-    // Throwing is safer if the logic absolutely depends on valid measurements.
+    // The render object must be laid out before we can measure spacing.
     return WidgetSpacing.empty;
   }
 
-  // Get widget's size and position
+  // Get widget's size and position.
   final widgetSize = renderBox.size;
   final widgetPosition = renderBox.localToGlobal(Offset.zero);
 
-  // Get screen dimensions from the model
+  // Get screen dimensions from the model.
   final screenWidth = screenSizeModel.logicalScreenWidth;
   final screenHeight = screenSizeModel.logicalScreenHeight;
 
-  // Calculate spacing
+  // Calculate spacing.
   final heightAbove = widgetPosition.dy;
   final heightBelow = screenHeight - (widgetPosition.dy + widgetSize.height);
   final widthLeft = widgetPosition.dx;
   final widthRight = screenWidth - (widgetPosition.dx + widgetSize.width);
 
-  // Calculate the size of the areas around the widget
-  // Note: Ensure these calculations make sense for your specific overlay needs.
-  // These assume the areas span the full width/height outside the widget bounds.
+  // Calculate the size of the areas around the widget.
   final sizeAbove = Size(screenWidth, heightAbove);
   final sizeBelow = Size(screenWidth, heightBelow);
   final sizeLeft = Size(widthLeft, screenHeight);
   final sizeRight = Size(widthRight, screenHeight);
 
-  // Return the calculated spacing
   return WidgetSpacing(
     screenHeight: screenHeight,
     screenWidth: screenWidth,
@@ -109,6 +104,8 @@ WidgetSpacing getWidgetSpacingWithValue<T extends Enum, V extends Object?>(
 
 @immutable
 class WidgetSpacing {
+  /// Collection of geometric information describing where a widget sits on the
+  /// screen and how much free space exists around it.
   const WidgetSpacing({
     required this.screenHeight,
     required this.screenWidth,
@@ -148,6 +145,7 @@ class WidgetSpacing {
 
   final Size sizeRight;
 
+  /// Constant representing a zero-size, zero-position spacing.
   static const empty = WidgetSpacing(
     screenHeight: 0,
     screenWidth: 0,
@@ -171,6 +169,11 @@ class WidgetSpacing {
 
   bool get hasSpaceBelow => heightBelow > 0;
 
+  /// Derives vertical overlay constraints and direction based on available
+  /// space above and below the widget.
+  ///
+  /// When [desiredDirection] does not have enough room to satisfy
+  /// [minimumSpace], the opposite direction is chosen instead.
   (BoxConstraints effectiveConstraints, VerticalDirection effectiveDirection)
       constraintsVertical({
     double minimumSpace = 250,
@@ -222,6 +225,11 @@ class WidgetSpacing {
     }
   }
 
+  /// Derives horizontal overlay constraints and direction based on available
+  /// space to the left and right of the widget.
+  ///
+  /// When [desiredDirection] does not have enough room to satisfy
+  /// [minimumWidth], the opposite direction is chosen instead.
   (BoxConstraints effectiveConstraints, HorizonatalDirection effectiveDirection)
       onstraintsHorizontal({
     double minimumWidth = 150,
@@ -345,7 +353,9 @@ class WidgetSpacing {
 }
 
 enum HorizonatalDirection {
+  /// Lay out content to the left of the reference widget.
   left,
 
+  /// Lay out content to the right of the reference widget.
   right,
 }

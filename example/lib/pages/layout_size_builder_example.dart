@@ -1,16 +1,16 @@
 import 'package:example/shared/widgets/screen_size_header.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide LayoutWidgetBuilder;
 import 'package:responsive_size_builder/responsive_size_builder.dart';
 
-class LayoutSizeBuilderExample extends StatelessWidget {
-  const LayoutSizeBuilderExample({super.key});
+class LayoutWidgetBuilderExample extends StatelessWidget {
+  const LayoutWidgetBuilderExample({super.key});
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('LayoutSizeBuilder Example'),
+        title: const Text('LayoutWidgetBuilder Example'),
         backgroundColor: theme.colorScheme.inversePrimary,
       ),
       body: Column(
@@ -23,7 +23,7 @@ class LayoutSizeBuilderExample extends StatelessWidget {
                 child: Column(
                   children: [
                     Text(
-                      'LayoutSizeBuilder',
+                      'LayoutWidgetBuilder',
                       style: theme.textTheme.headlineSmall,
                     ),
                     const SizedBox(height: 8),
@@ -108,7 +108,7 @@ class _Panel extends StatelessWidget {
               ],
             ),
             Expanded(
-              child: LayoutSizeBuilder(
+              child: LayoutWidgetBuilder(
                 small: (context) => _Content(
                   size: 'Small',
                   columns: 1,

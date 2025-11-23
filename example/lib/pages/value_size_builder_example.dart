@@ -2,8 +2,8 @@ import 'package:example/shared/widgets/screen_size_header.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_size_builder/responsive_size_builder.dart';
 
-class ValueSizeBuilderExample extends StatelessWidget {
-  const ValueSizeBuilderExample({super.key});
+class ScreenValueBuilderExample extends StatelessWidget {
+  const ScreenValueBuilderExample({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +12,7 @@ class ValueSizeBuilderExample extends StatelessWidget {
       breakpoints: Breakpoints.defaultBreakpoints,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('ValueSizeBuilder Example'),
+          title: const Text('ScreenValueBuilder Example'),
           backgroundColor: theme.colorScheme.inversePrimary,
         ),
         body: SingleChildScrollView(
@@ -25,7 +25,7 @@ class ValueSizeBuilderExample extends StatelessWidget {
                   child: Column(
                     children: [
                       Text(
-                        'ValueSizeBuilder',
+                        'ScreenValueBuilder',
                         style: theme.textTheme.headlineSmall,
                       ),
                       const SizedBox(height: 8),
@@ -41,13 +41,13 @@ class ValueSizeBuilderExample extends StatelessWidget {
               ),
               const SizedBox(height: 20),
               // Example 1: Responsive Spacing
-              ValueSizeBuilder<double>(
+              ScreenValueBuilder<double, Object?>(
                 extraSmall: 4,
                 small: 8,
                 medium: 16,
                 large: 24,
                 extraLarge: 32,
-                builder: (context, spacing) {
+                builder: (context, spacing, {data, responsiveValue}) {
                   return Card(
                     child: Padding(
                       padding: EdgeInsets.all(spacing),
@@ -71,13 +71,13 @@ class ValueSizeBuilderExample extends StatelessWidget {
               ),
               const SizedBox(height: 20),
               // Example 2: Responsive Font Size
-              ValueSizeBuilder<double>(
+              ScreenValueBuilder<double, Object?>(
                 extraSmall: 12,
                 small: 14,
                 medium: 18,
                 large: 22,
                 extraLarge: 28,
-                builder: (context, fontSize) {
+                builder: (context, fontSize, {data, responsiveValue}) {
                   return Card(
                     child: Padding(
                       padding: const EdgeInsets.all(20),
@@ -109,13 +109,13 @@ class ValueSizeBuilderExample extends StatelessWidget {
               ),
               const SizedBox(height: 20),
               // Example 3: Responsive Column Count
-              ValueSizeBuilder<int>(
+              ScreenValueBuilder<int, Object?>(
                 extraSmall: 1,
                 small: 1,
                 medium: 2,
                 large: 4,
                 extraLarge: 6,
-                builder: (context, columns) {
+                builder: (context, columns, {data, responsiveValue}) {
                   return Card(
                     child: Padding(
                       padding: const EdgeInsets.all(20),

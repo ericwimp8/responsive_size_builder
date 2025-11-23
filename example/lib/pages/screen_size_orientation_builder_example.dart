@@ -2,8 +2,8 @@ import 'package:example/shared/widgets/screen_size_header.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_size_builder/responsive_size_builder.dart';
 
-class ScreenSizeOrientationBuilderExample extends StatelessWidget {
-  const ScreenSizeOrientationBuilderExample({super.key});
+class ScreenWidgetBuilderOrientationExample extends StatelessWidget {
+  const ScreenWidgetBuilderOrientationExample({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,55 +17,55 @@ class ScreenSizeOrientationBuilderExample extends StatelessWidget {
       ),
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('ScreenSizeOrientationBuilder Example'),
+          title: const Text('ScreenWidgetBuilderOrientation Example'),
           backgroundColor: theme.colorScheme.inversePrimary,
         ),
-        body: ScreenSizeOrientationBuilder(
+        body: ScreenWidgetBuilderOrientation(
           // Portrait builders
-          small: (context) => _PortraitLayout(
+          small: (context, data) => _PortraitLayout(
             title: 'Small Portrait',
             backgroundColor: theme.colorScheme.errorContainer,
             columns: 1,
             icon: Icons.stay_current_portrait,
           ),
-          medium: (context) => _PortraitLayout(
+          medium: (context, data) => _PortraitLayout(
             title: 'Medium Portrait',
             backgroundColor: theme.colorScheme.tertiaryContainer,
             columns: 2,
             icon: Icons.tablet,
           ),
-          large: (context) => _PortraitLayout(
+          large: (context, data) => _PortraitLayout(
             title: 'Large Portrait',
             backgroundColor: theme.colorScheme.secondaryContainer,
             columns: 3,
             icon: Icons.desktop_windows,
           ),
-          extraLarge: (context) => _PortraitLayout(
+          extraLarge: (context, data) => _PortraitLayout(
             title: 'Extra Large Portrait',
             backgroundColor: theme.colorScheme.primaryContainer,
             columns: 4,
             icon: Icons.tv,
           ),
           // Landscape builders
-          smallLandscape: (context) => _LandscapeLayout(
+          smallLandscape: (context, data) => _LandscapeLayout(
             title: 'Small Landscape',
             backgroundColor: theme.colorScheme.error,
             columns: 2,
             icon: Icons.stay_current_landscape,
           ),
-          mediumLandscape: (context) => _LandscapeLayout(
+          mediumLandscape: (context, data) => _LandscapeLayout(
             title: 'Medium Landscape',
             backgroundColor: theme.colorScheme.tertiary,
             columns: 3,
             icon: Icons.tablet_android,
           ),
-          largeLandscape: (context) => _LandscapeLayout(
+          largeLandscape: (context, data) => _LandscapeLayout(
             title: 'Large Landscape',
             backgroundColor: theme.colorScheme.secondary,
             columns: 4,
             icon: Icons.laptop,
           ),
-          extraLargeLandscape: (context) => _LandscapeLayout(
+          extraLargeLandscape: (context, data) => _LandscapeLayout(
             title: 'Extra Large Landscape',
             backgroundColor: theme.colorScheme.primary,
             columns: 5,

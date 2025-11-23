@@ -1,11 +1,16 @@
 import 'package:flutter/foundation.dart';
 
+/// Base contract for a breakpoint configuration mapping enum values to
+/// logical pixel thresholds.
 abstract class BaseBreakpoints<T extends Enum> {
   const BaseBreakpoints();
 
+  /// Map from the enum breakpoint to the minimum logical pixel size
+  /// (typically width) required for that breakpoint.
   Map<T, double> get values;
 }
 
+/// Simple breakpoint set for the common 5-size layout model.
 @immutable
 class Breakpoints implements BaseBreakpoints<LayoutSize> {
   const Breakpoints({
@@ -18,14 +23,19 @@ class Breakpoints implements BaseBreakpoints<LayoutSize> {
           'Breakpoints must be in decending order and larger than or equal to 0.',
         );
 
+  /// Minimum logical width for [LayoutSize.extraLarge].
   final double extraLarge;
 
+  /// Minimum logical width for [LayoutSize.large].
   final double large;
 
+  /// Minimum logical width for [LayoutSize.medium].
   final double medium;
 
+  /// Minimum logical width for [LayoutSize.small].
   final double small;
 
+  /// Default breakpoint configuration used by all standard builders.
   static const defaultBreakpoints = Breakpoints();
 
   @override
@@ -71,6 +81,8 @@ class Breakpoints implements BaseBreakpoints<LayoutSize> {
   }
 }
 
+/// More granular breakpoint set with 12 sizes spanning jumbo, standard and
+/// compact device classes.
 @immutable
 class BreakpointsGranular implements BaseBreakpoints<LayoutSizeGranular> {
   const BreakpointsGranular({
@@ -126,6 +138,7 @@ class BreakpointsGranular implements BaseBreakpoints<LayoutSizeGranular> {
 
   final double compactSmall;
 
+  /// Default breakpoint configuration used by all granular builders.
   static const defaultBreakpoints = BreakpointsGranular();
 
   @override
@@ -217,41 +230,59 @@ class BreakpointsGranular implements BaseBreakpoints<LayoutSizeGranular> {
 }
 
 enum LayoutSize {
+  /// Very wide layouts such as large desktop windows.
   extraLarge,
 
+  /// Large layouts, e.g. landscape tablets or medium desktop windows.
   large,
 
+  /// Medium layouts such as portrait tablets or large phones.
   medium,
 
+  /// Small layouts (typical phone width).
   small,
 
+  /// Extra small layouts below [Breakpoints.small].
   extraSmall,
 }
 
 enum LayoutSizeGranular {
+  /// Largest "jumbo" layout (e.g. ultra-wide monitors).
   jumboExtraLarge,
 
+  /// Large jumbo layout.
   jumboLarge,
 
+  /// Normal jumbo layout.
   jumboNormal,
 
+  /// Small jumbo layout.
   jumboSmall,
 
+  /// Extra large standard layout.
   standardExtraLarge,
 
+  /// Large standard layout.
   standardLarge,
 
+  /// Normal standard layout.
   standardNormal,
 
+  /// Small standard layout.
   standardSmall,
 
+  /// Extra large compact layout.
   compactExtraLarge,
 
+  /// Large compact layout.
   compactLarge,
 
+  /// Normal compact layout.
   compactNormal,
 
+  /// Small compact layout.
   compactSmall,
 
+  /// Below the smallest compact breakpoint.
   tiny,
 }

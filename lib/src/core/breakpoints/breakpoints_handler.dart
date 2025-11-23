@@ -1,5 +1,6 @@
 import 'package:responsive_size_builder/responsive_size_builder.dart';
 
+/// Convenience [BaseBreakpointsHandler] wired to the 5-size [LayoutSize] enum.
 class BreakpointsHandler<T> extends BaseBreakpointsHandler<T, LayoutSize> {
   BreakpointsHandler({
     super.breakpoints = Breakpoints.defaultBreakpoints,
@@ -28,6 +29,7 @@ class BreakpointsHandler<T> extends BaseBreakpointsHandler<T, LayoutSize> {
 
   final T? extraSmall;
 
+  /// Map of [LayoutSize] to the value used when that breakpoint is active.
   @override
   Map<LayoutSize, T?> get values => {
         LayoutSize.extraLarge: extraLarge,

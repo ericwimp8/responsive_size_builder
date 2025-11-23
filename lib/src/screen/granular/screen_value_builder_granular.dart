@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_size_builder/responsive_size_builder.dart';
 
-class ScreenSizeBuilderGranular extends StatefulWidget {
-  const ScreenSizeBuilderGranular({
+/// Granular MediaQuery-driven value selector (12 breakpoints) with optional responsive value exposure.
+
+class ScreenValueBuilderGranular<K, V extends Object?> extends StatefulWidget {
+  const ScreenValueBuilderGranular({
+    required this.builder,
     this.jumboExtraLarge,
     this.jumboLarge,
     this.jumboNormal,
@@ -17,7 +20,6 @@ class ScreenSizeBuilderGranular extends StatefulWidget {
     this.compactSmall,
     this.tiny,
     this.breakpoints = BreakpointsGranular.defaultBreakpoints,
-    this.animateChange = false,
     super.key,
   }) : assert(
           jumboExtraLarge != null ||
@@ -33,47 +35,34 @@ class ScreenSizeBuilderGranular extends StatefulWidget {
               compactNormal != null ||
               compactSmall != null ||
               tiny != null,
-          'At least one builder must be provided',
+          'At least one value must be provided',
         );
 
-  final ScreenSizeWidgetBuilder? jumboExtraLarge;
-
-  final ScreenSizeWidgetBuilder? jumboLarge;
-
-  final ScreenSizeWidgetBuilder? jumboNormal;
-
-  final ScreenSizeWidgetBuilder? jumboSmall;
-
-  final ScreenSizeWidgetBuilder? standardExtraLarge;
-
-  final ScreenSizeWidgetBuilder? standardLarge;
-
-  final ScreenSizeWidgetBuilder? standardNormal;
-
-  final ScreenSizeWidgetBuilder? standardSmall;
-
-  final ScreenSizeWidgetBuilder? compactExtraLarge;
-
-  final ScreenSizeWidgetBuilder? compactLarge;
-
-  final ScreenSizeWidgetBuilder? compactNormal;
-
-  final ScreenSizeWidgetBuilder? compactSmall;
-
-  final ScreenSizeWidgetBuilder? tiny;
-
-  final bool animateChange;
-
+  final ScreenValueBuilderFn<K, LayoutSizeGranular, V> builder;
+  final K? jumboExtraLarge;
+  final K? jumboLarge;
+  final K? jumboNormal;
+  final K? jumboSmall;
+  final K? standardExtraLarge;
+  final K? standardLarge;
+  final K? standardNormal;
+  final K? standardSmall;
+  final K? compactExtraLarge;
+  final K? compactLarge;
+  final K? compactNormal;
+  final K? compactSmall;
+  final K? tiny;
   final BreakpointsGranular breakpoints;
 
   @override
-  State<ScreenSizeBuilderGranular> createState() =>
-      _ScreenSizeBuilderGranularState();
+  State<ScreenValueBuilderGranular<K, V>> createState() =>
+      _ScreenValueBuilderGranularState<K, V>();
 }
 
-class _ScreenSizeBuilderGranularState extends State<ScreenSizeBuilderGranular> {
-  late BreakpointsHandlerGranular<ScreenSizeWidgetBuilder> handler =
-      BreakpointsHandlerGranular<ScreenSizeWidgetBuilder>(
+class _ScreenValueBuilderGranularState<K, V extends Object?>
+    extends State<ScreenValueBuilderGranular<K, V>> {
+  late final BreakpointsHandlerGranular<K> _handler =
+      BreakpointsHandlerGranular<K>(
     breakpoints: widget.breakpoints,
     jumboExtraLarge: widget.jumboExtraLarge,
     jumboLarge: widget.jumboLarge,
@@ -92,21 +81,19 @@ class _ScreenSizeBuilderGranularState extends State<ScreenSizeBuilderGranular> {
 
   @override
   Widget build(BuildContext context) {
-    final data = ScreenSizeModel.of<LayoutSizeGranular>(context);
+    final dataWithValue =
+        ScreenSizeModelWithValue.maybeOf<LayoutSizeGranular, V>(context);
+    final screenData = dataWithValue?.asScreenData() ??
+        ScreenSizeModel.of<LayoutSizeGranular>(context);
+    final screenSize = screenData.screenSize;
 
-    var child = handler.getScreenSizeValue(
-      screenSize: data.screenSize,
-    )(
+    final value = _handler.getScreenSizeValue(screenSize: screenSize);
+
+    return widget.builder(
       context,
-      data,
+      value,
+      data: screenData,
+      responsiveValue: dataWithValue?.responsiveValue,
     );
-
-    if (widget.animateChange) {
-      child = AnimatedSwitcher(
-        duration: const Duration(milliseconds: 300),
-        child: child,
-      );
-    }
-    return child;
   }
 }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_size_builder/responsive_size_builder.dart';
 
+/// Layout-only widget selector using 12 granular breakpoints derived from
+/// local [LayoutBuilder] constraints.
 class LayoutSizeBuilderGranular extends StatefulWidget {
   const LayoutSizeBuilderGranular({
     this.breakpoints = BreakpointsGranular.defaultBreakpoints,
@@ -19,30 +21,31 @@ class LayoutSizeBuilderGranular extends StatefulWidget {
     super.key,
   });
 
-  final ScreenSizeWidgetBuilder? jumboExtraLarge;
+  final WidgetBuilder? jumboExtraLarge;
 
-  final ScreenSizeWidgetBuilder? jumboLarge;
+  final WidgetBuilder? jumboLarge;
 
-  final ScreenSizeWidgetBuilder? jumboNormal;
+  final WidgetBuilder? jumboNormal;
 
-  final ScreenSizeWidgetBuilder? jumboSmall;
+  final WidgetBuilder? jumboSmall;
 
-  final ScreenSizeWidgetBuilder? standardExtraLarge;
+  final WidgetBuilder? standardExtraLarge;
 
-  final ScreenSizeWidgetBuilder? standardLarge;
+  final WidgetBuilder? standardLarge;
 
-  final ScreenSizeWidgetBuilder? standardNormal;
+  final WidgetBuilder? standardNormal;
 
-  final ScreenSizeWidgetBuilder? standardSmall;
+  final WidgetBuilder? standardSmall;
 
-  final ScreenSizeWidgetBuilder? compactExtraLarge;
+  final WidgetBuilder? compactExtraLarge;
 
-  final ScreenSizeWidgetBuilder? compactLarge;
+  final WidgetBuilder? compactLarge;
 
-  final ScreenSizeWidgetBuilder? compactNormal;
+  final WidgetBuilder? compactNormal;
 
-  final ScreenSizeWidgetBuilder? compactSmall;
+  final WidgetBuilder? compactSmall;
 
+  /// Breakpoints used to classify the layout constraints.
   final BreakpointsGranular breakpoints;
 
   @override
@@ -50,8 +53,8 @@ class LayoutSizeBuilderGranular extends StatefulWidget {
 }
 
 class _LayoutSizeGranularState extends State<LayoutSizeBuilderGranular> {
-  late BreakpointsHandlerGranular<ScreenSizeWidgetBuilder> handler =
-      BreakpointsHandlerGranular<ScreenSizeWidgetBuilder>(
+  late BreakpointsHandlerGranular<WidgetBuilder> handler =
+      BreakpointsHandlerGranular<WidgetBuilder>(
     breakpoints: widget.breakpoints,
     jumboExtraLarge: widget.jumboExtraLarge,
     jumboLarge: widget.jumboLarge,
@@ -71,17 +74,11 @@ class _LayoutSizeGranularState extends State<LayoutSizeBuilderGranular> {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
-        // Retrieve comprehensive screen size data from the ancestor ScreenSize widget
-        // This provides additional context beyond just the layout constraints
-        final data = ScreenSizeModel.of<LayoutSize>(
-          context,
-        );
-
         // Get the appropriate widget builder based on current constraints
         // and invoke it with both context and screen size data for enhanced decision making
         return handler.getLayoutSizeValue(
           constraints: constraints,
-        )(context, data);
+        )(context);
       },
     );
   }

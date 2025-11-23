@@ -3,8 +3,8 @@ import 'package:example/shared/widgets/screen_size_header.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_size_builder/responsive_size_builder.dart';
 
-class ScreenSizeWithValueOrientationBuilderExample extends StatelessWidget {
-  const ScreenSizeWithValueOrientationBuilderExample({super.key});
+class ScreenWithValueWidgetBuilderOrientationExample extends StatelessWidget {
+  const ScreenWithValueWidgetBuilderOrientationExample({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +34,7 @@ class _OrientationResponsiveContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ScreenSizeWithValueOrientationBuilder<LayoutConfig>(
+    return ScreenWithValueWidgetBuilderOrientation<LayoutConfig>(
       // Portrait builders - get config from data.responsiveValue
       extraSmall: (context, data) => _PortraitLayout(
         data: data,

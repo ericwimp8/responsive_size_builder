@@ -1,5 +1,7 @@
 import 'package:flutter/widgets.dart';
 
+/// Provides the nearest [BoxConstraints] produced by a [LayoutBuilder] to
+/// descendants in the tree.
 class LayoutConstraintsProvider extends InheritedWidget {
   const LayoutConstraintsProvider({
     required this.constraints,
@@ -9,6 +11,8 @@ class LayoutConstraintsProvider extends InheritedWidget {
 
   final BoxConstraints constraints;
 
+  /// Returns the [BoxConstraints] from the nearest [LayoutConstraintsProvider]
+  /// above [context], or null when none is found.
   static BoxConstraints? of(BuildContext context) {
     final result =
         context.dependOnInheritedWidgetOfExactType<LayoutConstraintsProvider>();
