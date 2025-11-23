@@ -201,7 +201,7 @@ The **Responsive Size Builder** is a Flutter package designed to simplify respon
 
 ### Value Modules (`/src/responsive_value/`, `/src/value_size/`)
 - **Boundary**: Value containers and value-based builders
-- **Interface**: `ResponsiveValue<V>` containers, value builders
+- **Interface**: `ResponsiveValue<V>` containers, value builders (screen-size and layout-constraint based)
 - **Responsibilities**: Type-safe value storage, value selection logic
 
 ## Getting Started
@@ -213,7 +213,8 @@ Quick guide for developers to understand the architecture:
 3. **Builder Selection**: Use appropriate builders:
    - `ScreenSizeBuilder` for MediaQuery-based responses
    - `LayoutSizeBuilder` for constraint-based responses
-   - `ValueSizeBuilder` for value-based responses
+   - `ValueSizeBuilder` for MediaQuery-driven value responses
+   - `LayoutValueSizeBuilder` for constraint-driven value responses
 4. **Type Safety**: Always specify the correct generic type parameter matching your breakpoint enum
 
 ## Key Conventions

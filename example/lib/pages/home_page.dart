@@ -90,6 +90,12 @@ class _ResponsiveLayout extends StatelessWidget {
       route: '/layout-size-builder',
     ),
     _ExampleData(
+      title: 'LayoutValueSizeBuilder',
+      subtitle: 'Constraint-based responsive values',
+      icon: Icons.straighten_rounded,
+      route: '/layout-value-size-builder',
+    ),
+    _ExampleData(
       title: 'ValueSizeBuilder',
       subtitle: 'Responsive values with standard breakpoints',
       icon: Icons.straighten,

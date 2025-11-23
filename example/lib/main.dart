@@ -1,5 +1,6 @@
 import 'package:example/pages/home_page.dart';
 import 'package:example/pages/layout_size_builder_example.dart';
+import 'package:example/pages/layout_value_size_builder_example.dart';
 import 'package:example/pages/screen_size_builder_example.dart';
 import 'package:example/pages/screen_size_builder_granular_example.dart';
 import 'package:example/pages/screen_size_orientation_builder_example.dart';
@@ -37,6 +38,8 @@ class MyApp extends StatelessWidget {
         '/screen-size-builder-granular': (context) =>
             const ScreenSizeBuilderGranularExample(),
         '/layout-size-builder': (context) => const LayoutSizeBuilderExample(),
+        '/layout-value-size-builder': (context) =>
+            const LayoutValueSizeBuilderExample(),
         '/value-size-builder': (context) => const ValueSizeBuilderExample(),
         '/value-size-builder-granular': (context) =>
             const ValueSizeBuilderGranularExample(),

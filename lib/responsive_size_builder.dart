@@ -23,5 +23,7 @@ export 'src/screen_size/screen_size_data.dart';
 export 'src/screen_size/screen_size_orientation_builder.dart';
 export 'src/value_size/value_size_builder.dart';
 export 'src/value_size/value_size_builder_granular.dart';
+export 'src/value_size/layout_value_size_builder.dart';
+export 'src/value_size/layout_value_size_builder_granular.dart';
 export 'src/value_size_with_value_builder/value_size_with_value_builder.dart';
 export 'src/value_size_with_value_builder/value_size_with_value_builder_granular.dart';

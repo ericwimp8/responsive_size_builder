@@ -1,41 +1,80 @@
-<!--
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
+# Responsive Size Builder
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/tools/pub/writing-package-pages).
+Responsive layout utilities for Flutter that choose widgets _and_ values based on screen size, orientation, or local layout constraints. Breakpoints are type-safe (`LayoutSize`, `LayoutSizeGranular`) and can be customized.
 
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/to/develop-packages).
--->
+## Modules
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+- `ScreenSizeBuilder` / `ScreenSizeBuilderGranular`: MediaQuery-driven widget builders (5 or 13 breakpoints).
+- `LayoutSizeBuilder` / `LayoutSizeBuilderGranular`: Constraint-driven widget builders using `LayoutBuilder`.
+- `ValueSizeBuilder` / `ValueSizeBuilderGranular`: MediaQuery-driven value selectors.
+- `LayoutValueSizeBuilder` / `LayoutValueSizeBuilderGranular`: **New** constraint-driven value selectors (no `ScreenSize` wrapper required).
+- `ScreenSizeWithValue*`: Builders that pipe both breakpoint data and an injected value.
 
-## Features
-
-TODO: List what your package can do. Maybe include images, gifs, or videos.
-
-## Getting started
-
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
-
-## Usage
-
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder.
+## Quick Start
 
 ```dart
-const like = 'sample';
+// MediaQuery-based value selection
+ScreenSize<LayoutSize>(
+  child: ValueSizeBuilder<double>(
+    small: 8,
+    medium: 12,
+    large: 20,
+    builder: (context, spacing) => Padding(
+      padding: EdgeInsets.all(spacing),
+      child: const Text('Hello'),
+    ),
+  ),
+);
+
+// Constraint-based value selection (no ScreenSize wrapper needed)
+LayoutValueSizeBuilder<int>(
+  small: 1,
+  medium: 2,
+  large: 3,
+  builder: (context, columns) => GridView.count(
+    crossAxisCount: columns,
+    children: const [/* ... */],
+  ),
+);
 ```
 
-## Additional information
+## Examples
 
-TODO: Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more.
-# responsive_size_builder
-# responsive_size_builder
+Run the example app to see all builders in action, including the new layout-driven value builders:
+
+```bash
+flutter run example
+```
+
+Key routes in the demo:
+- `/layout-value-size-builder` - constraint-based value selection
+- `/layout-size-builder` - constraint-based widget selection
+- `/value-size-builder` - screen-size value selection
+- `/screen-size-builder` - screen-size widget selection
+
+## Customizing Breakpoints
+
+Pass your own `Breakpoints` or `BreakpointsGranular` to any builder:
+
+```dart
+const customBreakpoints = Breakpoints(
+  small: 500,
+  medium: 900,
+  large: 1200,
+  extraLarge: 1600,
+);
+
+LayoutValueSizeBuilder<double>(
+  breakpoints: customBreakpoints,
+  small: 8,
+  medium: 12,
+  large: 18,
+  builder: (context, value) => Text('$value'),
+);
+```
+
+## Notes
+
+- All builders require at least one breakpoint value.
+- `useShortestSide` is available on layout value builders when you want tablet/phone splits based on min dimension.
+- For value builders, add `AnimatedSwitcher` yourself if you want animated transitions; widget builders have `animateChange` flags.

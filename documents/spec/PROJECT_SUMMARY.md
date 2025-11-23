@@ -39,6 +39,7 @@ Utilizes Flutter's native InheritedModel for efficient state propagation with as
 - **ScreenSizeBuilder**: Responds to MediaQuery screen dimensions
 - **LayoutSizeBuilder**: Adapts to widget-level layout constraints
 - **ValueSizeBuilder**: Type-safe value switching based on breakpoints
+- **LayoutValueSizeBuilder**: Constraint-based value switching (no ScreenSize wrapper needed)
 - **Orientation-aware builders**: Separate handling for portrait/landscape
 
 #### Screen Size Detection
