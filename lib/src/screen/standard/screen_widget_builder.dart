@@ -36,15 +36,25 @@ class ScreenWidgetBuilder extends StatefulWidget with AnimatedChildMixin {
 }
 
 class _ScreenWidgetBuilderState extends State<ScreenWidgetBuilder> {
-  late final BreakpointsHandler<ScreenWidgetBuilderFn<LayoutSize>> _handler =
-      BreakpointsHandler<ScreenWidgetBuilderFn<LayoutSize>>(
-    breakpoints: widget.breakpoints,
-    extraLarge: widget.extraLarge,
-    large: widget.large,
-    medium: widget.medium,
-    small: widget.small,
-    extraSmall: widget.extraSmall,
-  );
+  late BreakpointsHandler<ScreenWidgetBuilderFn<LayoutSize>> _handler =
+      _createHandler();
+
+  BreakpointsHandler<ScreenWidgetBuilderFn<LayoutSize>> _createHandler() {
+    return BreakpointsHandler<ScreenWidgetBuilderFn<LayoutSize>>(
+      breakpoints: widget.breakpoints,
+      extraLarge: widget.extraLarge,
+      large: widget.large,
+      medium: widget.medium,
+      small: widget.small,
+      extraSmall: widget.extraSmall,
+    );
+  }
+
+  @override
+  void didUpdateWidget(ScreenWidgetBuilder oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    _handler = _createHandler();
+  }
 
   @override
   Widget build(BuildContext context) {

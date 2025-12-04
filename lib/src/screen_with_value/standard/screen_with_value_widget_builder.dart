@@ -39,16 +39,26 @@ class ScreenWithValueWidgetBuilder<V extends Object?> extends StatefulWidget
 
 class _ScreenWithValueWidgetBuilderState<V extends Object?>
     extends State<ScreenWithValueWidgetBuilder<V>> {
-  late final BreakpointsHandler<ScreenWithValueWidgetBuilderFn<LayoutSize, V>>
-      _handler =
-      BreakpointsHandler<ScreenWithValueWidgetBuilderFn<LayoutSize, V>>(
-    breakpoints: widget.breakpoints,
-    extraLarge: widget.extraLarge,
-    large: widget.large,
-    medium: widget.medium,
-    small: widget.small,
-    extraSmall: widget.extraSmall,
-  );
+  late BreakpointsHandler<ScreenWithValueWidgetBuilderFn<LayoutSize, V>>
+      _handler = _createHandler();
+
+  BreakpointsHandler<ScreenWithValueWidgetBuilderFn<LayoutSize, V>>
+      _createHandler() {
+    return BreakpointsHandler<ScreenWithValueWidgetBuilderFn<LayoutSize, V>>(
+      breakpoints: widget.breakpoints,
+      extraLarge: widget.extraLarge,
+      large: widget.large,
+      medium: widget.medium,
+      small: widget.small,
+      extraSmall: widget.extraSmall,
+    );
+  }
+
+  @override
+  void didUpdateWidget(ScreenWithValueWidgetBuilder<V> oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    _handler = _createHandler();
+  }
 
   @override
   Widget build(BuildContext context) {

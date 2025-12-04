@@ -38,15 +38,24 @@ class LayoutWidgetBuilder extends StatefulWidget with AnimatedChildMixin {
 }
 
 class _LayoutWidgetBuilderState extends State<LayoutWidgetBuilder> {
-  late final BreakpointsHandler<LayoutWidgetBuilderFn> _handler =
-      BreakpointsHandler<LayoutWidgetBuilderFn>(
-    breakpoints: widget.breakpoints,
-    extraLarge: widget.extraLarge,
-    large: widget.large,
-    medium: widget.medium,
-    small: widget.small,
-    extraSmall: widget.extraSmall,
-  );
+  late BreakpointsHandler<LayoutWidgetBuilderFn> _handler = _createHandler();
+
+  BreakpointsHandler<LayoutWidgetBuilderFn> _createHandler() {
+    return BreakpointsHandler<LayoutWidgetBuilderFn>(
+      breakpoints: widget.breakpoints,
+      extraLarge: widget.extraLarge,
+      large: widget.large,
+      medium: widget.medium,
+      small: widget.small,
+      extraSmall: widget.extraSmall,
+    );
+  }
+
+  @override
+  void didUpdateWidget(LayoutWidgetBuilder oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    _handler = _createHandler();
+  }
 
   @override
   Widget build(BuildContext context) {

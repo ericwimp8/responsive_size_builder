@@ -2,6 +2,7 @@
 ///
 /// This library re-exports all core breakpoint types plus the screen, layout
 /// and value builder widgets used to build fully responsive UIs.
+library;
 // ignore_for_file: directives_ordering
 
 // Core

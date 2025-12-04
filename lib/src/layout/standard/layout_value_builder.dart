@@ -37,14 +37,24 @@ class LayoutValueBuilder<K> extends StatefulWidget {
 }
 
 class _LayoutValueBuilderState<K> extends State<LayoutValueBuilder<K>> {
-  late final BreakpointsHandler<K> _handler = BreakpointsHandler<K>(
-    breakpoints: widget.breakpoints,
-    extraLarge: widget.extraLarge,
-    large: widget.large,
-    medium: widget.medium,
-    small: widget.small,
-    extraSmall: widget.extraSmall,
-  );
+  late BreakpointsHandler<K> _handler = _createHandler();
+
+  BreakpointsHandler<K> _createHandler() {
+    return BreakpointsHandler<K>(
+      breakpoints: widget.breakpoints,
+      extraLarge: widget.extraLarge,
+      large: widget.large,
+      medium: widget.medium,
+      small: widget.small,
+      extraSmall: widget.extraSmall,
+    );
+  }
+
+  @override
+  void didUpdateWidget(LayoutValueBuilder<K> oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    _handler = _createHandler();
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -65,25 +65,36 @@ class ScreenWithValueWidgetBuilderGranular<V extends Object?>
 
 class _ScreenWithValueWidgetBuilderGranularState<V extends Object?>
     extends State<ScreenWithValueWidgetBuilderGranular<V>> {
-  late final BreakpointsHandlerGranular<
+  late BreakpointsHandlerGranular<
           ScreenWithValueWidgetBuilderFn<LayoutSizeGranular, V>> _handler =
-      BreakpointsHandlerGranular<
-          ScreenWithValueWidgetBuilderFn<LayoutSizeGranular, V>>(
-    breakpoints: widget.breakpoints,
-    jumboExtraLarge: widget.jumboExtraLarge,
-    jumboLarge: widget.jumboLarge,
-    jumboNormal: widget.jumboNormal,
-    jumboSmall: widget.jumboSmall,
-    standardExtraLarge: widget.standardExtraLarge,
-    standardLarge: widget.standardLarge,
-    standardNormal: widget.standardNormal,
-    standardSmall: widget.standardSmall,
-    compactExtraLarge: widget.compactExtraLarge,
-    compactLarge: widget.compactLarge,
-    compactNormal: widget.compactNormal,
-    compactSmall: widget.compactSmall,
-    tiny: widget.tiny,
-  );
+      _createHandler();
+
+  BreakpointsHandlerGranular<
+      ScreenWithValueWidgetBuilderFn<LayoutSizeGranular, V>> _createHandler() {
+    return BreakpointsHandlerGranular<
+        ScreenWithValueWidgetBuilderFn<LayoutSizeGranular, V>>(
+      breakpoints: widget.breakpoints,
+      jumboExtraLarge: widget.jumboExtraLarge,
+      jumboLarge: widget.jumboLarge,
+      jumboNormal: widget.jumboNormal,
+      jumboSmall: widget.jumboSmall,
+      standardExtraLarge: widget.standardExtraLarge,
+      standardLarge: widget.standardLarge,
+      standardNormal: widget.standardNormal,
+      standardSmall: widget.standardSmall,
+      compactExtraLarge: widget.compactExtraLarge,
+      compactLarge: widget.compactLarge,
+      compactNormal: widget.compactNormal,
+      compactSmall: widget.compactSmall,
+      tiny: widget.tiny,
+    );
+  }
+
+  @override
+  void didUpdateWidget(ScreenWithValueWidgetBuilderGranular<V> oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    _handler = _createHandler();
+  }
 
   @override
   Widget build(BuildContext context) {

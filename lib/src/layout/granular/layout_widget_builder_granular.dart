@@ -51,23 +51,33 @@ class LayoutWidgetBuilderGranular extends StatefulWidget
 
 class _LayoutWidgetBuilderGranularState
     extends State<LayoutWidgetBuilderGranular> {
-  late final BreakpointsHandlerGranular<LayoutWidgetBuilderFn> _handler =
-      BreakpointsHandlerGranular<LayoutWidgetBuilderFn>(
-    breakpoints: widget.breakpoints,
-    jumboExtraLarge: widget.jumboExtraLarge,
-    jumboLarge: widget.jumboLarge,
-    jumboNormal: widget.jumboNormal,
-    jumboSmall: widget.jumboSmall,
-    standardExtraLarge: widget.standardExtraLarge,
-    standardLarge: widget.standardLarge,
-    standardNormal: widget.standardNormal,
-    standardSmall: widget.standardSmall,
-    compactExtraLarge: widget.compactExtraLarge,
-    compactLarge: widget.compactLarge,
-    compactNormal: widget.compactNormal,
-    compactSmall: widget.compactSmall,
-    tiny: widget.tiny,
-  );
+  late BreakpointsHandlerGranular<LayoutWidgetBuilderFn> _handler =
+      _createHandler();
+
+  BreakpointsHandlerGranular<LayoutWidgetBuilderFn> _createHandler() {
+    return BreakpointsHandlerGranular<LayoutWidgetBuilderFn>(
+      breakpoints: widget.breakpoints,
+      jumboExtraLarge: widget.jumboExtraLarge,
+      jumboLarge: widget.jumboLarge,
+      jumboNormal: widget.jumboNormal,
+      jumboSmall: widget.jumboSmall,
+      standardExtraLarge: widget.standardExtraLarge,
+      standardLarge: widget.standardLarge,
+      standardNormal: widget.standardNormal,
+      standardSmall: widget.standardSmall,
+      compactExtraLarge: widget.compactExtraLarge,
+      compactLarge: widget.compactLarge,
+      compactNormal: widget.compactNormal,
+      compactSmall: widget.compactSmall,
+      tiny: widget.tiny,
+    );
+  }
+
+  @override
+  void didUpdateWidget(LayoutWidgetBuilderGranular oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    _handler = _createHandler();
+  }
 
   @override
   Widget build(BuildContext context) {
