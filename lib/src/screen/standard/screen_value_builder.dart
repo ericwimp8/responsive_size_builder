@@ -1,0 +1,80 @@
+import 'package:flutter/material.dart';
+import 'package:responsive_size_builder/responsive_size_builder.dart';
+
+/// MediaQuery-driven value selector using 5 breakpoints.
+/// Passes the resolved value, screen data, and any responsive value to [builder].
+class ScreenValueBuilder<K, V extends Object?> extends StatefulWidget {
+  /// Creates a value selector for the current media query width.
+  const ScreenValueBuilder({
+    required this.builder,
+    this.extraLarge,
+    this.large,
+    this.medium,
+    this.small,
+    this.extraSmall,
+    this.breakpoints = Breakpoints.defaultBreakpoints,
+    super.key,
+  }) : assert(
+          extraLarge != null ||
+              large != null ||
+              medium != null ||
+              small != null ||
+              extraSmall != null,
+          'At least one value must be provided',
+        );
+
+  /// Builds the widget for the resolved screen size.
+  final ScreenValueBuilderFn<K, LayoutSize, V> builder;
+  final K? extraLarge;
+  final K? large;
+  final K? medium;
+  final K? small;
+  final K? extraSmall;
+
+  /// Breakpoints used to resolve the active [LayoutSize].
+  final Breakpoints breakpoints;
+
+  @override
+  State<ScreenValueBuilder<K, V>> createState() =>
+      _ScreenValueBuilderState<K, V>();
+}
+
+class _ScreenValueBuilderState<K, V extends Object?>
+    extends State<ScreenValueBuilder<K, V>> {
+  late BreakpointsHandler<K> _handler = _createHandler();
+
+  BreakpointsHandler<K> _createHandler() {
+    return BreakpointsHandler<K>(
+      breakpoints: widget.breakpoints,
+      extraLarge: widget.extraLarge,
+      large: widget.large,
+      medium: widget.medium,
+      small: widget.small,
+      extraSmall: widget.extraSmall,
+    );
+  }
+
+  @override
+  void didUpdateWidget(ScreenValueBuilder<K, V> oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    _handler = _createHandler();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final dataWithValue =
+        ScreenSizeModelWithValue.maybeOf<LayoutSize, V>(context);
+    final screenData = dataWithValue?.asScreenData() ??
+        ScreenSizeModel.of<LayoutSize>(context);
+    final screenSize = screenData.screenSize;
+
+    final value = _handler.getScreenSizeValue(screenSize: screenSize);
+
+    return widget.builder(
+      context,
+      value,
+      data: screenData,
+      responsiveValue: dataWithValue?.responsiveValue,
+    );
+  }
+}

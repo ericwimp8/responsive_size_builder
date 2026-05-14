@@ -1,0 +1,37 @@
+name: responsive_size_builder
+description: Responsive Flutter layout builders for breakpoints, local constraints, orientation variants, shared values, and Material 3 window classes.
+version: 0.1.2
+homepage: https://github.com/ericwimp8/responsive_size_builder
+repository: https://github.com/ericwimp8/responsive_size_builder
+issue_tracker: https://github.com/ericwimp8/responsive_size_builder/issues
+topics:
+  - flutter
+  - responsive-ui
+  - layout
+  - breakpoints
+  - material-design
+
+platforms:
+  android:
+  ios:
+  linux:
+  macos:
+  web:
+  windows:
+
+environment:
+  sdk: ">=3.5.0 <4.0.0"
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+  mocktail: ^1.0.4
+  very_good_analysis: ^5.1.0
+
+flutter:
