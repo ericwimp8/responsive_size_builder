@@ -79,7 +79,7 @@ README is written to be usable as the main human-facing guide.
 
 ```yaml
 dependencies:
-  responsive_size_builder: ^0.1.2
+  responsive_size_builder: ^0.1.3
 ```
 
 Then import the package:
@@ -470,7 +470,7 @@ return ListView(
   padding: EdgeInsets.all(values.pageMargin),
   children: [
     ResponsiveSectionRow(
-      minSectionWidth: values.fixedPaneWidth ?? 280,
+      minSectionWidth: values.minimumPaneWidth,
       spacing: values.paneSpacing,
       sections: sections,
     ),
@@ -479,10 +479,13 @@ return ListView(
 ```
 
 `MaterialResponsiveValues` includes values such as `pageMargin`, `paneSpacing`,
-`recommendedPaneCount`, `maxPaneCount`, `fixedPaneWidth`, and
-`sideSheetMaxWidth`. It also exposes constants for Material sizing rules such as
-touch targets, pointer targets, dialogs, bottom sheets, search, snackbars,
-progress indicators, toolbars, and carousel constraints.
+`recommendedPaneCount`, `maxPaneCount`, `minimumPaneWidth`,
+`singlePaneMaxWidth`, `fixedPaneWidth`, and `sideSheetMaxWidth`. Use these
+values for Material-owned margins, pane gaps, pane reflow widths, and focused
+single-pane width constraints instead of scattering fallback numbers through
+screens. It also exposes constants for Material sizing rules such as touch
+targets, pointer targets, dialogs, bottom sheets, search, snackbars, progress
+indicators, toolbars, and carousel constraints.
 
 Use custom `MaterialBreakpoints` only when the product intentionally shifts the
 Material thresholds:

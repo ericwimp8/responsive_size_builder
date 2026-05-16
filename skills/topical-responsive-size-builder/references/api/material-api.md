@@ -59,7 +59,7 @@ return ListView(
   padding: EdgeInsets.all(values.pageMargin),
   children: [
     ResponsiveSectionRow(
-      minSectionWidth: values.fixedPaneWidth ?? 280,
+      minSectionWidth: values.minimumPaneWidth,
       spacing: values.paneSpacing,
       sections: sections,
     ),
@@ -68,7 +68,13 @@ return ListView(
 ```
 
 Use fields such as `pageMargin`, `paneSpacing`, `recommendedPaneCount`,
-`maxPaneCount`, `fixedPaneWidth`, and `sideSheetMaxWidth`.
+`maxPaneCount`, `minimumPaneWidth`, `singlePaneMaxWidth`, `fixedPaneWidth`, and
+`sideSheetMaxWidth`.
+
+Use the inherited `MaterialResponsiveValues` for Material-owned margins, pane
+spacing, pane reflow widths, and focused single-pane width constraints. Do not
+scatter fallback pane widths or content max widths through screens when the
+value represents the Material responsive layout contract.
 
 Use static constants for Material sizing rules such as touch targets, pointer
 targets, bottom sheets, dialogs, search, snackbars, progress, toolbars, and

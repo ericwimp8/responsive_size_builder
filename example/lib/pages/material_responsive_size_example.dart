@@ -33,7 +33,7 @@ class MaterialResponsiveSizeExample extends StatelessWidget {
           ),
           SizedBox(height: values.paneSpacing),
           ResponsiveSectionRow(
-            minSectionWidth: 280,
+            minSectionWidth: values.minimumPaneWidth,
             spacing: values.paneSpacing,
             runSpacing: values.paneSpacing,
             sections: [
@@ -57,8 +57,8 @@ class MaterialResponsiveSizeExample extends StatelessWidget {
           SizedBox(height: values.paneSpacing),
           ResponsiveGrid(
             minChildWidth: 220,
-            spacing: 12,
-            runSpacing: 12,
+            spacing: values.paneSpacing,
+            runSpacing: values.paneSpacing,
             children: [
               _ValueCard(
                 title: 'Recommended panes',
@@ -76,6 +76,16 @@ class MaterialResponsiveSizeExample extends StatelessWidget {
                     ? 'none'
                     : '${values.fixedPaneWidth!.toStringAsFixed(0)}dp',
                 icon: Icons.width_full,
+              ),
+              _ValueCard(
+                title: 'Minimum pane width',
+                value: '${values.minimumPaneWidth.toStringAsFixed(0)}dp',
+                icon: Icons.fit_screen,
+              ),
+              _ValueCard(
+                title: 'Single pane max',
+                value: '${values.singlePaneMaxWidth.toStringAsFixed(0)}dp',
+                icon: Icons.crop_free,
               ),
               _ValueCard(
                 title: 'Side sheet max',

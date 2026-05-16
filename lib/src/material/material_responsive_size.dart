@@ -88,6 +88,8 @@ class MaterialResponsiveValues {
     required this.paneSpacing,
     required this.recommendedPaneCount,
     required this.maxPaneCount,
+    required this.minimumPaneWidth,
+    required this.singlePaneMaxWidth,
     this.fixedPaneWidth,
     this.sideSheetMaxWidth,
   });
@@ -103,6 +105,12 @@ class MaterialResponsiveValues {
 
   /// Maximum pane count Material supports for the current window size class.
   final int maxPaneCount;
+
+  /// Minimum pane width to use before reflowing pane-like sections.
+  final double minimumPaneWidth;
+
+  /// Maximum width for a focused single-pane content region.
+  final double singlePaneMaxWidth;
 
   /// Default fixed pane width where Material specifies one.
   final double? fixedPaneWidth;
@@ -193,7 +201,7 @@ class MaterialResponsiveValues {
 
   @override
   String toString() {
-    return 'MaterialResponsiveValues(pageMargin: $pageMargin, paneSpacing: $paneSpacing, recommendedPaneCount: $recommendedPaneCount, maxPaneCount: $maxPaneCount, fixedPaneWidth: $fixedPaneWidth, sideSheetMaxWidth: $sideSheetMaxWidth)';
+    return 'MaterialResponsiveValues(pageMargin: $pageMargin, paneSpacing: $paneSpacing, recommendedPaneCount: $recommendedPaneCount, maxPaneCount: $maxPaneCount, minimumPaneWidth: $minimumPaneWidth, singlePaneMaxWidth: $singlePaneMaxWidth, fixedPaneWidth: $fixedPaneWidth, sideSheetMaxWidth: $sideSheetMaxWidth)';
   }
 
   @override
@@ -205,6 +213,8 @@ class MaterialResponsiveValues {
         other.paneSpacing == paneSpacing &&
         other.recommendedPaneCount == recommendedPaneCount &&
         other.maxPaneCount == maxPaneCount &&
+        other.minimumPaneWidth == minimumPaneWidth &&
+        other.singlePaneMaxWidth == singlePaneMaxWidth &&
         other.fixedPaneWidth == fixedPaneWidth &&
         other.sideSheetMaxWidth == sideSheetMaxWidth;
   }
@@ -216,6 +226,8 @@ class MaterialResponsiveValues {
       paneSpacing,
       recommendedPaneCount,
       maxPaneCount,
+      minimumPaneWidth,
+      singlePaneMaxWidth,
       fixedPaneWidth,
       sideSheetMaxWidth,
     );
@@ -236,6 +248,8 @@ class MaterialResponsiveValue extends BaseResponsiveValue<
               paneSpacing: 24,
               recommendedPaneCount: 3,
               maxPaneCount: 3,
+              minimumPaneWidth: 412,
+              singlePaneMaxWidth: 720,
               fixedPaneWidth: 412,
               sideSheetMaxWidth: 400,
             ),
@@ -244,6 +258,8 @@ class MaterialResponsiveValue extends BaseResponsiveValue<
               paneSpacing: 24,
               recommendedPaneCount: 2,
               maxPaneCount: 2,
+              minimumPaneWidth: 412,
+              singlePaneMaxWidth: 720,
               fixedPaneWidth: 412,
               sideSheetMaxWidth: 400,
             ),
@@ -252,6 +268,8 @@ class MaterialResponsiveValue extends BaseResponsiveValue<
               paneSpacing: 24,
               recommendedPaneCount: 2,
               maxPaneCount: 2,
+              minimumPaneWidth: 360,
+              singlePaneMaxWidth: 720,
               fixedPaneWidth: 360,
             ),
             MaterialWindowSizeClass.medium: const MaterialResponsiveValues(
@@ -259,12 +277,16 @@ class MaterialResponsiveValue extends BaseResponsiveValue<
               paneSpacing: 24,
               recommendedPaneCount: 1,
               maxPaneCount: 2,
+              minimumPaneWidth: 280,
+              singlePaneMaxWidth: 720,
             ),
             MaterialWindowSizeClass.compact: const MaterialResponsiveValues(
               pageMargin: 16,
               paneSpacing: 24,
               recommendedPaneCount: 1,
               maxPaneCount: 1,
+              minimumPaneWidth: 280,
+              singlePaneMaxWidth: 720,
             ),
           },
         );

@@ -155,7 +155,10 @@ void main() {
 
       expect(compact.pageMargin, 16);
       expect(compact.maxPaneCount, 1);
+      expect(compact.minimumPaneWidth, 280);
       expect(expanded.fixedPaneWidth, 360);
+      expect(expanded.minimumPaneWidth, 360);
+      expect(expanded.singlePaneMaxWidth, 720);
       expect(extraLarge.recommendedPaneCount, 3);
       expect(extraLarge.sideSheetMaxWidth, 400);
     });

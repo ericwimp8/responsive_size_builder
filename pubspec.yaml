@@ -1,6 +1,6 @@
 name: responsive_size_builder
 description: Responsive Flutter layout builders for breakpoints, local constraints, orientation variants, shared values, and Material 3 window classes.
-version: 0.1.2
+version: 0.1.3
 homepage: https://github.com/ericwimp8/responsive_size_builder
 repository: https://github.com/ericwimp8/responsive_size_builder
 issue_tracker: https://github.com/ericwimp8/responsive_size_builder/issues

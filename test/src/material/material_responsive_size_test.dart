@@ -92,6 +92,8 @@ void main() {
         paneSpacing: 16,
         recommendedPaneCount: 2,
         maxPaneCount: 3,
+        minimumPaneWidth: 360,
+        singlePaneMaxWidth: 720,
         fixedPaneWidth: 380,
         sideSheetMaxWidth: 420,
       );
@@ -100,6 +102,8 @@ void main() {
         paneSpacing: 16,
         recommendedPaneCount: 2,
         maxPaneCount: 3,
+        minimumPaneWidth: 360,
+        singlePaneMaxWidth: 720,
         fixedPaneWidth: 380,
         sideSheetMaxWidth: 420,
       );
@@ -108,6 +112,8 @@ void main() {
         paneSpacing: 16,
         recommendedPaneCount: 2,
         maxPaneCount: 3,
+        minimumPaneWidth: 280,
+        singlePaneMaxWidth: 720,
       );
 
       expect(first, second);
@@ -121,13 +127,15 @@ void main() {
         paneSpacing: 24,
         recommendedPaneCount: 3,
         maxPaneCount: 3,
+        minimumPaneWidth: 412,
+        singlePaneMaxWidth: 720,
         fixedPaneWidth: 412,
         sideSheetMaxWidth: 400,
       );
 
       expect(
         values.toString(),
-        'MaterialResponsiveValues(pageMargin: 24.0, paneSpacing: 24.0, recommendedPaneCount: 3, maxPaneCount: 3, fixedPaneWidth: 412.0, sideSheetMaxWidth: 400.0)',
+        'MaterialResponsiveValues(pageMargin: 24.0, paneSpacing: 24.0, recommendedPaneCount: 3, maxPaneCount: 3, minimumPaneWidth: 412.0, singlePaneMaxWidth: 720.0, fixedPaneWidth: 412.0, sideSheetMaxWidth: 400.0)',
       );
     });
 
@@ -171,6 +179,8 @@ void main() {
           paneSpacing: 24,
           recommendedPaneCount: 1,
           maxPaneCount: 1,
+          minimumPaneWidth: 280,
+          singlePaneMaxWidth: 720,
         ),
       );
       expect(
@@ -180,6 +190,8 @@ void main() {
           paneSpacing: 24,
           recommendedPaneCount: 1,
           maxPaneCount: 2,
+          minimumPaneWidth: 280,
+          singlePaneMaxWidth: 720,
         ),
       );
       expect(
@@ -191,6 +203,8 @@ void main() {
           paneSpacing: 24,
           recommendedPaneCount: 2,
           maxPaneCount: 2,
+          minimumPaneWidth: 360,
+          singlePaneMaxWidth: 720,
           fixedPaneWidth: 360,
         ),
       );
@@ -201,6 +215,8 @@ void main() {
           paneSpacing: 24,
           recommendedPaneCount: 2,
           maxPaneCount: 2,
+          minimumPaneWidth: 412,
+          singlePaneMaxWidth: 720,
           fixedPaneWidth: 412,
           sideSheetMaxWidth: 400,
         ),
@@ -214,6 +230,8 @@ void main() {
           paneSpacing: 24,
           recommendedPaneCount: 3,
           maxPaneCount: 3,
+          minimumPaneWidth: 412,
+          singlePaneMaxWidth: 720,
           fixedPaneWidth: 412,
           sideSheetMaxWidth: 400,
         ),
@@ -341,30 +359,40 @@ class _TestMaterialResponsiveValueProvider extends MaterialResponsiveValue {
             paneSpacing: 21,
             recommendedPaneCount: 9,
             maxPaneCount: 9,
+            minimumPaneWidth: 901,
+            singlePaneMaxWidth: 701,
           ),
           MaterialWindowSizeClass.large: MaterialResponsiveValues(
             pageMargin: 102,
             paneSpacing: 22,
             recommendedPaneCount: 8,
             maxPaneCount: 8,
+            minimumPaneWidth: 902,
+            singlePaneMaxWidth: 702,
           ),
           MaterialWindowSizeClass.expanded: MaterialResponsiveValues(
             pageMargin: 103,
             paneSpacing: 23,
             recommendedPaneCount: 7,
             maxPaneCount: 7,
+            minimumPaneWidth: 903,
+            singlePaneMaxWidth: 703,
           ),
           MaterialWindowSizeClass.medium: MaterialResponsiveValues(
             pageMargin: 104,
             paneSpacing: 24,
             recommendedPaneCount: 6,
             maxPaneCount: 6,
+            minimumPaneWidth: 904,
+            singlePaneMaxWidth: 704,
           ),
           MaterialWindowSizeClass.compact: MaterialResponsiveValues(
             pageMargin: 105,
             paneSpacing: 25,
             recommendedPaneCount: 5,
             maxPaneCount: 5,
+            minimumPaneWidth: 905,
+            singlePaneMaxWidth: 705,
           ),
         },
         super();
