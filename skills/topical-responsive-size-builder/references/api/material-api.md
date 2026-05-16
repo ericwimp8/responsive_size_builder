@@ -44,6 +44,26 @@ Default classes:
 - `large`
 - `extraLarge`
 
+## Branch by Material window class
+
+`MaterialResponsiveWidgetBuilder`
+
+Use `MaterialResponsiveWidgetBuilder` when Material window classes change the
+widget structure, such as app shells, page shells, navigation chrome, drawers,
+rails, bars, or split views.
+
+```dart
+MaterialResponsiveWidgetBuilder(
+  compact: (context, data) => const CompactShell(),
+  medium: (context, data) => const RailShell(),
+  large: (context, data) => const DrawerShell(),
+)
+```
+
+The builder uses the same breakpoint fallback behavior as other responsive
+builders. Sparse branches are valid: the example above uses `medium` for
+expanded windows and `large` for extra-large windows.
+
 ## Use Material responsive values
 
 `MaterialResponsiveValues`

@@ -1,3 +1,8 @@
+## 0.1.5
+
+- Added `MaterialResponsiveWidgetBuilder` for Material window class widget
+  branching with sparse breakpoint fallback.
+
 ## 0.1.4
 
 - Added Material 3 navigation drawer sizing constants to

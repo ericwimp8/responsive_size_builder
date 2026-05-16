@@ -352,6 +352,45 @@ void main() {
       expect(values.recommendedPaneCount, 9);
     });
   });
+
+  group('MaterialResponsiveWidgetBuilder', () {
+    testWidgets('uses sparse builders with smaller-size fallback', (
+      tester,
+    ) async {
+      final cases = [
+        (size: const Size(390, 800), expected: 'compact compact 16.0'),
+        (size: const Size(700, 900), expected: 'medium medium 24.0'),
+        (size: const Size(1000, 900), expected: 'medium expanded 24.0'),
+        (size: const Size(1366, 900), expected: 'large large 24.0'),
+        (size: const Size(1680, 900), expected: 'large extraLarge 24.0'),
+      ];
+
+      for (final item in cases) {
+        await pumpHarnessApp(
+          tester: tester,
+          addTearDown: addTearDown,
+          customSize: item.size,
+          withScaffold: false,
+          child: MaterialResponsiveSize(
+            child: MaterialResponsiveWidgetBuilder(
+              compact: (context, data) => Text(
+                'compact ${data.screenSize.name} ${data.responsiveValue.pageMargin}',
+              ),
+              medium: (context, data) => Text(
+                'medium ${data.screenSize.name} ${data.responsiveValue.pageMargin}',
+              ),
+              large: (context, data) => Text(
+                'large ${data.screenSize.name} ${data.responsiveValue.pageMargin}',
+              ),
+            ),
+          ),
+        );
+
+        expect(find.text(item.expected), findsOneWidget);
+        await unmountHarnessApp(tester: tester, withScaffold: false);
+      }
+    });
+  });
 }
 
 class _TestMaterialResponsiveValueProvider extends MaterialResponsiveValue {

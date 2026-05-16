@@ -164,9 +164,12 @@ breakpoints already describe the behavior.
     constraints
 
 - [Material API](references/api/material-api.md) - Use when the chosen API is
-  `MaterialResponsiveSize`, `MaterialWindowSizeClass`, `MaterialBreakpoints`,
+  `MaterialResponsiveSize`, `MaterialResponsiveWidgetBuilder`,
+  `MaterialWindowSizeClass`, `MaterialBreakpoints`,
   `MaterialResponsiveValue`, or `MaterialResponsiveValues`.
   - `MaterialResponsiveSize` - when Material 3 owns responsive classification
+  - `MaterialResponsiveWidgetBuilder` - when Material window classes change the
+    widget branch
   - `MaterialResponsiveValues` - when implementing Material margins, panes,
     sheets, dialogs, or adaptive constants
   - `MaterialBreakpoints` and `MaterialResponsiveValue` - when customizing the

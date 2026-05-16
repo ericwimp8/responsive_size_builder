@@ -304,6 +304,130 @@ class MaterialResponsiveValue extends BaseResponsiveValue<
         );
 }
 
+/// Builds a widget for the current Material 3 window size class.
+class MaterialResponsiveWidgetBuilder extends StatefulWidget
+    with AnimatedChildMixin {
+  /// Creates a Material window-size-aware builder with optional breakpoint callbacks.
+  const MaterialResponsiveWidgetBuilder({
+    this.extraLarge,
+    this.large,
+    this.expanded,
+    this.medium,
+    this.compact,
+    this.breakpoints = MaterialBreakpoints.defaultBreakpoints,
+    this.animateChange = false,
+    super.key,
+  }) : assert(
+          extraLarge != null ||
+              large != null ||
+              expanded != null ||
+              medium != null ||
+              compact != null,
+          'At least one builder must be provided',
+        );
+
+  /// Builder for extra-large windows.
+  final ScreenWithValueWidgetBuilderFn<MaterialWindowSizeClass,
+      MaterialResponsiveValues>? extraLarge;
+
+  /// Builder for large windows.
+  final ScreenWithValueWidgetBuilderFn<MaterialWindowSizeClass,
+      MaterialResponsiveValues>? large;
+
+  /// Builder for expanded windows.
+  final ScreenWithValueWidgetBuilderFn<MaterialWindowSizeClass,
+      MaterialResponsiveValues>? expanded;
+
+  /// Builder for medium windows.
+  final ScreenWithValueWidgetBuilderFn<MaterialWindowSizeClass,
+      MaterialResponsiveValues>? medium;
+
+  /// Builder for compact windows.
+  final ScreenWithValueWidgetBuilderFn<MaterialWindowSizeClass,
+      MaterialResponsiveValues>? compact;
+
+  /// Material breakpoint configuration.
+  final MaterialBreakpoints breakpoints;
+
+  @override
+  final bool animateChange;
+
+  @override
+  State<MaterialResponsiveWidgetBuilder> createState() =>
+      _MaterialResponsiveWidgetBuilderState();
+}
+
+class _MaterialResponsiveWidgetBuilderState
+    extends State<MaterialResponsiveWidgetBuilder> {
+  late _MaterialResponsiveWidgetBuilderHandler _handler = _createHandler();
+
+  _MaterialResponsiveWidgetBuilderHandler _createHandler() {
+    return _MaterialResponsiveWidgetBuilderHandler(
+      breakpoints: widget.breakpoints,
+      extraLarge: widget.extraLarge,
+      large: widget.large,
+      expanded: widget.expanded,
+      medium: widget.medium,
+      compact: widget.compact,
+    );
+  }
+
+  @override
+  void didUpdateWidget(MaterialResponsiveWidgetBuilder oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    _handler = _createHandler();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final data = ScreenSizeModelWithValue.of<MaterialWindowSizeClass,
+        MaterialResponsiveValues>(context);
+    final builder = _handler.getScreenSizeValue(screenSize: data.screenSize);
+    return widget.maybeAnimate(builder(context, data));
+  }
+}
+
+class _MaterialResponsiveWidgetBuilderHandler extends BaseBreakpointsHandler<
+    ScreenWithValueWidgetBuilderFn<MaterialWindowSizeClass,
+        MaterialResponsiveValues>,
+    MaterialWindowSizeClass> {
+  _MaterialResponsiveWidgetBuilderHandler({
+    required super.breakpoints,
+    this.extraLarge,
+    this.large,
+    this.expanded,
+    this.medium,
+    this.compact,
+  });
+
+  final ScreenWithValueWidgetBuilderFn<MaterialWindowSizeClass,
+      MaterialResponsiveValues>? extraLarge;
+
+  final ScreenWithValueWidgetBuilderFn<MaterialWindowSizeClass,
+      MaterialResponsiveValues>? large;
+
+  final ScreenWithValueWidgetBuilderFn<MaterialWindowSizeClass,
+      MaterialResponsiveValues>? expanded;
+
+  final ScreenWithValueWidgetBuilderFn<MaterialWindowSizeClass,
+      MaterialResponsiveValues>? medium;
+
+  final ScreenWithValueWidgetBuilderFn<MaterialWindowSizeClass,
+      MaterialResponsiveValues>? compact;
+
+  @override
+  Map<
+      MaterialWindowSizeClass,
+      ScreenWithValueWidgetBuilderFn<MaterialWindowSizeClass,
+          MaterialResponsiveValues>?> get values => {
+        MaterialWindowSizeClass.extraLarge: extraLarge,
+        MaterialWindowSizeClass.large: large,
+        MaterialWindowSizeClass.expanded: expanded,
+        MaterialWindowSizeClass.medium: medium,
+        MaterialWindowSizeClass.compact: compact,
+      };
+}
+
 /// Wraps a subtree with Material 3 window size classes and responsive values.
 class MaterialResponsiveSize extends StatelessWidget {
   /// Creates a widget that exposes Material responsive values to its subtree.

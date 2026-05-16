@@ -478,6 +478,20 @@ return ListView(
 );
 ```
 
+Branch by Material window class:
+
+```dart
+MaterialResponsiveWidgetBuilder(
+  compact: (context, data) => const CompactShell(),
+  medium: (context, data) => const RailShell(),
+  large: (context, data) => const DrawerShell(),
+)
+```
+
+Sparse branches fall back through the Material size classes, so the example
+above uses the `medium` builder for expanded windows and the `large` builder for
+extra-large windows.
+
 `MaterialResponsiveValues` includes values such as `pageMargin`, `paneSpacing`,
 `recommendedPaneCount`, `maxPaneCount`, `minimumPaneWidth`,
 `singlePaneMaxWidth`, `fixedPaneWidth`, and `sideSheetMaxWidth`. Use these
