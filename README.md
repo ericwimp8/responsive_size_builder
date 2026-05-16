@@ -485,7 +485,7 @@ values for Material-owned margins, pane gaps, pane reflow widths, and focused
 single-pane width constraints instead of scattering fallback numbers through
 screens. It also exposes constants for Material sizing rules such as touch
 targets, pointer targets, dialogs, bottom sheets, search, snackbars, progress
-indicators, toolbars, and carousel constraints.
+indicators, toolbars, navigation drawers, and carousel constraints.
 
 Use custom `MaterialBreakpoints` only when the product intentionally shifts the
 Material thresholds:

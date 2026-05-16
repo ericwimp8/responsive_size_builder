@@ -150,6 +150,10 @@ void main() {
       expect(MaterialResponsiveValues.snackbarCompactMinHeight, 48.0);
       expect(MaterialResponsiveValues.progressCircularMaxSize, 240.0);
       expect(MaterialResponsiveValues.carouselCompactMaxTextItems, 3);
+      expect(MaterialResponsiveValues.navigationDrawerWidth, 360.0);
+      expect(MaterialResponsiveValues.navigationDrawerIndicatorWidth, 336.0);
+      expect(MaterialResponsiveValues.navigationDrawerIndicatorHeight, 56.0);
+      expect(MaterialResponsiveValues.navigationDrawerIndicatorPadding, 12.0);
     });
   });
 

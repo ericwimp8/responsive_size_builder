@@ -1,3 +1,8 @@
+## 0.1.4
+
+- Added Material 3 navigation drawer sizing constants to
+  `MaterialResponsiveValues`.
+
 ## 0.1.2
 
 - Added pub.dev-ready package metadata.

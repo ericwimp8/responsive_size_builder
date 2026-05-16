@@ -199,6 +199,18 @@ class MaterialResponsiveValues {
   /// Maximum comfortable text carousel items in compact windows.
   static const carouselCompactMaxTextItems = 3;
 
+  /// Standard navigation drawer container width.
+  static const navigationDrawerWidth = 360.0;
+
+  /// Standard navigation drawer active indicator width.
+  static const navigationDrawerIndicatorWidth = 336.0;
+
+  /// Standard navigation drawer active indicator height.
+  static const navigationDrawerIndicatorHeight = 56.0;
+
+  /// Horizontal padding around the navigation drawer active indicator.
+  static const navigationDrawerIndicatorPadding = 12.0;
+
   @override
   String toString() {
     return 'MaterialResponsiveValues(pageMargin: $pageMargin, paneSpacing: $paneSpacing, recommendedPaneCount: $recommendedPaneCount, maxPaneCount: $maxPaneCount, minimumPaneWidth: $minimumPaneWidth, singlePaneMaxWidth: $singlePaneMaxWidth, fixedPaneWidth: $fixedPaneWidth, sideSheetMaxWidth: $sideSheetMaxWidth)';
