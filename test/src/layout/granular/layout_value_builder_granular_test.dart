@@ -9,7 +9,7 @@ void main() {
     test('requires at least one value', () {
       expect(
         () => LayoutValueBuilderGranular<String>(
-          builder: (_, __) => const SizedBox.shrink(),
+          builder: (_, __, constraints) => const SizedBox.shrink(),
         ),
         throwsAssertionError,
       );
@@ -26,7 +26,7 @@ void main() {
         child: LayoutValueBuilderGranular<String>(
           compactNormal: 'compactNormal',
           compactSmall: 'compactSmall',
-          builder: (_, value) {
+          builder: (_, value, constraints) {
             resolvedValue = value;
             return const SizedBox.shrink();
           },
@@ -67,7 +67,7 @@ void main() {
             compactExtraLarge: 'compactExtraLarge',
             tiny: 'tiny',
             useShortestSide: true,
-            builder: (_, value) {
+            builder: (_, value, constraints) {
               resolvedValue = value;
               return const SizedBox.shrink();
             },
@@ -88,7 +88,7 @@ void main() {
         withScaffold: false,
         child: LayoutValueBuilderGranular<String>(
           standardLarge: 'firstValue',
-          builder: (_, value) {
+          builder: (_, value, constraints) {
             resolvedValue = value;
             return const SizedBox.shrink();
           },
@@ -102,7 +102,7 @@ void main() {
           withScaffold: false,
           child: LayoutValueBuilderGranular<String>(
             standardLarge: 'updatedValue',
-            builder: (_, value) {
+            builder: (_, value, constraints) {
               resolvedValue = value;
               return const SizedBox.shrink();
             },

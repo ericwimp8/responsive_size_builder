@@ -45,7 +45,7 @@ class LayoutValueBuilder<K> extends StatefulWidget {
   /// Whether to resolve breakpoints using the shortest constraint side.
   final bool useShortestSide;
 
-  /// Builds the widget tree using the resolved breakpoint value.
+  /// Builds the widget tree using the resolved breakpoint value and constraints.
   final LayoutValueBuilderFn<K> builder;
 
   @override
@@ -80,7 +80,7 @@ class _LayoutValueBuilderState<K> extends State<LayoutValueBuilder<K>> {
           constraints: constraints,
           useShortestSide: widget.useShortestSide,
         );
-        return widget.builder(context, value);
+        return widget.builder(context, value, constraints);
       },
     );
   }

@@ -24,7 +24,7 @@ void main() {
     test('requires at least one portrait or landscape value', () {
       expect(
         () => LayoutValueBuilderGranularOrientation<String>(
-          builder: (_, __) => const SizedBox.shrink(),
+          builder: (_, __, constraints) => const SizedBox.shrink(),
         ),
         throwsAssertionError,
       );
@@ -46,7 +46,7 @@ void main() {
             breakpoints: _breakpoints,
             standardNormal: 'portraitValue',
             standardNormalLandscape: 'landscapeValue',
-            builder: (_, value) {
+            builder: (_, value, constraints) {
               resolvedValue = value;
               return const SizedBox.shrink();
             },
@@ -73,7 +73,7 @@ void main() {
             breakpoints: _breakpoints,
             standardNormal: 'portraitValue',
             standardNormalLandscape: 'landscapeValue',
-            builder: (_, value) {
+            builder: (_, value, constraints) {
               resolvedValue = value;
               return const SizedBox.shrink();
             },
@@ -100,7 +100,7 @@ void main() {
             child: LayoutValueBuilderGranularOrientation<String>(
               breakpoints: _breakpoints,
               standardNormal: 'portraitFallback',
-              builder: (_, value) {
+              builder: (_, value, constraints) {
                 resolvedValue = value;
                 return const SizedBox.shrink();
               },
@@ -128,7 +128,7 @@ void main() {
             child: LayoutValueBuilderGranularOrientation<String>(
               breakpoints: _breakpoints,
               standardNormalLandscape: 'landscapeFallback',
-              builder: (_, value) {
+              builder: (_, value, constraints) {
                 resolvedValue = value;
                 return const SizedBox.shrink();
               },
@@ -155,7 +155,7 @@ void main() {
             standardNormalLandscape: 'standardNormalLandscape',
             compactExtraLargeLandscape: 'compactExtraLargeLandscape',
             useShortestSide: true,
-            builder: (_, value) {
+            builder: (_, value, constraints) {
               resolvedValue = value;
               return const SizedBox.shrink();
             },

@@ -37,7 +37,7 @@ class LayoutValueBuilderOrientation<K> extends StatefulWidget {
           'Provide at least one portrait or landscape value',
         );
 
-  /// Builds the widget tree using the resolved breakpoint value.
+  /// Builds the widget tree using the resolved breakpoint value and constraints.
   final LayoutValueBuilderFn<K> builder;
   final K? extraLarge;
   final K? large;
@@ -107,7 +107,7 @@ class _LayoutValueBuilderOrientationState<K>
           constraints: constraints,
           useShortestSide: widget.useShortestSide,
         );
-        return widget.builder(context, value);
+        return widget.builder(context, value, constraints);
       },
     );
   }

@@ -9,7 +9,7 @@ void main() {
     test('requires at least one portrait or landscape value', () {
       expect(
         () => LayoutValueBuilderOrientation<String>(
-          builder: (_, __) => const SizedBox.shrink(),
+          builder: (_, __, constraints) => const SizedBox.shrink(),
         ),
         throwsAssertionError,
       );
@@ -31,7 +31,7 @@ void main() {
           child: LayoutValueBuilderOrientation<String>(
             small: 'portraitValue',
             smallLandscape: 'landscapeValue',
-            builder: (_, value) {
+            builder: (_, value, constraints) {
               resolvedValue = value;
               return const SizedBox.shrink();
             },
@@ -58,7 +58,7 @@ void main() {
           child: LayoutValueBuilderOrientation<String>(
             small: 'portraitValue',
             smallLandscape: 'landscapeValue',
-            builder: (_, value) {
+            builder: (_, value, constraints) {
               resolvedValue = value;
               return const SizedBox.shrink();
             },
@@ -84,7 +84,7 @@ void main() {
             height: 500,
             child: LayoutValueBuilderOrientation<String>(
               small: 'portraitFallback',
-              builder: (_, value) {
+              builder: (_, value, constraints) {
                 resolvedValue = value;
                 return const SizedBox.shrink();
               },
@@ -111,7 +111,7 @@ void main() {
             height: 500,
             child: LayoutValueBuilderOrientation<String>(
               smallLandscape: 'landscapeFallback',
-              builder: (_, value) {
+              builder: (_, value, constraints) {
                 resolvedValue = value;
                 return const SizedBox.shrink();
               },
@@ -145,7 +145,7 @@ void main() {
             extraLargeLandscape: 'extraLargeLandscape',
             extraSmallLandscape: 'extraSmallLandscape',
             useShortestSide: true,
-            builder: (_, value) {
+            builder: (_, value, constraints) {
               resolvedValue = value;
               return const SizedBox.shrink();
             },

@@ -32,6 +32,7 @@ typedef LayoutWidgetBuilderFn = Widget Function(BuildContext context);
 typedef LayoutValueBuilderFn<K> = Widget Function(
   BuildContext context,
   K value,
+  BoxConstraints constraints,
 );
 
 /// Mixin that animates child changes with an [AnimatedSwitcher] when enabled.

@@ -175,7 +175,7 @@ class _LayoutValueBuilderGranularOrientationState<K>
           constraints: constraints,
           useShortestSide: widget.useShortestSide,
         );
-        return widget.builder(context, value);
+        return widget.builder(context, value, constraints);
       },
     );
   }

@@ -103,14 +103,14 @@ class _ValuePanel extends StatelessWidget {
                 medium: 14,
                 large: 20,
                 extraLarge: 28,
-                builder: (context, spacing) {
+                builder: (context, spacing, _) {
                   return LayoutValueBuilder<int>(
                     extraSmall: 1,
                     small: 2,
                     medium: 3,
                     large: 4,
                     extraLarge: 5,
-                    builder: (context, columns) {
+                    builder: (context, columns, _) {
                       return _PanelBody(
                         spacing: spacing,
                         columns: columns,

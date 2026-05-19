@@ -312,7 +312,7 @@ LayoutValueBuilder<double>(
   extraSmall: 8,
   medium: 16,
   large: 24,
-  builder: (context, spacing) {
+  builder: (context, spacing, constraints) {
     return Padding(
       padding: EdgeInsets.all(spacing),
       child: const CardContent(),

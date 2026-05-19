@@ -9,7 +9,7 @@ void main() {
     test('requires at least one value', () {
       expect(
         () => LayoutValueBuilder<String>(
-          builder: (_, __) => const SizedBox.shrink(),
+          builder: (_, __, constraints) => const SizedBox.shrink(),
         ),
         throwsAssertionError,
       );
@@ -17,6 +17,7 @@ void main() {
 
     testWidgets('resolves value from layout width by default', (tester) async {
       String? resolvedValue;
+      BoxConstraints? resolvedConstraints;
 
       await pumpHarnessApp(
         tester: tester,
@@ -26,14 +27,17 @@ void main() {
         child: LayoutValueBuilder<String>(
           medium: 'medium',
           small: 'small',
-          builder: (_, value) {
+          builder: (_, value, constraints) {
             resolvedValue = value;
+            resolvedConstraints = constraints;
             return const SizedBox.shrink();
           },
         ),
       );
 
       expect(resolvedValue, 'medium');
+      expect(resolvedConstraints?.maxWidth, 620);
+      expect(resolvedConstraints?.maxHeight, 900);
     });
 
     testWidgets(
@@ -59,7 +63,7 @@ void main() {
             medium: 'medium',
             extraSmall: 'extraSmall',
             useShortestSide: true,
-            builder: (_, value) {
+            builder: (_, value, constraints) {
               resolvedValue = value;
               return const SizedBox.shrink();
             },
@@ -80,7 +84,7 @@ void main() {
         withScaffold: false,
         child: LayoutValueBuilder<String>(
           large: 'firstValue',
-          builder: (_, value) {
+          builder: (_, value, constraints) {
             resolvedValue = value;
             return const SizedBox.shrink();
           },
@@ -94,7 +98,7 @@ void main() {
           withScaffold: false,
           child: LayoutValueBuilder<String>(
             large: 'updatedValue',
-            builder: (_, value) {
+            builder: (_, value, constraints) {
               resolvedValue = value;
               return const SizedBox.shrink();
             },
@@ -123,7 +127,7 @@ void main() {
           ),
           large: 'largeValue',
           small: 'smallValue',
-          builder: (_, value) {
+          builder: (_, value, constraints) {
             resolvedValue = value;
             return const SizedBox.shrink();
           },
@@ -144,7 +148,7 @@ void main() {
             ),
             large: 'largeValue',
             small: 'smallValue',
-            builder: (_, value) {
+            builder: (_, value, constraints) {
               resolvedValue = value;
               return const SizedBox.shrink();
             },

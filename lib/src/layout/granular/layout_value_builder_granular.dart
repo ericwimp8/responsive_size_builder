@@ -59,7 +59,7 @@ class LayoutValueBuilderGranular<K> extends StatefulWidget {
   /// Uses the shortest side of the constraints when selecting a value.
   final bool useShortestSide;
 
-  /// Builds the widget for the selected value.
+  /// Builds the widget for the selected value and constraints.
   final LayoutValueBuilderFn<K> builder;
 
   @override
@@ -104,7 +104,7 @@ class _LayoutValueBuilderGranularState<K>
           constraints: constraints,
           useShortestSide: widget.useShortestSide,
         );
-        return widget.builder(context, value);
+        return widget.builder(context, value, constraints);
       },
     );
   }

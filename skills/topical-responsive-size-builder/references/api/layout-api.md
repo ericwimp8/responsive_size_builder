@@ -50,14 +50,14 @@ LayoutValueBuilder<int>(
   small: 1,
   medium: 2,
   large: 3,
-  builder: (context, columns) {
+  builder: (context, columns, constraints) {
     return GridView.count(crossAxisCount: columns);
   },
 )
 ```
 
-The generic type is the resolved value type. The callback still returns the
-widget to render.
+The generic type is the resolved value type. The callback receives the local
+constraints used to resolve the value and still returns the widget to render.
 
 ## Use layout orientation variants
 
@@ -92,7 +92,7 @@ LayoutValueBuilderGranular<double>(
   compactSmall: 8,
   standardNormal: 16,
   jumboSmall: 24,
-  builder: (context, spacing) {
+  builder: (context, spacing, constraints) {
     return Padding(
       padding: EdgeInsets.all(spacing),
       child: const Content(),
